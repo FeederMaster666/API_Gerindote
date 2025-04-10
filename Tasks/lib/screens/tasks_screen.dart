@@ -39,7 +39,7 @@ class _TasksScreenState extends State<TasksScreen> {
           TextButton(
             onPressed: () async {
               bool success = _isEditing
-                  ? await _authService.editTask(taskId!, _titleController.text, _descriptionController.text, false)
+                  ? await _authService.editTask(taskId, _titleController.text, _descriptionController.text, false)
                   : await _authService.addTask(_titleController.text, _descriptionController.text);
 
               if (success) {

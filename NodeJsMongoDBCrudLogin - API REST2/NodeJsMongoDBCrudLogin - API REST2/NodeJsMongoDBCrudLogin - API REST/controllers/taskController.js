@@ -16,6 +16,20 @@ exports.createTask = async (req, res) => {
         res.status(500).json({ message: "Error al crear la tarea" });
     }
 };
+exports.createTaskFlutter = async (req, res) => {
+    try {
+        userId = req.params.id;
+        const { title, description } = req.body;
+        if (!userId) {
+            return res.status(401).json({ message: "Usuario no autenticado" });
+        }
+        const newTask = new Task({ title, description, user: userId });
+        await newTask.insert();
+        res.status(201).json(newTask);
+    } catch (error) {
+        res.status(500).json({ message: "Error al crear la tarea" });
+    }
+};
 
 exports.getTasks = async (req, res) => {
     try {

@@ -34,10 +34,6 @@ const userSchema = new Schema({
     type: Boolean,
     default: false // Determina si está empadronado
   },
-  createdAt: {
-    type: Date,
-    default: Date.now // Fecha de creación
-  }
 });
 
 // Método para encriptar la contraseña antes de guardarla

@@ -12,14 +12,6 @@ exports.registerUser = (req, res, next) => {
     })(req, res, next);
 };
 
-
-
-
-
-
-
-
-
 exports.loginUser = (req, res, next) => {
     passport.authenticate('local-signin', (err, user, info) => {
         if (err) return next(err);
@@ -31,7 +23,6 @@ exports.loginUser = (req, res, next) => {
         });
     })(req, res, next);
 };
-
 exports.logoutUser = (req, res) => {
     req.logout((err) => {
         if (err) { return res.status(500).json({ message: "Error al cerrar sesión" }); }

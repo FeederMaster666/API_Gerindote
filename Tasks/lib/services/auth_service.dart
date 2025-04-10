@@ -70,7 +70,7 @@ class AuthService with ChangeNotifier {
   Future<void> checkAuth() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('user_id');
-    if (userId != null && !_isAuthenticated) {
+    if (!_isAuthenticated) {
       _isAuthenticated = true;
       notifyListeners();
     }
@@ -80,7 +80,6 @@ class AuthService with ChangeNotifier {
   Future<List<Map<String, dynamic>>> getTasks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('user_id');
-    if (userId == null) return [];
 
     try {
       final response = await http.get(Uri.parse('$baseUrl/tasks/$userId'));
@@ -97,7 +96,6 @@ class AuthService with ChangeNotifier {
   Future<bool> addTask(String title, String description) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('user_id');
-    if (userId == null) return false;
 
     try {
       final response = await http.post(
