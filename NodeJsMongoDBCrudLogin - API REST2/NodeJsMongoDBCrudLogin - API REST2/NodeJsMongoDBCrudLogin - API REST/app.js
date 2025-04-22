@@ -6,7 +6,7 @@ const session = require('express-session');
 const passport = require('passport');
 const logger = require('morgan');
 const cors = require('cors');
-const MongoStore = require('connect-mongo'); 
+const MongoStore = require('connect-mongo');
 
 
 var app = express();
