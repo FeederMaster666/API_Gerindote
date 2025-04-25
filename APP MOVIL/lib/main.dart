@@ -12,6 +12,28 @@ const MiApp({super.key});
 Widget build(BuildContext context) {
 return MaterialApp(
 debugShowCheckedModeBanner: false, // Oculta la etiqueta de "debug" en la app
+theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.lightBlueAccent, // Cambia esto a tu color principal
+          ),
+          useMaterial3: true, // Si usas Material 3
+        // Personaliza el color del cursor y selección de texto
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.lightBlueAccent, // Color del cursor
+          selectionColor: Colors.lightBlueAccent, // Color de selección de texto
+          selectionHandleColor: Colors.lightBlueAccent, // Color del "handle"
+        ),
+        // Personaliza el color de los checkbox
+        checkboxTheme: CheckboxThemeData(
+          checkColor: WidgetStatePropertyAll(Colors.white),
+          //modificar borde cehckbox
+          side: const BorderSide(
+            color: Colors.black, // Border color
+            width: 1.5,
+          ),
+        ),
+      ),
+        
 title: "Mi App", // Título de la aplicación
 home: Home(), // Página principal que se mostrará al iniciar
 );

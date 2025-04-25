@@ -11,6 +11,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool rememberMe = false; // Estado del checkbox para recordar sesión
+    bool _obscureText = true; // Added to manage password visibility
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class _LoginState extends State<Login> {
         // Imagen de fondo
         Positioned.fill(
           child: Image.network(
-            'https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0012.jpg?w=1024',
+            'https://www.guiarepsol.com/content/dam/repsol-guia/guia-cf/ubicacion/localidad/imagenes/media-filer_public-2d-68-2d68b723-6747-40c4-9b52-d2a85f2056c6-gerindote_iglesia_de_san_mateo_apostol_torre.jpg.transform/rp-rendition-xs/image.jpg',
             fit: BoxFit.cover,
           ),
         ),
@@ -31,27 +32,30 @@ class _LoginState extends State<Login> {
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Container(
                 padding: const EdgeInsets.all(20),
-                width: MediaQuery.of(context).size.width * 0.85,
+                width: MediaQuery.of(context).size.width * 0.85,//ancho container transparencia
+                height: MediaQuery.of(context).size.height * 0.90,//alto container transparencia
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.3),//opacidad
+                  borderRadius: BorderRadius.circular(10),//bordes redondeados
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset("lib/assets/gerindote.png", width: 150, height: 100),
-                    const SizedBox(height: 20),
+
+                    const SizedBox(height: 50),//espacio entre escudo y campo DNI
 
                     // Campo DNI/NIE o Email
                     TextFormField(
                       decoration: const InputDecoration(
                         labelText: "DNI/N.I.F o E-Mail",
                         labelStyle: TextStyle(color: Colors.white),
+                        floatingLabelStyle: TextStyle(color: Colors.lightBlueAccent),//cambiar el color del labeltext, cuando esta flotando
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green),
+                          borderSide: BorderSide(color: Colors.lightBlueAccent),
                         ),
                         prefixIcon: Icon(Icons.person, color: Colors.white),
                       ),
@@ -60,66 +64,74 @@ class _LoginState extends State<Login> {
                       textInputAction:
                           TextInputAction.next, // Permite pasar al siguiente campo
                     ),
-                    const SizedBox(height: 15),
+
+                    const SizedBox(height: 20),//espacio entre dni y contraseña
 
                     // Campo Contraseña
                     TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
+                      obscureText: _obscureText,
+                      decoration: InputDecoration(
                         labelText: "Contraseña",
                         labelStyle: TextStyle(color: Colors.white),
+                        floatingLabelStyle: TextStyle(color: Colors.lightBlueAccent),//cambiar el color del labeltext, cuando esta flotando
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green),
+                          borderSide: BorderSide(color: Colors.lightBlueAccent),
                         ),
                         prefixIcon:
                             Icon(Icons.lock, color: Colors.white),
-                        suffixIcon:
-                            Icon(Icons.visibility, color:
-                                Colors.white),
-                      ),
-                      style:
-                          const TextStyle(color:
-                              Colors.white),
+                        suffixIcon: IconButton(
+                              icon: Icon(
+                                // Cambiar icono ojo abierto y cerrado
+                                _obscureText ? Icons.visibility : Icons.visibility_off,
+                                color: _obscureText ? Colors.white: Colors.lightBlueAccent, // Establece color azul si _obscureText es falso
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureText = !_obscureText; // cambiar visibilidad
+                                });
+                              },
+                            ),
+                          ),
+                      style:const TextStyle(color:Colors.white),
                     ),
-                    const SizedBox(height:
-                        15),
+                    
+                    const SizedBox(height:20),
 
                     // Checkbox "Recuérdame" y enlace de ayuda
                     Row(
                       mainAxisAlignment:
                           MainAxisAlignment.spaceBetween,
-                      children:
-                          [
-                            Row(children:
-                                [
-                                  Checkbox(value:
-                                      rememberMe,
-                                      onChanged:
-                                          (value) {
-                                    setState(() {
-                                      rememberMe =
-                                          value ?? false;
-                                    });
-                                  }),
-                                  const Text("Recuérdame",
-                                      style:
-                                          TextStyle(color:
-                                              Colors.white)),
-                                ]),
-                            GestureDetector(onTap:
-                                () {
-                              // Acción al tocar "¿Necesitas ayuda?"
+                      children:[
+                        Row(
+                          children:[
+                            Checkbox(value:
+                              rememberMe,
+                              onChanged:
+                              (value) {
+                                setState(() {
+                                  rememberMe = value ?? false;
+                                });
+                              }),
+                              const Text("Recuérdame",style:TextStyle(color:Colors.white)),
+                          ]
+                        ),
+                          GestureDetector(
+                            onTap:() {
+                            // Acción al tocar "¿Necesitas ayuda?"
                             },
-                                child:
-                                    const Text("¿Necesitas ayuda?",
-                                        style:
-                                            TextStyle(decoration:
-                                                TextDecoration.underline, color:
-                                                Colors.blue))),
-                          ]),
+                            child:
+                              const Text(
+                                "¿Necesitas ayuda?", style: TextStyle(decoration:TextDecoration.underline, color:Colors.blue),
+                              ),
+                          ),
+                      ]
+                    ),
+
+                      Spacer(),//empuja los botones al fondo de la transparencia
+
                       // Botón Entrar
                       ElevatedButton(
                         onPressed: () {
@@ -130,7 +142,7 @@ class _LoginState extends State<Login> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.lightBlueAccent,
                           minimumSize: const Size(double.infinity, 50), // Define tamaño mínimo directamente
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10), // Bordes redondeados
@@ -141,7 +153,8 @@ class _LoginState extends State<Login> {
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                       ),
-                      const SizedBox(height: 10), // Espaciado entre botones
+
+                      const SizedBox(height: 15), // Espaciado entre botones
 
                       // Botón Inscribirse
                       ElevatedButton(
@@ -161,7 +174,7 @@ class _LoginState extends State<Login> {
                         ),
                         child: const Text(
                           "INSCRÍBETE",
-                          style: TextStyle(fontSize: 18, color: Colors.green),
+                          style: TextStyle(fontSize: 18, color: Colors.lightBlueAccent),
                         ),
                       ),
                   ],
