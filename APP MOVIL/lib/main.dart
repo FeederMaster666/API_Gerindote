@@ -1,4 +1,5 @@
 import 'package:ayuntamiento_gerindote/pages/Login.dart';
+import 'package:ayuntamiento_gerindote/pages/Login2.dart';
 import 'package:flutter/material.dart';
 
 // Punto de entrada de la aplicación
@@ -19,7 +20,7 @@ theme: ThemeData(
           useMaterial3: true, // Si usas Material 3
         // Personaliza el color del cursor y selección de texto
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.lightBlueAccent, // Color del cursor
+          cursorColor: Colors.white, // Color del cursor
           selectionColor: Colors.lightBlueAccent, // Color de selección de texto
           selectionHandleColor: Colors.lightBlueAccent, // Color del "handle"
         ),
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
 Widget build(BuildContext context) {
 return Scaffold(
 resizeToAvoidBottomInset: true, // Ajusta el diseño cuando aparece el teclado
-body: Login(), // Carga la pantalla de login
+body: Login2(), // Carga la pantalla de login
 );
 }
 }
