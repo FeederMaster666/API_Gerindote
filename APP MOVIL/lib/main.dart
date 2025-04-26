@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
 Widget build(BuildContext context) {
 return Scaffold(
 resizeToAvoidBottomInset: true, // Ajusta el diseño cuando aparece el teclado
-body: Login2(), // Carga la pantalla de login
+body: Login(), // Carga la pantalla de login
 );
 }
 }
