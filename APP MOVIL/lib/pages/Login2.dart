@@ -1,5 +1,6 @@
 import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp.dart';
+import 'package:ayuntamiento_gerindote/pages/SignUp2.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui'; // Import para el filtro de la imagen
 
@@ -166,7 +167,7 @@ class _LoginState2 extends State<Login2> {
                             // Acción para inscribirse
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SignUp()),
+                              MaterialPageRoute(builder: (context) => SignUp2()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
