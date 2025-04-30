@@ -41,7 +41,7 @@ class PasswordResetDialog {
                 children: [
                   Text(
                     message,
-                    style: const TextStyle(fontSize: 14, color: Colors.black54),
+                    style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.normal),
                   ),
                   const SizedBox(height: 20),
                   const Text(
@@ -51,9 +51,20 @@ class PasswordResetDialog {
                   const SizedBox(height: 8),
                   TextField(
                     controller: emailController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey, // Color del borde cuando no está enfocado
+                          width: 1.85, // Grosor del borde
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.lightBlueAccent, // Color del borde cuando está enfocado
+                          width: 2.0, // poner un poco más grueso cuando está enfocado
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
