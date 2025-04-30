@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class DetalleEventoScreen extends StatelessWidget {
   final Evento evento; // Recibe el evento a mostrar
   final String descripcion = '''Aprovecha esta actividad para que los niños disfruten de talleres, juegos y dinámicas mientras los adultos participan en las jornadas. Incluye monitores titulados, materiales y seguro de responsabilidad civil. ¡Plazas limitadas!
+  Aprovecha esta actividad para que los niños disfruten de talleres, juegos y dinámicas mientras los adultos participan en las jornadas. Incluye monitores titulados, materiales y seguro de responsabilidad civil. ¡Plazas limitadas!.
   Aprovecha esta actividad para que los niños disfruten de talleres, juegos y dinámicas mientras los adultos participan en las jornadas. Incluye monitores titulados, materiales y seguro de responsabilidad civil. ¡Plazas limitadas!''';
   const DetalleEventoScreen({Key? key, required this.evento}) : super(key: key);
 

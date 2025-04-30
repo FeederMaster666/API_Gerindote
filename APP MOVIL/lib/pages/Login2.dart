@@ -1,3 +1,4 @@
+import 'package:ayuntamiento_gerindote/pages/ChangePassword.dart';
 import 'package:ayuntamiento_gerindote/pages/EventosAyto.dart';
 import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp.dart';
@@ -126,7 +127,15 @@ class _LoginState2 extends State<Login2> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                // Acción al tocar "¿Necesitas ayuda?"
+                                // Mostrar diálogo de recuperación de contraseña
+                                PasswordResetDialog.show(
+                                  context: context,
+                                  onSendPressed: (email) {
+                                    // Aquí se implemetará la lógica para enviar el correo
+                                    print('Enviando email de recuperación a: $email');////Console Log
+                                    // llamar a servicio de Firebase Auth, API, etc.
+                                  },
+                                );
                               },
                               child: const Text(
                                 "Cambiar contraseña",
