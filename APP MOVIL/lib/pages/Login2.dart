@@ -1,3 +1,4 @@
+import 'package:ayuntamiento_gerindote/pages/EventosAyto.dart';
 import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp2.dart';
@@ -143,7 +144,7 @@ class _LoginState2 extends State<Login2> {
                             // Acción de inicio de sesión
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Inicio()),
+                              MaterialPageRoute(builder: (context) => EventosAyto()),
                             );
                           },
                           style: ElevatedButton.styleFrom(
