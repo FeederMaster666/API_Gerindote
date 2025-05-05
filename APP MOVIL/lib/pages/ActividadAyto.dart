@@ -1,5 +1,5 @@
 import 'package:ayuntamiento_gerindote/Clases/Eventos.dart';
-import 'package:ayuntamiento_gerindote/pages/EventosYtoDetalles.dart';
+import 'package:ayuntamiento_gerindote/pages/ActividadAytoDetalles.dart';
 import 'package:flutter/material.dart';
 
 class EventosAyto extends StatefulWidget {
