@@ -46,6 +46,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF4F4F4),
       appBar: AppBar(
         title: Text('Reservar - ${widget.nombreActividad}'),
         backgroundColor: Colors.green,
@@ -54,23 +55,42 @@ class _PantallaReservaState extends State<PantallaReserva> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TableCalendar(
-              focusedDay: _fechaSeleccionada,
-              firstDay: DateTime.now(),
-              lastDay: DateTime.now().add(Duration(days: 30)),
-              calendarFormat: CalendarFormat.month,
-              onDaySelected: (selectedDay, _) {
-                setState(() {
-                  _fechaSeleccionada = selectedDay;
-                });
-                _cargarHoras(selectedDay);
-              },
-              selectedDayPredicate: (day) {
-                return isSameDay(_fechaSeleccionada, day);
-              },
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TableCalendar(
+                  focusedDay: _fechaSeleccionada,
+                  firstDay: DateTime.now(),
+                  lastDay: DateTime.now().add(const Duration(days: 30)),
+                  calendarFormat: CalendarFormat.month,
+                  onDaySelected: (selectedDay, _) {
+                    setState(() {
+                      _fechaSeleccionada = selectedDay;
+                    });
+                    _cargarHoras(selectedDay);
+                  },
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_fechaSeleccionada, day);
+                  },
+                  calendarStyle: const CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                      color: Colors.green,
+                      shape: BoxShape.circle,
+                    ),
+                    todayDecoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            Text(
+            const Text(
               'Horas disponibles:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
@@ -79,19 +99,42 @@ class _PantallaReservaState extends State<PantallaReserva> {
               child: ListView.builder(
                 itemCount: horasDisponibles.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(horasDisponibles[index]),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Reservado a las ${horasDisponibles[index]}',
+                  return Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.access_time,
+                        color: Colors.green,
+                      ),
+                      title: Text(
+                        horasDisponibles[index],
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Reservado a las ${horasDisponibles[index]}',
+                              ),
                             ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                        );
-                      },
-                      child: Text('Reservar'),
+                        ),
+                        child: const Text(
+                          'Reservar',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -101,11 +144,14 @@ class _PantallaReservaState extends State<PantallaReserva> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: _onBottomNavTapped,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
         ],
+        currentIndex: 0,
+        onTap: _onBottomNavTapped,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
       ),
     );
   }
