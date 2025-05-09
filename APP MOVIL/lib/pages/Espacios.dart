@@ -1,20 +1,35 @@
-import 'package:ayuntamiento_gerindote/pages/PaginaActividades.dart';
+import 'package:ayuntamiento_gerindote/pages/EspaciosActividades.dart';
 import 'package:flutter/material.dart';
 
-class Inicio extends StatefulWidget {
-  const Inicio({Key? key}) : super(key: key);
+class Espacios extends StatefulWidget {
+  const Espacios({Key? key}) : super(key: key);
 
   @override
-  _InicioState createState() => _InicioState();
+  _EspaciosState createState() => _EspaciosState();
 }
 
-class _InicioState extends State<Inicio> {
+class _EspaciosState extends State<Espacios> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: const Text("Reservas Ayuntamiento de Gerindote", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Espacios Deportivos",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.white),

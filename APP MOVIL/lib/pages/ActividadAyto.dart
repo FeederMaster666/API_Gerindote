@@ -73,12 +73,26 @@ class _EventosAytoState extends State<EventosAyto> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // AppBar es la barra superior de la aplicación
       appBar: AppBar(
-        // Color de fondo verde
+        // Color de fondo azul claro
         backgroundColor: Colors.lightBlueAccent,
         // Título del AppBar con estilo de texto
-        title: Text("Eventos Municipales", style: const TextStyle(color: Colors.white, fontSize: 18)),
+        title: const Text(
+          "Eventos Municipales",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+        ),
         // Acciones en la parte derecha del AppBar
         actions: [
           // IconButton para el icono de usuario

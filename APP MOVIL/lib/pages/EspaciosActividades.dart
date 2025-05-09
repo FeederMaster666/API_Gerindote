@@ -1,3 +1,4 @@
+import 'package:ayuntamiento_gerindote/pages/EspaciosReserva.dart';
 import 'package:flutter/material.dart';
 
 // StatelessWidget para la página de actividades
@@ -141,6 +142,10 @@ class PaginaActividades extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Acción al presionar "Seleccionar" (por implementar)
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PantallaReserva(nombreActividad: activityName)),
+              );
               },
               // Estilo del botón
               style: ElevatedButton.styleFrom(

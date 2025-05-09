@@ -185,7 +185,7 @@ class DetalleEventoScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(8)),
                                     ),
                                     onPressed: () {
-                                  // Al simular la confirmación lanza un snackBar que da una confirmación al usuario de que la reserva se ha realizado
+                                    // Al simular la confirmación lanza un snackBar que da una confirmación al usuario de que la reserva se ha realizado
                                       Navigator.pop(context);
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(

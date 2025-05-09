@@ -1,7 +1,5 @@
 import 'package:ayuntamiento_gerindote/pages/ChangePassword.dart';
-import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
-import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
-import 'package:ayuntamiento_gerindote/pages/SignUp.dart';
+import 'package:ayuntamiento_gerindote/pages/GestionNavegacion.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp2.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui'; // Import para el filtro de la imagen
@@ -153,7 +151,7 @@ class _LoginState2 extends State<Login2> {
                             // Acción de inicio de sesión
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => EventosAyto()),
+                              MaterialPageRoute(builder: (context) => MainScreen()),
                             );
                           },
                           style: ElevatedButton.styleFrom(

@@ -1,6 +1,5 @@
 import 'package:ayuntamiento_gerindote/pages/ChangePassword.dart';
-import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
-import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
+import 'package:ayuntamiento_gerindote/pages/Espacios.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp.dart';
 import 'package:flutter/material.dart';
 
@@ -148,7 +147,7 @@ class _LoginState extends State<Login> {
                           // Acción de inicio de sesión
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Inicio()),
+                            MaterialPageRoute(builder: (context) => Espacios()),
                           );
                         },
                         style: ElevatedButton.styleFrom(

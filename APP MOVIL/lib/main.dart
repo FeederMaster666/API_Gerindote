@@ -1,4 +1,3 @@
-import 'package:ayuntamiento_gerindote/pages/Login.dart';
 import 'package:ayuntamiento_gerindote/pages/Login2.dart';
 import 'package:flutter/material.dart';
 
@@ -51,10 +50,10 @@ _HomeState createState() => _HomeState();
 
 class _HomeState extends State<Home> {
 @override
-Widget build(BuildContext context) {
-return Scaffold(
-resizeToAvoidBottomInset: true, // Ajusta el diseño cuando aparece el teclado
-body: Login2(), // Carga la pantalla de login
-);
-}
+  Widget build(BuildContext context) {
+  return Scaffold(
+  resizeToAvoidBottomInset: true, // Ajusta el diseño cuando aparece el teclado
+  body: Login2(), // Carga la pantalla de login
+  );
+  }
 }

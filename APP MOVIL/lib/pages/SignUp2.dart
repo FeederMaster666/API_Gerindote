@@ -1,9 +1,8 @@
+import 'package:ayuntamiento_gerindote/pages/Login2.dart';
 import 'package:flutter/material.dart';
-
 
 class SignUp2 extends StatefulWidget {
   const SignUp2({Key? key}) : super(key: key);
-
   @override
   _SignUpState2 createState() => _SignUpState2();
 }
@@ -17,6 +16,7 @@ class _SignUpState2 extends State<SignUp2> {
 
   @override
   Widget build(BuildContext context) {
+    bool estaEmpadronado = false;
     // Devuelve un Scaffold, que proporciona la estructura visual básica para la pantalla.
     return Scaffold(
       // Define el AppBar, la barra superior de la app.
@@ -247,6 +247,24 @@ class _SignUpState2 extends State<SignUp2> {
                                 _selectedGender = newValue;
                               });
                             },
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Empadronado",
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              ),
+                              Switch(
+                                value: estaEmpadronado,
+                                activeColor: Colors.lightBlueAccent,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    estaEmpadronado = value;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
