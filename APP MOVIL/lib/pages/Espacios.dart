@@ -13,6 +13,7 @@ class _EspaciosState extends State<Espacios> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.green,
         title: const Text(
           "Espacios Deportivos",

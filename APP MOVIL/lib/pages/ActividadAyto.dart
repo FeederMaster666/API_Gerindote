@@ -74,6 +74,8 @@ class _EventosAytoState extends State<EventosAyto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //quitar la backArrow
+        automaticallyImplyLeading: false,
         // Color de fondo azul claro
         backgroundColor: Colors.lightBlueAccent,
         // Título del AppBar con estilo de texto

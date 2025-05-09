@@ -32,6 +32,7 @@ class _NoticiasState extends State<Noticias> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           "Ayuntamiento de Gerindote",
           style: TextStyle(
