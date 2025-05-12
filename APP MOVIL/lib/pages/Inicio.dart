@@ -14,7 +14,10 @@ class _InicioState extends State<Inicio> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: const Text("Reservas Ayuntamiento de Gerindote", style: TextStyle(color: Colors.white)),
+        title: const Text(
+          "Reservas Ayuntamiento de Gerindote",
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.white),
@@ -57,12 +60,18 @@ class _InicioState extends State<Inicio> {
     );
   }
 
-  Widget _buildInstallationCard(BuildContext context, String title, String imageUrl) {
+  Widget _buildInstallationCard(
+    BuildContext context,
+    String title,
+    String imageUrl,
+  ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PaginaActividades(title: title)),
+          MaterialPageRoute(
+            builder: (context) => PaginaActividades(title: title),
+          ),
         );
       },
       child: SizedBox(
@@ -71,32 +80,58 @@ class _InicioState extends State<Inicio> {
           fit: StackFit.expand,
           children: [
             // Imagen de fondo
-            Image.network(
-              imageUrl,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            Image.network(imageUrl, width: double.infinity, fit: BoxFit.cover),
+            // Capa oscura para mejorar el contraste
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withOpacity(0.4),
+                    Colors.black.withOpacity(0.1),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+              ),
             ),
-            // Contenedor centrado con el nombre y el botón
+            // Contenido centrado
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     title,
                     style: const TextStyle(
                       fontSize: 24,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          blurRadius: 4,
+                          color: Colors.black87,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  Text(
-                    "Reservar",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(height: 4),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      "Reservar",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
