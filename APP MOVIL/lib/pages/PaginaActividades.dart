@@ -17,7 +17,10 @@ class PaginaActividades extends StatelessWidget {
         // Color de fondo verde
         backgroundColor: Colors.green,
         // Título del AppBar con estilo de texto
-        title: Text("Actividades en $title", style: const TextStyle(color: Colors.white, fontSize: 18)),
+        title: Text(
+          "Actividades en $title",
+          style: const TextStyle(color: Colors.white, fontSize: 18),
+        ),
         // Acciones en la parte derecha del AppBar
         actions: [
           // IconButton para el icono de usuario
@@ -85,7 +88,11 @@ class PaginaActividades extends StatelessWidget {
   }
 
   // Widget para construir una tarjeta de actividad
-  Widget _buildActivityCard(BuildContext context, String activityName, String imageUrl) {
+  Widget _buildActivityCard(
+    BuildContext context,
+    String activityName,
+    String imageUrl,
+  ) {
     // Container principal que contiene la tarjeta
     return Container(
       // Margen horizontal de 16 y vertical de 8 para separar las tarjetas
@@ -150,7 +157,10 @@ class PaginaActividades extends StatelessWidget {
                 textStyle: const TextStyle(fontSize: 16),
               ),
               // Texto del botón
-              child: const Text("Seleccionar", style: TextStyle(color: Colors.white)),
+              child: const Text(
+                "Seleccionar",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
