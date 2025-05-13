@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
 import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
+import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
 
 class PantallaReserva extends StatefulWidget {
   final String nombreActividad;
@@ -33,12 +34,17 @@ class _PantallaReservaState extends State<PantallaReserva> {
     if (index == 0) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Inicio()),
+        MaterialPageRoute(builder: (context) => Noticias()),
       );
     } else if (index == 1) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Noticias()),
+        MaterialPageRoute(builder: (context) => Inicio()),
+      );
+    } else if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => EventosAyto()),
       );
     }
   }
@@ -145,6 +151,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
         ],

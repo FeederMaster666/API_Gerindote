@@ -1,6 +1,7 @@
 import 'package:ayuntamiento_gerindote/pages/PaginaActividades.dart';
 import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
 import 'package:flutter/material.dart';
+import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
 
 class Inicio extends StatefulWidget {
   const Inicio({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1; // Inicio está en el centro
 
   void _onBottomNavTapped(int index) {
     if (index == _selectedIndex) return;
@@ -19,11 +20,25 @@ class _InicioState extends State<Inicio> {
       _selectedIndex = index;
     });
 
-    if (index == 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Noticias()),
-      );
+    switch (index) {
+      case 0: // Noticias
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Noticias()),
+        );
+        break;
+      case 1: // Inicio
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Inicio()),
+        );
+        break;
+      case 2: // Eventos
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => EventosAyto()),
+        );
+        break;
     }
   }
 
@@ -78,8 +93,9 @@ class _InicioState extends State<Inicio> {
         currentIndex: _selectedIndex,
         onTap: _onBottomNavTapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
         ],
       ),
     );

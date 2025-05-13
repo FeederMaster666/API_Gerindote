@@ -1,5 +1,5 @@
-//import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
-import 'package:ayuntamiento_gerindote/pages/Espacios.dart';
+import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
+import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
 import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +20,9 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         return Noticias();
       case 1:
-        return Espacios();
+        return Inicio();
       case 2:
-      //return EventosAyto();
+        return EventosAyto();
       case 3:
         return Noticias(); //Por ahora no hay nada. Posible lugares de interés?
       default:

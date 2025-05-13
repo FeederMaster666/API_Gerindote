@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
-import 'package:ayuntamiento_gerindote/pages/PaginaActividades.dart';
+import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
 
 class Noticias extends StatefulWidget {
   @override
@@ -47,7 +47,8 @@ class _NoticiasState extends State<Noticias> {
       "imagen": "https://picsum.photos/id/1081/600/300",
     },
   ];
-  int _selectedIndex = 1;
+
+  int _selectedIndex = 2;
 
   void _onBottomNavTapped(int index) {
     if (index == _selectedIndex) return;
@@ -57,11 +58,18 @@ class _NoticiasState extends State<Noticias> {
     });
 
     if (index == 0) {
+      // TODO: Navegar a la pantalla de Eventos cuando esté lista
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => EventosAyto()),
+      );
+    } else if (index == 1) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Inicio()),
       );
     }
+    // No hace falta hacer nada si index == 2, ya estás en Noticias
   }
 
   @override
@@ -125,6 +133,7 @@ class _NoticiasState extends State<Noticias> {
         currentIndex: _selectedIndex,
         onTap: _onBottomNavTapped,
         items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
         ],
