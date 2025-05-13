@@ -1,22 +1,35 @@
 import 'package:ayuntamiento_gerindote/pages/PaginaActividades.dart';
 import 'package:flutter/material.dart';
 
-class Inicio extends StatefulWidget {
-  const Inicio({Key? key}) : super(key: key);
+class Espacios extends StatefulWidget {
+  const Espacios({Key? key}) : super(key: key);
 
   @override
-  _InicioState createState() => _InicioState();
+  _EspaciosState createState() => _EspaciosState();
 }
 
-class _InicioState extends State<Inicio> {
+class _EspaciosState extends State<Espacios> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.green,
         title: const Text(
-          "Reservas Ayuntamiento de Gerindote",
-          style: TextStyle(color: Colors.white),
+          "Espacios Deportivos",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -81,57 +94,27 @@ class _InicioState extends State<Inicio> {
           children: [
             // Imagen de fondo
             Image.network(imageUrl, width: double.infinity, fit: BoxFit.cover),
-            // Capa oscura para mejorar el contraste
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0.4),
-                    Colors.black.withOpacity(0.1),
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
-              ),
-            ),
-            // Contenido centrado
+            // Contenedor centrado con el nombre y el botón
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     title,
                     style: const TextStyle(
                       fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w500,
                       color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 4,
-                          color: Colors.black87,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 4),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text(
-                      "Reservar",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    "Reservar",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

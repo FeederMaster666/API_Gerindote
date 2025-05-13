@@ -12,7 +12,7 @@ class PaginaActividades extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blueAccent,
         title: Text(
           "Actividades en $title",
           style: const TextStyle(color: Colors.white, fontSize: 18),
@@ -77,7 +77,7 @@ class PaginaActividades extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
-        selectedItemColor: Colors.green,
+        selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.grey,
         onTap: (index) {
           switch (index) {
@@ -151,7 +151,7 @@ class PaginaActividades extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 37, 86, 131),
+                backgroundColor: Colors.blueAccent,
                 textStyle: const TextStyle(fontSize: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

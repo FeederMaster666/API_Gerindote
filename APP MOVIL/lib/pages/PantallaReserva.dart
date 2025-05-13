@@ -49,7 +49,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
       backgroundColor: const Color(0xFFF4F4F4),
       appBar: AppBar(
         title: Text('Reservar - ${widget.nombreActividad}'),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -78,7 +78,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                   },
                   calendarStyle: const CalendarStyle(
                     selectedDecoration: BoxDecoration(
-                      color: Colors.green,
+                      color: Colors.blueAccent,
                       shape: BoxShape.circle,
                     ),
                     todayDecoration: BoxDecoration(
@@ -108,7 +108,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                     child: ListTile(
                       leading: const Icon(
                         Icons.access_time,
-                        color: Colors.green,
+                        color: Colors.blueAccent,
                       ),
                       title: Text(
                         horasDisponibles[index],
@@ -125,7 +125,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.blueAccent,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -150,7 +150,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
         ],
         currentIndex: 0,
         onTap: _onBottomNavTapped,
-        selectedItemColor: Colors.green,
+        selectedItemColor: Colors.blueAccent,
         unselectedItemColor: Colors.grey,
       ),
     );

@@ -13,22 +13,38 @@ class _NoticiasState extends State<Noticias> {
       "titulo": "La Romería de Gerindote ya cuenta con página web",
       "descripcion":
           "Ya está disponible la web oficial del evento para consultas y actividades.",
+      "imagen": "https://picsum.photos/id/1015/600/300",
     },
     {
       "titulo": "Entrega de diplomas a la Asociación de Vecinos",
       "descripcion": "Reconocimiento a los miembros por su labor comunitaria.",
+      "imagen": "https://picsum.photos/id/1027/600/300",
     },
     {
       "titulo": "Nuevo programa cultural en marcha",
       "descripcion": "Iniciativas culturales semanales para todas las edades.",
+      "imagen": "https://picsum.photos/id/1035/600/300",
     },
     {
       "titulo": "Subvenciones para jóvenes emprendedores",
       "descripcion": "Se abre el plazo para solicitar ayudas municipales.",
+      "imagen": "https://picsum.photos/id/1049/600/300",
     },
     {
       "titulo": "Plan municipal de sostenibilidad en marcha",
       "descripcion": "Acciones para un pueblo más verde y eficiente.",
+      "imagen": "https://picsum.photos/id/1060/600/300",
+    },
+    {
+      "titulo": "Inauguración del nuevo parque infantil",
+      "descripcion":
+          "El nuevo parque cuenta con juegos inclusivos y áreas verdes.",
+      "imagen": "https://picsum.photos/id/1074/600/300",
+    },
+    {
+      "titulo": "Feria de empleo y formación",
+      "descripcion": "Oportunidades laborales y formativas para los jóvenes.",
+      "imagen": "https://picsum.photos/id/1081/600/300",
     },
   ];
   int _selectedIndex = 1;
@@ -53,7 +69,7 @@ class _NoticiasState extends State<Noticias> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Noticias"),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blueAccent,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
@@ -76,6 +92,16 @@ class _NoticiasState extends State<Noticias> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        noticia["imagen"]!,
+                        height: 180,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(height: 10),
                     Text(
                       noticia["titulo"]!,
                       style: TextStyle(
