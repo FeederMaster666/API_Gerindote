@@ -1,4 +1,5 @@
 import 'package:ayuntamiento_gerindote/pages/PaginaActividades.dart';
+import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
 import 'package:flutter/material.dart';
 
 class Inicio extends StatefulWidget {
@@ -9,6 +10,23 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+  int _selectedIndex = 0;
+
+  void _onBottomNavTapped(int index) {
+    if (index == _selectedIndex) return;
+
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Noticias()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +47,6 @@ class _InicioState extends State<Inicio> {
       ),
       body: ListView(
         children: [
-          // Primera instalación
           _buildInstallationCard(
             context,
             "Campo de fútbol",
@@ -57,6 +74,14 @@ class _InicioState extends State<Inicio> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onBottomNavTapped,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
+          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
+        ],
+      ),
     );
   }
 
@@ -75,13 +100,12 @@ class _InicioState extends State<Inicio> {
         );
       },
       child: SizedBox(
-        height: 131,
+        height: 200,
+        width: double.infinity,
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Imagen de fondo
             Image.network(imageUrl, width: double.infinity, fit: BoxFit.cover),
-            // Capa oscura para mejorar el contraste
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -94,7 +118,6 @@ class _InicioState extends State<Inicio> {
                 ),
               ),
             ),
-            // Contenido centrado
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
