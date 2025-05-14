@@ -10,6 +10,7 @@ class Inicio extends StatefulWidget {
   _InicioState createState() => _InicioState();
 }
 
+//ASHJDiasjfoasidhoadshgàgpkajsbdpkjasbgkjasbkja
 class _InicioState extends State<Inicio> {
   int _selectedIndex = 1; // Inicio está en el centro
 
