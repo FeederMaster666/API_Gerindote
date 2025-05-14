@@ -11,45 +11,29 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
-  int _selectedIndex = 1; // Inicio está en el centro
-
-  void _onBottomNavTapped(int index) {
-    if (index == _selectedIndex) return;
-
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0: // Noticias
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Noticias()),
-        );
-        break;
-      case 1: // Inicio
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Inicio()),
-        );
-        break;
-      case 2: // Eventos
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => EventosAyto()),
-        );
-        break;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.blueAccent,
+        centerTitle: true,
         title: const Text(
-          "Reservas Ayuntamiento de Gerindote",
-          style: TextStyle(color: Colors.white),
+          "Reservas Ayuntamiento",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -87,15 +71,6 @@ class _InicioState extends State<Inicio> {
             "Pistas Exteriores",
             "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0026.jpg",
           ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onBottomNavTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
         ],
       ),
     );

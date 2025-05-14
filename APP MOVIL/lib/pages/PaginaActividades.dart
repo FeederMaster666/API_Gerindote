@@ -75,37 +75,6 @@ class PaginaActividades extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        selectedItemColor: Colors.blueAccent,
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Inicio()),
-              );
-              break;
-            case 1:
-              break; // Ya estamos en Actividades
-            case 2:
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Noticias()),
-              );
-              break;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center),
-            label: 'Actividades',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
-        ],
-      ),
     );
   }
 
@@ -146,7 +115,7 @@ class PaginaActividades extends StatelessWidget {
                   MaterialPageRoute(
                     builder:
                         (context) =>
-                            PantallaReserva(nombreActividad: activityName),
+                          PantallaReserva(nombreActividad: activityName),
                   ),
                 );
               },

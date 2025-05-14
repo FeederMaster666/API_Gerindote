@@ -48,40 +48,40 @@ class _NoticiasState extends State<Noticias> {
     },
   ];
 
-  int _selectedIndex = 2;
-
-  void _onBottomNavTapped(int index) {
-    if (index == _selectedIndex) return;
-
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    if (index == 0) {
-      // TODO: Navegar a la pantalla de Eventos cuando esté lista
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => EventosAyto()),
-      );
-    } else if (index == 1) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Inicio()),
-      );
-    }
-    // No hace falta hacer nada si index == 2, ya estás en Noticias
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Noticias"),
-        backgroundColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+        appBar: AppBar(
+        //quitar la backArrow
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: const Text(
+          "Noticias y Eventos",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
+        backgroundColor: Colors.blueAccent,
+        // Acciones en la parte derecha del AppBar
+        actions: [
+          // IconButton para el icono de usuario
+          IconButton(
+            icon: const Icon(Icons.person, color: Colors.white),
+            onPressed: () {
+              // Acción al presionar el icono de usuario (por implementar)
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -128,15 +128,6 @@ class _NoticiasState extends State<Noticias> {
             );
           },
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onBottomNavTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
-        ],
       ),
     );
   }

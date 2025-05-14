@@ -12,36 +12,6 @@ class EventosAyto extends StatefulWidget {
 }
 
 class _EventosAytoState extends State<EventosAyto> {
-  int _selectedIndex = 2; // Inicio está en el centro
-
-  void _onBottomNavTapped(int index) {
-    if (index == _selectedIndex) return;
-
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0: // Noticias
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Noticias()),
-        );
-        break;
-      case 1: // Inicio
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => Inicio()),
-        );
-        break;
-      case 2: // Eventos
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => EventosAyto()),
-        );
-        break;
-    }
-  }
 
   //lista eventos
   final List<Evento> eventos = [
@@ -120,8 +90,9 @@ class _EventosAytoState extends State<EventosAyto> {
         // Color de fondo azul claro
         backgroundColor: Colors.blueAccent,
         // Título del AppBar con estilo de texto
+        centerTitle: true,
         title: const Text(
-          "Eventos Municipales",
+          "Actividades Municipales",
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -154,15 +125,6 @@ class _EventosAytoState extends State<EventosAyto> {
           final evento = eventos[index];
           return _buildEventCard(evento);
         },
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onBottomNavTapped,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
-        ],
       ),
     );
   }

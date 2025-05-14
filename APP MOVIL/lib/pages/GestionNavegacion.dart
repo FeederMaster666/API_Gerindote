@@ -18,13 +18,11 @@ class _MainScreenState extends State<MainScreen> {
   Widget _getBody(int index) {
     switch (index) {
       case 0:
-        return Noticias();
+        return EventosAyto();
       case 1:
         return Inicio();
       case 2:
-        return EventosAyto();
-      case 3:
-        return Noticias(); //Por ahora no hay nada. Posible lugares de interés?
+        return Noticias();
       default:
         return Container();
     }
@@ -43,18 +41,14 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Inicio'),
+          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Actividades'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Inicio',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
-            label: 'Reservas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Actividades',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'Proximamente',
+            label: 'Noticias',
           ),
         ],
       ),

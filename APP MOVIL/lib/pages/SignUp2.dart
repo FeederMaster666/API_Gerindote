@@ -102,7 +102,7 @@ class _SignUpState2 extends State<SignUp2> {
                       // Widget TextFormField para el campo Contraseña.
                       TextFormField(
                         // Habilita el texto oculto.
-                        obscureText: true,
+                        obscureText: _obscureText,
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
                         decoration: InputDecoration(
                           labelText: "Contraseña",
