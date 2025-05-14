@@ -1,5 +1,7 @@
 import 'package:ayuntamiento_gerindote/pages/PaginaActividades.dart';
+import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
 import 'package:flutter/material.dart';
+import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
 
 class Inicio extends StatefulWidget {
   const Inicio({Key? key}) : super(key: key);
@@ -9,14 +11,29 @@ class Inicio extends StatefulWidget {
 }
 
 class _InicioState extends State<Inicio> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.blueAccent,
+        centerTitle: true,
         title: const Text(
-          "Reservas Ayuntamiento de Gerindote",
-          style: TextStyle(color: Colors.white),
+          "Reservas Ayuntamiento",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -29,7 +46,6 @@ class _InicioState extends State<Inicio> {
       ),
       body: ListView(
         children: [
-          // Primera instalación
           _buildInstallationCard(
             context,
             "Campo de fútbol",
@@ -75,13 +91,12 @@ class _InicioState extends State<Inicio> {
         );
       },
       child: SizedBox(
-        height: 131,
+        height: 200,
+        width: double.infinity,
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Imagen de fondo
             Image.network(imageUrl, width: double.infinity, fit: BoxFit.cover),
-            // Capa oscura para mejorar el contraste
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -94,7 +109,6 @@ class _InicioState extends State<Inicio> {
                 ),
               ),
             ),
-            // Contenido centrado
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -143,3 +157,4 @@ class _InicioState extends State<Inicio> {
     );
   }
 }
+
