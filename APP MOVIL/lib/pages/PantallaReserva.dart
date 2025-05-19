@@ -47,7 +47,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
       // Ir a Noticias
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Noticias()),
+        MaterialPageRoute(builder: (context) => EventosAyto()),
       );
     } else if (index == 1) {
       // Ir a Inicio
@@ -59,7 +59,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
       // Ir a ActividadAyto (Eventos del Ayuntamiento)
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => EventosAyto()),
+        MaterialPageRoute(builder: (context) => Noticias()),
       );
     }
   }
@@ -157,13 +157,85 @@ class _PantallaReservaState extends State<PantallaReserva> {
                       // Botón de "Reservar"
                       trailing: ElevatedButton(
                         onPressed: () {
-                          // Al pulsar, muestra un mensaje confirmando la reserva
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Reservado a las ${horasDisponibles[index]}',
-                              ),
-                            ),
+                          final TextEditingController nombreController =
+                              TextEditingController();
+                          final TextEditingController correoController =
+                              TextEditingController();
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Datos de la reserva'),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    TextField(
+                                      controller: nombreController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Nombre completo',
+                                      ),
+                                    ),
+                                    TextField(
+                                      controller: correoController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Correo electrónico',
+                                      ),
+                                      keyboardType: TextInputType.emailAddress,
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed:
+                                        () => Navigator.of(context).pop(),
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      final nombre =
+                                          nombreController.text.trim();
+                                      final correo =
+                                          correoController.text.trim();
+
+                                      if (nombre.isEmpty || correo.isEmpty) {
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Por favor, completa todos los campos.',
+                                            ),
+                                          ),
+                                        );
+                                        return;
+                                      }
+
+                                      Navigator.of(
+                                        context,
+                                      ).pop(); // Cerrar el diálogo
+
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Reserva hecha para $nombre a las ${horasDisponibles[index]}.\nSe enviará confirmación a $correo.',
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.blueAccent,
+                                    ),
+                                    child: const Text(
+                                      'Confirmar',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         },
                         style: ElevatedButton.styleFrom(
