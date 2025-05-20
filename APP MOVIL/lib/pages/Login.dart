@@ -40,9 +40,7 @@ class _LoginState extends State<Login> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ), // Add horizontal padding
+                padding: const EdgeInsets.symmetric(horizontal: 20,), // Padding horizontal
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -141,6 +139,7 @@ class _LoginState extends State<Login> {
                               ),
                             ],
                           ),
+                          //GestureDetector hace que el texto sea clickable
                           GestureDetector(
                             onTap: () {
                               // Mostrar diálogo de recuperación de contraseña

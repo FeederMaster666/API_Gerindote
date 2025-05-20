@@ -16,9 +16,22 @@ class PaginaActividades extends StatelessWidget {
       // AppBar con título y botón de perfil
       appBar: AppBar(
         backgroundColor: Colors.blueAccent, // Color de fondo del AppBar
+        centerTitle: true,
         title: Text(
-          "Actividades en $title", // Muestra el título dinámico
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          "$title", // Muestra el título dinámico
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(

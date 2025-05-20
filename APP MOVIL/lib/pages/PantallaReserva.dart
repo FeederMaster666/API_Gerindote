@@ -1,9 +1,6 @@
 // Importación de paquetes necesarios para la interfaz, el calendario y las páginas internas
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
-import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
-import 'package:ayuntamiento_gerindote/pages/ActividadAyto.dart';
 
 // Definición del widget con estado que representa la pantalla de reservas
 class PantallaReserva extends StatefulWidget {
@@ -41,29 +38,6 @@ class _PantallaReservaState extends State<PantallaReserva> {
     });
   }
 
-  // Función que gestiona la navegación inferior entre páginas
-  void _onBottomNavTapped(int index) {
-    if (index == 0) {
-      // Ir a Noticias
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => EventosAyto()),
-      );
-    } else if (index == 1) {
-      // Ir a Inicio
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Inicio()),
-      );
-    } else if (index == 2) {
-      // Ir a ActividadAyto (Eventos del Ayuntamiento)
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Noticias()),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // Estructura visual de la pantalla
@@ -71,7 +45,21 @@ class _PantallaReservaState extends State<PantallaReserva> {
       backgroundColor: const Color(0xFFF4F4F4), // Color de fondo
       // AppBar con el nombre de la actividad
       appBar: AppBar(
-        title: Text('Reservar - ${widget.nombreActividad}'),
+        title: Text('Reservar - ${widget.nombreActividad}',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+        ),
         backgroundColor: Colors.blueAccent,
       ),
 
@@ -256,19 +244,6 @@ class _PantallaReservaState extends State<PantallaReserva> {
             ),
           ],
         ),
-      ),
-
-      // Barra de navegación inferior
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Eventos'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
-          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'Noticias'),
-        ],
-        currentIndex: 0, // Pestaña activa por defecto
-        onTap: _onBottomNavTapped, // Controlador de pulsaciones
-        selectedItemColor: Colors.blueAccent, // Color al seleccionar
-        unselectedItemColor: Colors.grey, // Color cuando no está seleccionado
       ),
     );
   }
