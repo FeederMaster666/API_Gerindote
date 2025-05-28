@@ -12,10 +12,10 @@ class _SignUpState2 extends State<SignUp2> {
   // Inicializa con "Masculino" para evitar errores de null.
   String? _selectedGender = "Masculino";
   bool _obscureText = true; // Added to manage password visibility
+  bool estaEmpadronado = false;
 
   @override
   Widget build(BuildContext context) {
-    bool estaEmpadronado = false;
     // Devuelve un Scaffold, que proporciona la estructura visual básica para la pantalla.
     return Scaffold(
       // Define el AppBar, la barra superior de la app.
@@ -296,14 +296,17 @@ class _SignUpState2 extends State<SignUp2> {
                                   color: Colors.white,
                                 ),
                               ),
-                              Switch(
-                                value: estaEmpadronado,
-                                activeColor: Colors.lightBlueAccent,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    estaEmpadronado = value;
-                                  });
-                                },
+                              Transform.scale(
+                                scale: 0.85, // Reduce el tamaño a 85%
+                                child: Switch(
+                                  value: estaEmpadronado,
+                                  activeColor: Colors.lightBlueAccent,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      estaEmpadronado = value;
+                                    });
+                                  },
+                                ),
                               ),
                             ],
                           ),

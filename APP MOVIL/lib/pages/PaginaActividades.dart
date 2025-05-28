@@ -1,33 +1,51 @@
+// Importa los paquetes necesarios de Flutter y una pantalla personalizada
 import 'package:flutter/material.dart';
 import 'package:ayuntamiento_gerindote/pages/PantallaReserva.dart';
-import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
-import 'package:ayuntamiento_gerindote/pages/Noticias.dart';
 
+// Define un widget sin estado (StatelessWidget) llamado PaginaActividades
 class PaginaActividades extends StatelessWidget {
+  // Variable final para el título, se recibe por constructor
   final String title;
 
+  // Constructor con parámetro requerido 'title'
   const PaginaActividades({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar con título y botón de perfil
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.blueAccent, // Color de fondo del AppBar
+        centerTitle: true,
         title: Text(
-          "Actividades en $title",
-          style: const TextStyle(color: Colors.white, fontSize: 18),
+          "$title", // Muestra el título dinámico
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1, // Espaciado entre letras
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
-              // Acción futura
+              // Acción futura (a definir)
             },
           ),
         ],
       ),
+      // Cuerpo de la pantalla: una lista de tarjetas (Cards) con actividades
       body: ListView(
         children: [
+          // Cada tarjeta representa una actividad con su imagen y botón
           _buildActivityCard(
             context,
             "Pista de Tenis y/o baloncesto",
@@ -78,28 +96,31 @@ class PaginaActividades extends StatelessWidget {
     );
   }
 
+  // Método auxiliar para construir una tarjeta (Card) de actividad
   Widget _buildActivityCard(
     BuildContext context,
     String activityName,
     String imageUrl,
   ) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Margen
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12), // Bordes redondeados
         side: BorderSide(
-          color: Colors.blueGrey.shade200,
+          color: Colors.blueGrey.shade200, // Color del borde
           width: 1,
         ), // Borde visible
       ),
       elevation: 2, // Sombra suave
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12.0), // Espaciado interno
         child: Row(
           children: [
+            // Avatar circular con la imagen de la actividad
             CircleAvatar(backgroundImage: NetworkImage(imageUrl), radius: 30),
-            const SizedBox(width: 16),
+            const SizedBox(width: 16), // Espacio entre imagen y texto
             Expanded(
+              // Nombre de la actividad
               child: Text(
                 activityName,
                 style: const TextStyle(
@@ -108,30 +129,32 @@ class PaginaActividades extends StatelessWidget {
                 ),
               ),
             ),
+            // Botón para seleccionar la actividad
             ElevatedButton(
               onPressed: () {
+                // Navega a la pantalla de reserva, pasando el nombre de la actividad
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder:
                         (context) =>
-                          PantallaReserva(nombreActividad: activityName),
+                            PantallaReserva(nombreActividad: activityName),
                   ),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
+                backgroundColor: Colors.blueAccent, // Color del botón
                 textStyle: const TextStyle(fontSize: 16),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10), // Bordes redondeados
                 ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 6,
-                ),
+                ), // Tamaño interno del botón
               ),
               child: const Text(
-                "Seleccionar",
+                "Seleccionar", // Texto del botón
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),
@@ -141,4 +164,3 @@ class PaginaActividades extends StatelessWidget {
     );
   }
 }
-

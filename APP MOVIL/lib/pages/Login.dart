@@ -1,5 +1,4 @@
 import 'package:ayuntamiento_gerindote/pages/GestionNavegacion.dart';
-import 'package:ayuntamiento_gerindote/pages/Inicio.dart';
 import 'package:ayuntamiento_gerindote/pages/ChangePassword.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp2.dart';
 import 'package:flutter/material.dart';
@@ -41,9 +40,7 @@ class _LoginState extends State<Login> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ), // Add horizontal padding
+                padding: const EdgeInsets.symmetric(horizontal: 20,), // Padding horizontal
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -142,6 +139,7 @@ class _LoginState extends State<Login> {
                               ),
                             ],
                           ),
+                          //GestureDetector hace que el texto sea clickable
                           GestureDetector(
                             onTap: () {
                               // Mostrar diálogo de recuperación de contraseña
@@ -175,7 +173,9 @@ class _LoginState extends State<Login> {
                           // Acción de inicio de sesión
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MainScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => MainScreen(),
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
