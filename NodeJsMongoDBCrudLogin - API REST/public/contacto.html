@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Ayuntamiento de Gerindote</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header igual que en index.html -->
+    <nav>
+    <div class="barra-navegacion">
+        <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        </label>
+        <div class="nav-links">
+            <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <div class="nav-item">
+                <button class="submenu-toggle">Ayuntamiento</button>
+                <div class="submenu">
+                    <a href="alcaldia.html">Alcaldía</a>
+                    <a href="corporacionMunicipal.html">Corporación municipal</a>
+                    <a href="alcaldia.html">Tablón de anuncios</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="submenu-toggle">Áreas</button>
+                <div class="submenu">
+                    <a href="#">Urbanismo</a>
+                    <a href="#">Cultura</a>
+                    <a href="#">Deportes</a>
+                </div>
+            </div>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
+            <div id="user-section" style="display: none;">
+                <div class="user-container">
+                    <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <!-- El contenido se rellena dinámicamente por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+    <main>
+        <div class="container" style="max-width: 600px; margin: 40px auto;">
+            <h2>Contacto</h2>
+            <p><strong>Ayuntamiento de Gerindote</strong></p>
+            <p>Plaza España, 1<br>
+            45518 Gerindote (Toledo)</p>
+            <p>Teléfono: 925 76 09 01 – Fax: 925 76 29 00</p>
+            <p>E-mail: <a href="mailto:gerindote.ayto@gmail.com">gerindote.ayto@gmail.com</a></p>
+            <p><a href="http://www.ayuntamientodegerindote.es" target="_blank">www.ayuntamientodegerindote.es</a></p>
+        </div>
+    </main>
+    <script>
+    // Puedes copiar aquí la lógica de usuario/rol del index.html si quieres el menú dinámico
+    async function renderUserMenuFromBackend() {
+        const userSection = document.getElementById("user-section");
+        const userMenu = document.getElementById("user-menu");
+        const userIcon = document.getElementById("user-icon-toggle");
+        userSection.style.display = "none";
+        userMenu.innerHTML = "";
+        try {
+            const res = await fetch("/api/users/session-info", { credentials: "include" });
+            const data = await res.json();
+            if (data.authenticated) {
+                userSection.style.display = "flex";
+                if (data.rol === "admin") {
+                    const adminLink = document.createElement("a");
+                    adminLink.href = "/administrador.html";
+                    adminLink.textContent = "Herramientas de Administrador";
+                    userMenu.appendChild(adminLink);
+                }
+                const logoutLink = document.createElement("a");
+                logoutLink.href = "#";
+                logoutLink.id = "logout";
+                logoutLink.textContent = "Cerrar sesión";
+                userMenu.appendChild(logoutLink);
+            } else {
+                const loginLink = document.createElement("a");
+                loginLink.href = "/login.html";
+                loginLink.textContent = "Iniciar Sesión";
+                userMenu.appendChild(loginLink);
+
+                const registerLink = document.createElement("a");
+                registerLink.href = "/registrar.html";
+                registerLink.textContent = "Registrarse";
+                userMenu.appendChild(registerLink);
+
+                userSection.style.display = "flex";
+            }
+        } catch (e) {
+            userSection.style.display = "none";
+        }
+        if (userIcon) {
+            userIcon.onclick = (e) => {
+                e.stopPropagation();
+                userMenu.style.display = userMenu.style.display === "flex" ? "none" : "flex";
+            };
+            document.addEventListener("click", (e) => {
+                if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+                    userMenu.style.display = "none";
+                }
+            });
+        }
+    }
+    renderUserMenuFromBackend();
+    </script>
+</body>
+</html>

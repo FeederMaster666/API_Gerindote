@@ -161,7 +161,7 @@
                     const user = await userResponse.json();
                     console.log('Usuario autenticado:', user);
                     if (user.rol === 'admin') {
-                        window.location.href = 'añadirTareas.html';
+                        window.location.href = 'administrador.html';
                     } else if (user.rol === 'user') {
                         window.location.href = 'index.html';
                     }
@@ -201,7 +201,7 @@
                         if (userResponse.ok) {
                             const user = await userResponse.json();
                             if (user.rol === 'admin') {
-                                window.location.href = 'añadirTareas.html';
+                                window.location.href = 'administrador.html';
                             } else if (user.rol === 'user') {
                                 window.location.href = 'index.html';
                             } else {

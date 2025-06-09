@@ -122,7 +122,11 @@
                     // Si el usuario está autenticado, redirige a tareas
                     const user = await userResponse.json();
                     console.log('Usuario autenticado:', user);
-                    window.location.href = 'tareas.html'; // Redirige si ya está autenticado
+                    if (user.rol === 'admin') {
+                        window.location.href = 'administrador.html';
+                    } else if (user.rol === 'user') {
+                        window.location.href = 'index.html';
+                    }
                 }
             } catch (error) {
                 console.error('Error al verificar autenticación:', error);
@@ -152,7 +156,7 @@
 
                     // Redirigir a la página de tareas después de un registro exitoso
                     setTimeout(() => {
-                        window.location.href = 'tareas.html';
+                        window.location.href = 'administrador.html';
                     }, 2000); // Espera 2 segundos para mostrar el mensaje antes de redirigir
                 } else {
                     document.getElementById('message').innerHTML = `<div class="alert alert-danger">${result.message}</div>`;

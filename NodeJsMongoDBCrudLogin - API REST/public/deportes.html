@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Espacios Deportivos - Gerindote</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .espacios-title {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .espacios-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+        .espacios-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto 2rem auto;
+        }
+        .espacio-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            text-align: center;
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .espacio-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .espacio-card img {
+            width: 100%;
+            max-width: 260px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .espacio-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .espacio-card p {
+            color: #555;
+            font-size: 1rem;
+        }
+        .reservar-btn {
+            margin-top: 1rem;
+        }
+        @media (max-width: 800px) {
+            .espacios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <!-- ...puedes reutilizar tu navbar aquí... -->
+    </nav>
+    <main>
+        <h1 class="espacios-title">Espacios Deportivos Municipales</h1>
+        <div class="espacios-subtitle">Reserva tu espacio deportivo favorito y disfruta de las instalaciones municipales</div>
+        <div class="espacios-grid">
+            <div class="espacio-card">
+                <img src="img/deportes/pabellon.jpg" alt="Pabellón Polideportivo">
+                <h3>Pabellón Polideportivo</h3>
+                <p>Espacio cubierto para la práctica de deportes como fútbol sala, baloncesto, voleibol, etc.</p>
+                <a href="reservas.html?espacio=Pabellon" class="btn btn-primary reservar-btn">Reservar</a>
+            </div>
+            <div class="espacio-card">
+                <img src="img/deportes/padel.jpg" alt="Pistas de Pádel">
+                <h3>Pistas de Pádel</h3>
+                <p>Disfruta de nuestras pistas de pádel al aire libre, perfectas para partidos entre amigos.</p>
+                <a href="reservas.html?espacio=Pistas%20de%20padel" class="btn btn-primary reservar-btn">Reservar</a>
+            </div>
+            <div class="espacio-card">
+                <img src="img/deportes/tenis.jpg" alt="Pistas de Tenis">
+                <h3>Pistas de Tenis</h3>
+                <p>Pistas de tenis municipales para todos los niveles y edades.</p>
+                <a href="reservas.html?espacio=Pistas%20de%20tenis" class="btn btn-primary reservar-btn">Reservar</a>
+            </div>
+            <div class="espacio-card">
+                <img src="img/deportes/salon-cultural.jpg" alt="Salón Cultural">
+                <h3>Salón Cultural</h3>
+                <p>Espacio multifuncional para actividades deportivas, culturales y eventos.</p>
+                <a href="reservas.html?espacio=Salon%20Cultural" class="btn btn-primary reservar-btn">Reservar</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -15,6 +15,9 @@ require('./passport/local-auth');
 
 var tasksRouter = require('./routes/tasks');
 var usersRouter = require('./routes/users');
+var noticiasRouter = require('./routes/noticias');
+var userController = require('./controllers/userController');
+const espaciosRouter = require('./routes/espacios'); // Añadido
 
 // view engine setup
 app.set('port', process.env.PORT || 5500);
@@ -54,16 +57,26 @@ app.use((req, res, next) => {
 // Rutas API
 app.use('/api/users', usersRouter);
 app.use('/api/tasks', tasksRouter);
+app.use('/api/noticias', noticiasRouter);
+app.use('/api/espacios', espaciosRouter); // Añadido
+const reservasRouter = require('./routes/reservas'); // ⛔ Falta
+app.use('/api/reservas', reservasRouter);   
+// Endpoint para info de sesión (autenticación y rol)
+app.get('/api/users/session-info', userController.sessionInfo);
 
-// RENDER personalizado para "/"
-app.get("/", (req, res) => {
+// RENDER personalizado para "/index.html"
+app.get("/index.html", (req, res) => {
   const authenticated = !!req.user;
+  const role = req.user && req.user.role ? req.user.role : null;
 
   let html = fs.readFileSync(path.join(__dirname, "public", "index.html"), "utf8");
 
   html = html.replace(
     "</head>",
-    `<script>window.AUTHENTICATED = ${authenticated};</script>\n</head>`
+    `<script>
+      window.AUTHENTICATED = ${JSON.stringify(authenticated)};
+      window.USER_ROLE = ${JSON.stringify(role)};
+    </script>\n</head>`
   );
 
   res.send(html);

@@ -1,0 +1,78 @@
+.reserva-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 2rem;
+}
+.reserva-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.form-group {
+    margin-bottom: 1.2rem;
+}
+.horas-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0.7rem 0.5rem;
+    margin-top: 1.5rem;
+}
+.horas-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+    padding: 0.5rem 0.7rem;
+}
+.hora-label {
+    font-weight: 500;
+    background: #f9f9f9;
+    border-radius: 8px 0 0 8px;
+    min-width: 90px;
+    text-align: center;
+}
+.celda-disponible {
+    background: #e6f7e6;
+    border-radius: 8px;
+    transition: background 0.2s;
+    cursor: pointer;
+    font-weight: 500;
+}
+.celda-disponible.selected {
+    background: #b3e6ff;
+    border: 2px solid #007bff;
+}
+.celda-disponible:hover {
+    background: #cce6ff;
+}
+.celda-reservada {
+    background: #ffcccc !important;
+    color: #b30000;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: not-allowed;
+}
+.celda-reservada label {
+    color: #b30000;
+    text-decoration: line-through;
+}
+.celda-disponible label {
+    cursor: pointer;
+}
+.horas-table input[type="checkbox"] {
+    display: none;
+}
+.reservar-btn {
+    margin-top: 1.5rem;
+}
+#reserva-msg {
+    margin-top: 1rem;
+}
+@media (max-width: 900px) {
+    .horas-table th, .horas-table td, .hora-label {
+        font-size: 0.9em;
+        padding: 0.2rem 0.2rem;
+    }
+}

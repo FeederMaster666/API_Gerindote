@@ -23,6 +23,7 @@ exports.loginUser = (req, res, next) => {
         });
     })(req, res, next);
 };
+
 exports.logoutUser = (req, res) => {
     req.logout((err) => {
         if (err) { return res.status(500).json({ message: "Error al cerrar sesión" }); }
@@ -30,6 +31,20 @@ exports.logoutUser = (req, res) => {
     });
 };
 
+// Endpoint para exponer autenticación y rol al frontend
+exports.sessionInfo = (req, res) => {
+    if (req.isAuthenticated() && req.user) {
+        res.json({
+            authenticated: true,
+            rol: req.user.rol || null
+        });
+    } else {
+        res.json({
+            authenticated: false,
+            rol: null
+        });
+    }
+};
 
 // Obtener todos los usuarios (solo para administración)
 exports.getAllUsers = async (req, res) => {

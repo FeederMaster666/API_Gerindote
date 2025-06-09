@@ -14,4 +14,20 @@ espacioSchema.methods.insert= async function () {
     .catch(error => console.log(error));
   };
 
+espacioSchema.statics.initDefaultEspacios = async function () {
+    const espacios = [
+        { nombre: 'Pabellon' },
+        { nombre: 'Pistas de padel' },
+        { nombre: 'Pistas de tenis' },
+        { nombre: 'Salon Cultural' }
+    ];
+    for (const esp of espacios) {
+        await this.findOneAndUpdate(
+            { nombre: esp.nombre },
+            esp,
+            { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
+    }
+};
+
 module.exports = mongoose.model('espacio', espacioSchema);

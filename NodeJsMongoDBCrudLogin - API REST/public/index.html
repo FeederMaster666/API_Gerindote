@@ -10,7 +10,7 @@
 <body>
     <nav>
     <div class="barra-navegacion">
-        <a href="#" class="logo"><img src="img/gerindote.png" alt=""></a>
+        <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
 
         <!-- Menú hamburguesa -->
         <input type="checkbox" id="menu-toggle" />
@@ -23,7 +23,7 @@
         <!-- Enlaces -->
         
         <div class="nav-links">
-            <img src="img/gerindote.png" alt="" class="logo2">
+            <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
             <div class="nav-item">
                 <button class="submenu-toggle">Ayuntamiento</button>
                 <div class="submenu">
@@ -38,18 +38,17 @@
                 <div class="submenu">
                     <a href="#">Urbanismo</a>
                     <a href="#">Cultura</a>
-                    <a href="#">Deportes</a>
+                    <a href="deportes.html">Deportes</a>
                 </div>
                 </div>
-            <a href="#">Sede Electrónica</a>
-            <a href="#">Noticias</a>
-            <a href="#">Contacto</a>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
             <div id="user-section" style="display: none;">
                 <div class="user-container">
                     <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
-                    <div class="user-menu" id="user-menu">
-                    <a href="/añadirTareas.html">Configuración</a>
-                    <a id="logout">Cerrar sesión</a>
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <!-- El contenido se rellena dinámicamente por JS -->
                     </div>
                 </div>
             </div>
@@ -138,68 +137,50 @@
 
         <section class="ultimas-noticias">
             <h2>Últimas Noticias</h2>
-            <div class="contenedor-noticias">
-                <div class="noticia">
-                    <img src="img/inicio/image.png" alt="Gerindote en FENAVIN">
-                    <h4>El Ayuntamiento de Gerindote presentará en FENAVIN el potencial del municipio como referente de enoturismo</h4>
-                    <p>Gerindote acudirá a FENAVIN 2025 con una apuesta decidida por el vino, sus bodegas y su tradición vitivinícola, bajo el lema “Raíces, Vino y Territorio”, contando con un stand propio que reflejará la esencia y el patrimonio enológico local.</p>
-                    <small>2/5/2025</small>
-                </div>
-                <div class="noticia">
-                    <img src="img/inicio/image.png" alt="Entrega Premios AEPEV en Gerindote">
-                    <h4>Gerindote se convierte en epicentro nacional del vino con la entrega de los Premios AEPEV</h4>
-                    <p>El alcalde ha subrayado que Gerindote es una localidad donde “todo gira en torno a la viticultura”, con una fuerte vinculación a la industria del vino que ha sido clave en el desarrollo económico y cultural del municipio.</p>
-                    <small>25/4/2025</small>
-                </div>
-                <div class="noticia">
-                    <img src="img/inicio/image.png" alt="Premios XVI AEPEV en Gerindote">
-                    <h4>Gerindote acogerá la entrega de los XVI Premios de la Asociación Española de Periodistas y Escritores del Vino (AEPEV)</h4>
-                    <p>La concejala de Turismo, Marta Fernández, ha destacado la importancia de este tipo de eventos para posicionar a Gerindote como destino enoturístico y visibilizar el trabajo del sector vitivinícola local.</p>
-                    <small>22/4/2025</small>
-                </div>
+            <div class="contenedor-noticias" id="ultimas-noticias-container">
+                <!-- Noticias dinámicas aquí -->
             </div>
-            <button class="boton-secundario">Ver más</button>
-
-
-            <div class="resources">
-                <a href="https://www.citapreviadnie.es/citaPreviaDni/" target="_blank">
-                    <img src="img/inicio/dni.jpg" alt="Sede Electrónica">
-                </a>
-                <a href="https://sanidad.castillalamancha.es/" target="_blank">
-                    <img src="img/inicio/sescam.png" alt="SESCAM">
-                </a>
-                <a href="https://www.aemet.es/es/eltiempo/prediccion/municipios/gerindote-id45069" target="_blank">
-                    <img src="img/inicio/tiempo.png" alt="Weather">
-                </a>
-                <a href="https://112.castillalamancha.es/" target="_blank">
-                    <img src="img/inicio/112.png" alt="Emergency">
-                </a>
-                <a href="https://sede.oapgt.es/Paginas/inicio.aspx" target="_blank">
-                    <img src="img/inicio/gestion-tributaria.png" alt="OAPGT">
-                </a>
-                <a href="https://www.diputoledo.es/" target="_blank">
-                    <img src="img/inicio/diputacion-toledo.png" alt="Diputación de Toledo">
-                </a>
-                <a href="https://www.jccm.es/" target="_blank">
-                    <img src="img/inicio/clm.png" alt="Castilla-La Mancha">
-                </a>
-                <a href="https://www.gestagua.es/clientes" target="_blank">
-                    <img src="img/inicio/gestagua.png" alt="Gestagua">
-                </a>
-                <a href="https://example.com/gerindote" target="_blank">
-                    <img src="img/inicio/gerindote-digital.jpg" alt="Gerindote">
-                </a>
-                <a href="https://sede.sepe.gob.es/portalSede" target="_blank">
-                    <img src="img/inicio/sepe.png" alt="SEPE">
-                </a>
-                <a href="https://sanidad.castillalamancha.es/ciudadanos/farmacias_de_guardia" target="_blank">
-                    <img src="img/inicio/farmacias-guardia.png" alt="Farmacias de Guardia">
-                </a>
-                <a href="https://gerindote.sedelectronica.es/" target="_blank">
-                    <img src="img/inicio/sede-electronica.png" alt="DNI">
-                </a>
-            </div>
+            <button class="boton-secundario" id="ver-mas-noticias">Ver más</button>
         </section>
+
+        <div class="resources">
+            <a href="https://www.citapreviadnie.es/citaPreviaDni/" target="_blank">
+                <img src="img/inicio/dni.jpg" alt="Sede Electrónica">
+            </a>
+            <a href="https://sanidad.castillalamancha.es/" target="_blank">
+                <img src="img/inicio/sescam.png" alt="SESCAM">
+            </a>
+            <a href="https://www.aemet.es/es/eltiempo/prediccion/municipios/gerindote-id45069" target="_blank">
+                <img src="img/inicio/tiempo.png" alt="Weather">
+            </a>
+            <a href="https://112.castillalamancha.es/" target="_blank">
+                <img src="img/inicio/112.png" alt="Emergency">
+            </a>
+            <a href="https://sede.oapgt.es/Paginas/inicio.aspx" target="_blank">
+                <img src="img/inicio/gestion-tributaria.png" alt="OAPGT">
+            </a>
+            <a href="https://www.diputoledo.es/" target="_blank">
+                <img src="img/inicio/diputacion-toledo.png" alt="Diputación de Toledo">
+            </a>
+            <a href="https://www.jccm.es/" target="_blank">
+                <img src="img/inicio/clm.png" alt="Castilla-La Mancha">
+            </a>
+            <a href="https://www.gestagua.es/clientes" target="_blank">
+                <img src="img/inicio/gestagua.png" alt="Gestagua">
+            </a>
+            <a href="https://example.com/gerindote" target="_blank">
+                <img src="img/inicio/gerindote-digital.jpg" alt="Gerindote">
+            </a>
+            <a href="https://sede.sepe.gob.es/portalSede" target="_blank">
+                <img src="img/inicio/sepe.png" alt="SEPE">
+            </a>
+            <a href="https://sanidad.castillalamancha.es/ciudadanos/farmacias_de_guardia" target="_blank">
+                <img src="img/inicio/farmacias-guardia.png" alt="Farmacias de Guardia">
+            </a>
+            <a href="https://gerindote.sedelectronica.es/" target="_blank">
+                <img src="img/inicio/sede-electronica.png" alt="DNI">
+            </a>
+        </div>
     </main>
 
 
@@ -267,77 +248,144 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const isMobile = window.matchMedia("(max-width: 1080px)");
+document.addEventListener("DOMContentLoaded", function () {
+  // ...existing code de menú hamburguesa...
 
-    if (isMobile.matches) {
-      document.querySelectorAll(".submenu-toggle").forEach(button => {
-        button.addEventListener("click", function () {
-          const submenu = this.nextElementSibling;
+  // Lógica de usuario/rol desde backend
+  async function renderUserMenuFromBackend() {
+    const userSection = document.getElementById("user-section");
+    const userMenu = document.getElementById("user-menu");
+    const userIcon = document.getElementById("user-icon-toggle");
 
-          // Cerrar otros submenús si deseas un acordeón exclusivo
-          document.querySelectorAll(".submenu").forEach(other => {
-            if (other !== submenu) {
-              other.style.maxHeight = null;
-              other.style.opacity = 0;
-            }
-          });
+    // Oculta por defecto
+    userSection.style.display = "none";
+    userMenu.innerHTML = "";
 
-          // Alternar visibilidad del submenu clicado
-          if (submenu.style.maxHeight) {
-            submenu.style.maxHeight = null;
-            submenu.style.opacity = 0;
-          } else {
-            submenu.style.maxHeight = submenu.scrollHeight + "px";
-            submenu.style.opacity = 1;
-          }
-        });
-      });
+    try {
+      const res = await fetch("/api/users/session-info", { credentials: "include" });
+      const data = await res.json();
+
+      if (data.authenticated) {
+        userSection.style.display = "flex";
+        if (data.rol === "admin") {
+          const adminLink = document.createElement("a");
+          adminLink.href = "/administrador.html";
+          adminLink.textContent = "Herramientas de Administrador";
+          userMenu.appendChild(adminLink);
+        }
+        const logoutLink = document.createElement("a");
+        logoutLink.href = "#";
+        logoutLink.id = "logout";
+        logoutLink.textContent = "Cerrar sesión";
+        userMenu.appendChild(logoutLink);
+      } else {
+        const loginLink = document.createElement("a");
+        loginLink.href = "/login.html";
+        loginLink.textContent = "Iniciar Sesión";
+        userMenu.appendChild(loginLink);
+
+        const registerLink = document.createElement("a");
+        registerLink.href = "/registrar.html";
+        registerLink.textContent = "Registrarse";
+        userMenu.appendChild(registerLink);
+
+        userSection.style.display = "flex";
+      }
+    } catch (e) {
+      // Si hay error, oculta el menú
+      userSection.style.display = "none";
     }
-  });
-     document.addEventListener("DOMContentLoaded", () => {
-    if (window.AUTHENTICATED) {
-      document.getElementById("user-section").style.display = "flex";
 
-      const userIcon = document.getElementById("user-icon-toggle");
-      const userMenu = document.getElementById("user-menu");
-
-      userIcon.addEventListener("click", () => {
+    // Menú desplegable usuario
+    if (userIcon) {
+      userIcon.onclick = (e) => {
+        e.stopPropagation();
         userMenu.style.display = userMenu.style.display === "flex" ? "none" : "flex";
-      });
-
+      };
       document.addEventListener("click", (e) => {
         if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
           userMenu.style.display = "none";
         }
       });
     }
+  }
+
+  renderUserMenuFromBackend();
+
+  // Logout handler (delegado)
+  document.addEventListener('click', async function(event) {
+    if (event.target && event.target.id === 'logout') {
+      event.preventDefault();
+      const confirmation = confirm("¿Estás seguro de que quieres cerrar sesión?");
+      if (!confirmation) return;
+      const response = await fetch('/api/users/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        window.location.href = 'index.html';
+      } else {
+        alert("Error al cerrar sesión: " + result.message);
+      }
+    }
   });
-  console.log("¿Estoy autenticado?", window.AUTHENTICATED);
 
-if (window.AUTHENTICATED) {
-  document.getElementById("user-section").style.display = "flex";
-}
-document.getElementById('logout').addEventListener('click', async function(event) {
-        event.preventDefault(); // Evita que el enlace recargue la página
-
-        const confirmation = confirm("¿Estás seguro de que quieres cerrar sesión?");
-        if (!confirmation) return;
-
-        const response = await fetch('http://localhost:3000/api/users/logout', {
-            method: 'POST',
-            credentials: 'include', // Asegúrate de enviar cookies si estás usando cookies para la sesión
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            alert(result.message); // O realiza alguna otra acción según lo necesites
-            window.location.href = 'index.html'; // Redirigir a index.html después de logout
-        } else {
-            alert("Error al cerrar sesión: " + result.message);
+  // Mostrar las 3 noticias más recientes (por fecha, sin mostrar la hora)
+  async function cargarUltimasNoticias() {
+    const contenedor = document.getElementById("ultimas-noticias-container");
+    contenedor.innerHTML = "";
+    try {
+        const res = await fetch("/api/noticias");
+        let noticias = await res.json();
+        // Ordenar por fecha descendente (más reciente primero)
+        noticias.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+        // Tomar solo las 3 más recientes
+        noticias = noticias.slice(0, 3);
+        if (!Array.isArray(noticias) || noticias.length === 0) {
+            contenedor.innerHTML = "<div class='alert alert-info'>No hay noticias disponibles.</div>";
+            return;
         }
-    });
+        noticias.forEach(noticia => {
+            // Formato fecha dd/mm/yyyy (sin hora)
+            let fecha = "";
+            if (noticia.fecha) {
+                const d = new Date(noticia.fecha);
+                const day = String(d.getDate()).padStart(2, '0');
+                const month = String(d.getMonth() + 1).padStart(2, '0');
+                const year = d.getFullYear();
+                fecha = `${day}/${month}/${year}`;
+            }
+            const titulo = noticia.titulo || "Sin título";
+            // Recorta la descripción a 60 palabras
+            let descripcion = noticia.descripcion || "";
+            const palabras = descripcion.split(/\s+/);
+            if (palabras.length > 60) {
+                descripcion = palabras.slice(0, 60).join(" ") + " ...";
+            }
+            const imagen = noticia.imagen || 'img/inicio/image.png';
+            const div = document.createElement("div");
+            div.className = "noticia";
+            div.innerHTML = `
+                <img src="${imagen}" alt="${titulo}">
+                <h4>${titulo}</h4>
+                <p>${descripcion}</p>
+                <small>${fecha}</small>
+            `;
+            contenedor.appendChild(div);
+        });
+    } catch (e) {
+        contenedor.innerHTML = "<div class='alert alert-danger'>No se pudieron cargar las noticias.</div>";
+    }
+  }
+  cargarUltimasNoticias();
+
+  // Botón ver más
+  document.getElementById("ver-mas-noticias").onclick = () => {
+      window.location.href = "noticias.html";
+  };
+});
 </script>
 </body>
 </html>
