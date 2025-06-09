@@ -1,3 +1,5 @@
+import 'package:ayuntamiento_gerindote/pages/Login.dart';
+import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:flutter/material.dart';
 
 class SignUp2 extends StatefulWidget {
@@ -10,9 +12,57 @@ class SignUp2 extends StatefulWidget {
 class _SignUpState2 extends State<SignUp2> {
   // Define una variable para mantener el valor seleccionado del DropdownButtonFormField para el género.
   // Inicializa con "Masculino" para evitar errores de null.
+  final TextEditingController _dniController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _apellidosController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   String? _selectedGender = "Masculino";
   bool _obscureText = true; // Added to manage password visibility
   bool estaEmpadronado = false;
+  bool _isLoading = false;
+  //autenticación
+  final AuthService _authService = AuthService();
+  //registrar usuario
+  void _registerUser() async {
+    setState(() => _isLoading = true);
+    try{
+      final response = await _authService.registerMobile(
+        name: _nameController.text.trim(),
+        apellidos: _apellidosController.text.trim(),
+        email: _emailController.text.trim(),
+        dni: _dniController.text.trim(),
+        password: _passwordController.text,
+        isEmpadronado: estaEmpadronado,
+      );
+
+      setState(() => _isLoading = false);
+
+      if (response['success']) {
+        // Registro exitoso
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Registro exitoso, ahora puedes iniciar sesión")),
+        );
+        //la renavegación al login me crashea 
+        /*Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Login()),
+        );*/
+      } else {
+        // Error en el registro
+        String errorMessage = response['error'] ?? 'Error desconocido';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $errorMessage")),
+        );
+      }
+    } catch (e) {
+    setState(() => _isLoading = false);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error inesperado: $e")),
+    );
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +128,7 @@ class _SignUpState2 extends State<SignUp2> {
                       // Widget TextFormField para el campo DNI.
                       TextFormField(
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
+                        controller: _dniController,
                         decoration: const InputDecoration(
                           labelText: "DNI",
                           labelStyle: TextStyle(color: Colors.white),
@@ -101,6 +152,8 @@ class _SignUpState2 extends State<SignUp2> {
 
                       // Widget TextFormField para el campo Contraseña.
                       TextFormField(
+                        //controller
+                        controller: _passwordController,
                         // Habilita el texto oculto.
                         obscureText: _obscureText,
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
@@ -146,6 +199,7 @@ class _SignUpState2 extends State<SignUp2> {
 
                       // Widget TextFormField para el campo Nombre.
                       TextFormField(
+                        controller: _nameController,
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
                         decoration: const InputDecoration(
                           labelText: "Nombre",
@@ -170,6 +224,7 @@ class _SignUpState2 extends State<SignUp2> {
 
                       // Widget TextFormField para el campo Apellidos.
                       TextFormField(
+                        controller: _apellidosController,
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
                         decoration: const InputDecoration(
                           labelText: "Apellidos",
@@ -194,6 +249,7 @@ class _SignUpState2 extends State<SignUp2> {
 
                       // Widget TextFormField para el campo Email.
                       TextFormField(
+                        controller: _emailController,
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
                         decoration: const InputDecoration(
                           labelText: "Email",
@@ -216,7 +272,7 @@ class _SignUpState2 extends State<SignUp2> {
                       // Widget SizedBox para añadir un espacio vertical de 15 píxeles.
                       const SizedBox(height: 15),
 
-                      // Widget TextFormField para el campo Fecha de Nacimiento.
+                      /*// Widget TextFormField para el campo Fecha de Nacimiento.
                       TextFormField(
                         // Define la decoración del campo, incluyendo la etiqueta, el estilo de la etiqueta, el borde y el icono.
                         decoration: const InputDecoration(
@@ -238,8 +294,8 @@ class _SignUpState2 extends State<SignUp2> {
                         style: const TextStyle(color: Colors.white),
                       ),
                       // Widget SizedBox para añadir un espacio vertical de 15 píxeles.
-                      const SizedBox(height: 15),
-                      // Campo Género (DropdownButton)
+                      const SizedBox(height: 15),*/
+                      /*// Campo Género (DropdownButton)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -312,12 +368,13 @@ class _SignUpState2 extends State<SignUp2> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 20),*/
 
                       // Botón Registrarse
                       ElevatedButton(
                         onPressed: () {
                           // Acción al presionar "Registrarme"
+                          _isLoading ? null : _registerUser();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.lightBlueAccent,
@@ -326,7 +383,7 @@ class _SignUpState2 extends State<SignUp2> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text(
+                        child: _isLoading ? CircularProgressIndicator() : const Text(
                           "REGISTRARME",
                           style: TextStyle(fontSize: 18, color: Colors.white),
                         ),

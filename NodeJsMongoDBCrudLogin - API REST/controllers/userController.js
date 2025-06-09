@@ -24,6 +24,62 @@ exports.loginUser = (req, res, next) => {
     })(req, res, next);
 };
 
+//login ruta app móvil
+exports.loginUserMobile = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user || !user.comparePassword(password)) {
+      return res.status(401).json({ error: "Credenciales inválidas" });
+    }
+
+    res.json({
+      message: "Login exitoso",
+      user: { id: user._id, name: user.name, rol: user.rol }
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Error del servidor" });
+  }
+};
+//ruta para registro app móvil
+exports.registerUserMobile = async (req, res) => {
+  try {
+    const { email, password, name, apellidos, dni, isEmpadronado } = req.body;
+    if (!email || !password || !name) {
+      return res.status(400).json({ error: "Faltan campos obligatorios" });
+    }
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ error: "El correo ya está registrado" });
+    }
+    const hashedPassword = User.prototype.encryptPassword(password);
+
+    const user = new User({
+      email,
+      name,
+      apellidos,
+      dni,
+      password: hashedPassword,
+      isEmpadronado
+    });
+    await user.save();
+
+    res.json({
+      message: "Usuario registrado correctamente",
+      user: { id: user._id, name: user.name, rol: user.rol }
+    });
+  } catch (error) {
+    console.error(error);
+    if (error.code === 11000) {
+      return res.status(409).json({ error: "El email o DNI ya está registrado" });
+    }
+    res.status(500).json({ error: "Error del servidor" });
+  }
+};
+
+
+
 exports.logoutUser = (req, res) => {
     req.logout((err) => {
         if (err) { return res.status(500).json({ message: "Error al cerrar sesión" }); }
