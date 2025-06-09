@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -19,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       body: json.encode({
         'name': _nameController.text,
         'email': _emailController.text,
-        'password': _passwordController.text
+        'password': _passwordController.text,
       }),
     );
 
@@ -66,16 +68,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: 20),
                 _buildTextField(_nameController, "Nombre", Icons.person),
                 SizedBox(height: 10),
-                _buildTextField(_emailController, "Correo Electrónico", Icons.email),
+                _buildTextField(
+                  _emailController,
+                  "Correo Electrónico",
+                  Icons.email,
+                ),
                 SizedBox(height: 10),
-                _buildTextField(_passwordController, "Contraseña", Icons.lock, obscureText: true),
+                _buildTextField(
+                  _passwordController,
+                  "Contraseña",
+                  Icons.lock,
+                  obscureText: true,
+                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: _registerUser,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
                     padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   child: Text(
                     "Registrarse",
@@ -95,7 +108,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool obscureText = false}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    bool obscureText = false,
+  }) {
     return TextField(
       controller: controller,
       obscureText: obscureText,

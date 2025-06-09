@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 // Declaramos un widget con estado llamado Noticias
 class Noticias extends StatefulWidget {
+  const Noticias({super.key});
+
   @override
   _NoticiasState createState() => _NoticiasState();
 }

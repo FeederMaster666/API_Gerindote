@@ -8,8 +8,7 @@ class PantallaReserva extends StatefulWidget {
   nombreActividad; // Nombre de la actividad que se mostrará en el AppBar
 
   // Constructor con parámetro obligatorio
-  const PantallaReserva({Key? key, required this.nombreActividad})
-    : super(key: key);
+  const PantallaReserva({super.key, required this.nombreActividad});
 
   @override
   _PantallaReservaState createState() => _PantallaReservaState();
@@ -45,7 +44,8 @@ class _PantallaReservaState extends State<PantallaReserva> {
       backgroundColor: const Color(0xFFF4F4F4), // Color de fondo
       // AppBar con el nombre de la actividad
       appBar: AppBar(
-        title: Text('Reservar - ${widget.nombreActividad}',
+        title: Text(
+          'Reservar - ${widget.nombreActividad}',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,

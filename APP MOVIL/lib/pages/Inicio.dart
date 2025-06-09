@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Clase principal del widget de la página de inicio, que es un StatefulWidget porque su estado puede cambiar
 class Inicio extends StatefulWidget {
-  const Inicio({Key? key}) : super(key: key);
+  const Inicio({super.key});
 
   @override
   _InicioState createState() => _InicioState();

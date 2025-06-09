@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 
 class TasksScreen extends StatefulWidget {
+  const TasksScreen({super.key});
+
   @override
   _TasksScreenState createState() => _TasksScreenState();
 }
@@ -19,38 +21,52 @@ class _TasksScreenState extends State<TasksScreen> {
   }
 
   void _showTaskForm({String? taskId, String? title, String? description}) {
-    final _titleController = TextEditingController(text: title);
-    final _descriptionController = TextEditingController(text: description);
-    bool _isEditing = taskId != null;
+    final titleController = TextEditingController(text: title);
+    final descriptionController = TextEditingController(text: description);
+    bool isEditing = taskId != null;
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(_isEditing ? 'Editar Tarea' : 'Añadir Tarea'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildTextField(_titleController, "Título", Icons.title),
-            SizedBox(height: 10),
-            _buildTextField(_descriptionController, "Descripción", Icons.description),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              bool success = _isEditing
-                  ? await _authService.editTask(taskId, _titleController.text, _descriptionController.text, false)
-                  : await _authService.addTask(_titleController.text, _descriptionController.text);
+      builder:
+          (context) => AlertDialog(
+            title: Text(isEditing ? 'Editar Tarea' : 'Añadir Tarea'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildTextField(titleController, "Título", Icons.title),
+                SizedBox(height: 10),
+                _buildTextField(
+                  descriptionController,
+                  "Descripción",
+                  Icons.description,
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  bool success =
+                      isEditing
+                          ? await _authService.editTask(
+                            taskId,
+                            titleController.text,
+                            descriptionController.text,
+                            false,
+                          )
+                          : await _authService.addTask(
+                            titleController.text,
+                            descriptionController.text,
+                          );
 
-              if (success) {
-                Navigator.pop(context);
-                setState(() {});
-              }
-            },
-            child: Text(_isEditing ? 'Guardar Cambios' : 'Añadir Tarea'),
+                  if (success) {
+                    Navigator.pop(context);
+                    setState(() {});
+                  }
+                },
+                child: Text(isEditing ? 'Guardar Cambios' : 'Añadir Tarea'),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -91,9 +107,14 @@ class _TasksScreenState extends State<TasksScreen> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 8),
                       elevation: 3,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 8,
+                        ),
                         title: Text(
                           task['title'],
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -104,16 +125,19 @@ class _TasksScreenState extends State<TasksScreen> {
                           children: [
                             IconButton(
                               icon: Icon(Icons.edit, color: Colors.blueAccent),
-                              onPressed: () => _showTaskForm(
-                                taskId: task['_id'],
-                                title: task['title'],
-                                description: task['description'],
-                              ),
+                              onPressed:
+                                  () => _showTaskForm(
+                                    taskId: task['_id'],
+                                    title: task['title'],
+                                    description: task['description'],
+                                  ),
                             ),
                             IconButton(
                               icon: Icon(Icons.delete, color: Colors.redAccent),
                               onPressed: () async {
-                                bool success = await authService.deleteTask(task['_id']);
+                                bool success = await authService.deleteTask(
+                                  task['_id'],
+                                );
                                 if (success) setState(() {});
                               },
                             ),
@@ -136,7 +160,11 @@ class _TasksScreenState extends State<TasksScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon,
+  ) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(

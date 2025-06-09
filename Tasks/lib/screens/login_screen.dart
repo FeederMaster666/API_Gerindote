@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -17,8 +19,10 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
 
-    bool success = await Provider.of<AuthService>(context, listen: false)
-        .login(_emailController.text, _passwordController.text);
+    bool success = await Provider.of<AuthService>(
+      context,
+      listen: false,
+    ).login(_emailController.text, _passwordController.text);
 
     setState(() {
       _isLoading = false;
@@ -27,9 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (success) {
       Navigator.pushReplacementNamed(context, '/tasks');
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Credenciales inválidas')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Credenciales inválidas')));
     }
   }
 
@@ -66,24 +70,38 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: 20),
-                _buildTextField(_emailController, "Correo Electrónico", Icons.email),
+                _buildTextField(
+                  _emailController,
+                  "Correo Electrónico",
+                  Icons.email,
+                ),
                 SizedBox(height: 10),
-                _buildTextField(_passwordController, "Contraseña", Icons.lock, obscureText: true),
+                _buildTextField(
+                  _passwordController,
+                  "Contraseña",
+                  Icons.lock,
+                  obscureText: true,
+                ),
                 SizedBox(height: 20),
                 _isLoading
                     ? CircularProgressIndicator()
                     : ElevatedButton(
-                  onPressed: _login,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                  child: Text(
-                    "Ingresar",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
+                      onPressed: _login,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        "Ingresar",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
                 SizedBox(height: 10),
                 TextButton(
                   onPressed: () => Navigator.pushNamed(context, '/register'),
@@ -97,7 +115,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, IconData icon, {bool obscureText = false}) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    IconData icon, {
+    bool obscureText = false,
+  }) {
     return TextField(
       controller: controller,
       obscureText: obscureText,

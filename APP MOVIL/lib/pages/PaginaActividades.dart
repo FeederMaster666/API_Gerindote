@@ -8,7 +8,7 @@ class PaginaActividades extends StatelessWidget {
   final String title;
 
   // Constructor con parámetro requerido 'title'
-  const PaginaActividades({Key? key, required this.title}) : super(key: key);
+  const PaginaActividades({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class PaginaActividades extends StatelessWidget {
         backgroundColor: Colors.blueAccent, // Color de fondo del AppBar
         centerTitle: true,
         title: Text(
-          "$title", // Muestra el título dinámico
+          title, // Muestra el título dinámico
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,

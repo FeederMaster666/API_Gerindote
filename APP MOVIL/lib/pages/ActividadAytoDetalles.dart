@@ -9,7 +9,7 @@ class DetalleEventoScreen extends StatelessWidget {
       '''Aprovecha esta actividad para que los niños disfruten de talleres, juegos y dinámicas mientras los adultos participan en las jornadas. Incluye monitores titulados, materiales y seguro de responsabilidad civil. ¡Plazas limitadas!
   Aprovecha esta actividad para que los niños disfruten de talleres, juegos y dinámicas mientras los adultos participan en las jornadas. Incluye monitores titulados, materiales y seguro de responsabilidad civil. ¡Plazas limitadas!.
   Aprovecha esta actividad para que los niños disfruten de talleres, juegos y dinámicas mientras los adultos participan en las jornadas. Incluye monitores titulados, materiales y seguro de responsabilidad civil. ¡Plazas limitadas!''';
-  const DetalleEventoScreen({Key? key, required this.evento}) : super(key: key);
+  const DetalleEventoScreen({super.key, required this.evento});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class DetalleEventoScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment:
-          CrossAxisAlignment.start, // Alinea todo a la izquierda
+              CrossAxisAlignment.start, // Alinea todo a la izquierda
           children: [
             // Fila: Imagen a la izquierda, ubicación y aforo a la derecha
             Row(
@@ -43,20 +43,29 @@ class DetalleEventoScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Container(
-                    color:Colors.grey[200], // Fondo gris claro si la imagen no carga
+                    color:
+                        Colors
+                            .grey[200], // Fondo gris claro si la imagen no carga
                     width: 70,
                     height: 70,
                     child:
-                    evento.imagenUrl != null 
-                      ? Image.network(
-                        evento.imagenUrl!,
-                        fit:BoxFit.cover, // La imagen cubre todo el contenedor
-                        errorBuilder:
-                          (context, error, stackTrace) => const Icon(Icons.broken_image,size: 30,), // Icono si falla la imagen
-                      )
-                      : const Icon(
-                        Icons.image,size: 30,color: Colors.grey,
-                      ), // Icono si no hay imagen
+                        evento.imagenUrl != null
+                            ? Image.network(
+                              evento.imagenUrl!,
+                              fit:
+                                  BoxFit
+                                      .cover, // La imagen cubre todo el contenedor
+                              errorBuilder:
+                                  (context, error, stackTrace) => const Icon(
+                                    Icons.broken_image,
+                                    size: 30,
+                                  ), // Icono si falla la imagen
+                            )
+                            : const Icon(
+                              Icons.image,
+                              size: 30,
+                              color: Colors.grey,
+                            ), // Icono si no hay imagen
                   ),
                 ),
                 const SizedBox(width: 12), // Espacio entre imagen y texto
@@ -108,7 +117,7 @@ class DetalleEventoScreen extends StatelessWidget {
                       foregroundColor: Colors.white, // Texto e icono en blanco
                       minimumSize: const Size(0, 45), // Altura mínima
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),// Bordes suaves
+                        borderRadius: BorderRadius.circular(4), // Bordes suaves
                       ),
                       elevation: 0, // Sin sombra
                     ),
@@ -255,7 +264,8 @@ class DetalleEventoScreen extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          backgroundColor:Colors.blueAccent[700],
+                                          backgroundColor:
+                                              Colors.blueAccent[700],
                                         ),
                                       );
                                     },
@@ -419,49 +429,75 @@ class DetalleEventoScreen extends StatelessWidget {
               // Opciones de configuración del carrusel
               options: cs.CarouselOptions(
                 height: 200, // Altura fija del carrusel en píxeles
-                viewportFraction: 1.0, // Cada imagen ocupa el 100% del ancho disponible
+                viewportFraction:
+                    1.0, // Cada imagen ocupa el 100% del ancho disponible
                 enlargeCenterPage: false, // No agranda la imagen del centro
-                enableInfiniteScroll: true, // Permite que el carrusel vuelva al inicio al llegar al final
+                enableInfiniteScroll:
+                    true, // Permite que el carrusel vuelva al inicio al llegar al final
                 autoPlay: true, // El carrusel avanza automáticamente
-                autoPlayInterval: Duration(seconds: 5), // Tiempo entre cambios automáticos de imagen
-                autoPlayAnimationDuration: Duration(milliseconds: 800), // Duración de la animación de cambio
-                autoPlayCurve: Curves.fastOutSlowIn, // Curva de animación para el cambio de imagen
+                autoPlayInterval: Duration(
+                  seconds: 5,
+                ), // Tiempo entre cambios automáticos de imagen
+                autoPlayAnimationDuration: Duration(
+                  milliseconds: 800,
+                ), // Duración de la animación de cambio
+                autoPlayCurve:
+                    Curves
+                        .fastOutSlowIn, // Curva de animación para el cambio de imagen
               ),
               // Lista de imágenes a mostrar en el carrusel
-              items: [
-                'https://static.eldiario.es/clip/fca62239-e62b-4562-9814-152342302caa_16-9-discover-aspect-ratio_default_0.jpg',
-                'https://i0.wp.com/lacosmopolilla.com/wp-content/uploads/2023/03/La-Gruta-de-las-Maravillas-que-ver-en-Aracena.jpg?resize=900%2C678&ssl=1',
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpEWgAnJD4-3e2L-hBQWRXwhzVR73OIjkJ3Q&s',
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnb-F33q7oROHKicHqlqwNnoOHGJk3EVDXHA&s',
-                'https://mediaim.expedia.com/destination/1/ef5bc1e5bb9c138164f57875bf35ceef.jpg',
-              ].map((imageUrl) {
-                // Por cada URL de imagen, crea un widget para mostrarla en el carrusel
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width, // Ocupa todo el ancho disponible
-                      margin: EdgeInsets.symmetric(horizontal: 5.0), // Margen entre imágenes
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10), // Bordes redondeados del contenedor
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10), // Bordes redondeados de la imagen
-                        child: Image.network(
-                          imageUrl, // URL de la imagen a mostrar
-                          fit: BoxFit.cover, // La imagen cubre todo el contenedor
-                          width: double.infinity, // Ocupa todo el ancho del contenedor
-                          // Si la imagen falla al cargar, muestra un icono de imagen rota
-                          errorBuilder: (context, error, stackTrace) => 
-                            Container(
-                              color: Colors.grey[300],
-                              child: Icon(Icons.broken_image, size: 50, color: Colors.grey[600]),
+              items:
+                  [
+                    'https://static.eldiario.es/clip/fca62239-e62b-4562-9814-152342302caa_16-9-discover-aspect-ratio_default_0.jpg',
+                    'https://i0.wp.com/lacosmopolilla.com/wp-content/uploads/2023/03/La-Gruta-de-las-Maravillas-que-ver-en-Aracena.jpg?resize=900%2C678&ssl=1',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpEWgAnJD4-3e2L-hBQWRXwhzVR73OIjkJ3Q&s',
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnb-F33q7oROHKicHqlqwNnoOHGJk3EVDXHA&s',
+                    'https://mediaim.expedia.com/destination/1/ef5bc1e5bb9c138164f57875bf35ceef.jpg',
+                  ].map((imageUrl) {
+                    // Por cada URL de imagen, crea un widget para mostrarla en el carrusel
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          width:
+                              MediaQuery.of(
+                                context,
+                              ).size.width, // Ocupa todo el ancho disponible
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 5.0,
+                          ), // Margen entre imágenes
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ), // Bordes redondeados del contenedor
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              10,
+                            ), // Bordes redondeados de la imagen
+                            child: Image.network(
+                              imageUrl, // URL de la imagen a mostrar
+                              fit:
+                                  BoxFit
+                                      .cover, // La imagen cubre todo el contenedor
+                              width:
+                                  double
+                                      .infinity, // Ocupa todo el ancho del contenedor
+                              // Si la imagen falla al cargar, muestra un icono de imagen rota
+                              errorBuilder:
+                                  (context, error, stackTrace) => Container(
+                                    color: Colors.grey[300],
+                                    child: Icon(
+                                      Icons.broken_image,
+                                      size: 50,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
                             ),
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     );
-                  },
-                );
-              }).toList(), // Convierte la lista de widgets en una lista para el carrusel
+                  }).toList(), // Convierte la lista de widgets en una lista para el carrusel
             ),
 
             // Espacio vertical entre el carrusel y los indicadores
@@ -471,17 +507,38 @@ class DetalleEventoScreen extends StatelessWidget {
             // Este ejemplo muestra 5 puntos, el primero en azul para indicar la imagen activa
             //Esto aun ha que hacerlo funcionar correctamente
             Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Centra los puntitos
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Centra los puntitos
               children: [
-                Icon(Icons.circle, size: 8, color: Colors.lightBlueAccent), // Punto activo (primera imagen)
+                Icon(
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.lightBlueAccent,
+                ), // Punto activo (primera imagen)
                 SizedBox(width: 4),
-                Icon(Icons.circle, size: 8, color: Colors.grey[400]), // Punto inactivo
+                Icon(
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.grey[400],
+                ), // Punto inactivo
                 SizedBox(width: 4),
-                Icon(Icons.circle, size: 8, color: Colors.grey[400]), // Punto inactivo
+                Icon(
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.grey[400],
+                ), // Punto inactivo
                 SizedBox(width: 4),
-                Icon(Icons.circle, size: 8, color: Colors.grey[400]), // Punto inactivo
+                Icon(
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.grey[400],
+                ), // Punto inactivo
                 SizedBox(width: 4),
-                Icon(Icons.circle, size: 8, color: Colors.grey[400]), // Punto inactivo
+                Icon(
+                  Icons.circle,
+                  size: 8,
+                  color: Colors.grey[400],
+                ), // Punto inactivo
               ],
             ),
           ],

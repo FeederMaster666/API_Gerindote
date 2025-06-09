@@ -1,5 +1,7 @@
 import 'package:ayuntamiento_gerindote/pages/GestionNavegacion.dart';
 import 'package:ayuntamiento_gerindote/pages/ChangePassword.dart';
+import 'package:ayuntamiento_gerindote/services/AuthService.dart';
+
 import 'package:ayuntamiento_gerindote/pages/SignUp2.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui'; // Import para el filtro de la imagen
@@ -12,8 +14,46 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool rememberMe = false; // Estado del checkbox para recordar sesión
+  final TextEditingController _emailDniController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
+  bool _isLoading = false;
+  final AuthService _authService = AuthService();
+  bool rememberMe = false;
+
+  // Método para iniciar sesión
+  void _loginUser() async {
+    setState(() => _isLoading = true);
+    try {
+      final response = await _authService.loginMobile(
+        dniOEmail: _emailDniController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      setState(() => _isLoading = false);
+
+      if (response['success']) {
+        // Login exitoso, navega a la pantalla principal
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      } else {
+        // Error en el login
+        String errorMessage = response['error'] ?? 'Error desconocido';
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Error: $errorMessage")));
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error inesperado: $e")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +80,9 @@ class _LoginState extends State<Login> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,), // Padding horizontal
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ), // Padding horizontal
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -169,15 +211,7 @@ class _LoginState extends State<Login> {
 
                       // Login Button
                       ElevatedButton(
-                        onPressed: () {
-                          // Acción de inicio de sesión
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(),
-                            ),
-                          );
-                        },
+                        onPressed: _isLoading ? null : _loginUser,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.lightBlueAccent,
                           minimumSize: const Size(double.infinity, 50),
@@ -185,12 +219,11 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text(
-                          "ENTRAR",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
+                        child:
+                            _isLoading
+                                ? CircularProgressIndicator()
+                                : Text('ENTRAR'),
                       ),
-
                       const SizedBox(height: 15), // Espaciado entre botones
                       // SignUp Button
                       ElevatedButton(

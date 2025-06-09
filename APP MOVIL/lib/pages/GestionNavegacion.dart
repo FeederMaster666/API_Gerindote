@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 //Esta clase gestion la navegación de la App por índices para optimizar el rendimiento
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -41,11 +41,11 @@ class _MainScreenState extends State<MainScreen> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Actividades'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Inicio',
+            icon: Icon(Icons.event),
+            label: 'Actividades',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Inicio'),
           BottomNavigationBarItem(
             icon: Icon(Icons.newspaper),
             label: 'Noticias',

@@ -10,18 +10,16 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => AuthService())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Auth & Tasks',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue),
         initialRoute: '/',
         routes: {
           '/': (context) => AuthWrapper(),
@@ -33,7 +31,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -41,9 +42,7 @@ class AuthWrapper extends StatelessWidget {
       future: authService.checkAuth(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
         } else if (authService.isAuthenticated) {
           return TasksScreen();
         } else {
@@ -53,7 +52,10 @@ class AuthWrapper extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Bienvenido", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(
+                    "Bienvenido",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, '/login'),
