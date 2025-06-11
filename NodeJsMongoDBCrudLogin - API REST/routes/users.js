@@ -1,6 +1,6 @@
 const express = require("express");
 //importa todo el controlador
-const { registerUser, loginUser, loginUserMobile, registerUserMobile } = require("../controllers/userController");
+const { registerUser, loginUser, loginUserMobile, registerUserMobile, getUserByEmailMobile } = require("../controllers/userController");
 const { getAllUsers, updateUserRole } = require("../controllers/usersController");
 const router = express.Router();
 
@@ -24,6 +24,8 @@ router.post("/signup", registerUser);
 router.post("/signin", loginUser);
 router.post("/mobile/signup", registerUserMobile);
 router.post("/mobile/signin", loginUserMobile);
+// Buscar usuario por email
+router.get("/mobile/email/:email", getUserByEmailMobile);
 router.get("/check-auth", (req, res) => {
   // Si no está autenticado, devolvemos un error
   if (!req.isAuthenticated()) {

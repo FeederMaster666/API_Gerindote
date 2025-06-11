@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   static const String baseUrl = 'http://10.0.2.2:3000/api';
@@ -36,5 +37,81 @@ class AuthService {
     } catch (e) {
       return {'success': false, 'error': e.toString()};
     }
+  }
+
+  Future<Map<String, dynamic>> loginMobile({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      // 1. Login
+      final response = await http.post(
+        Uri.parse('$baseUrl/users/mobile/signin'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'email': email, 'password': password}),
+      );
+
+      final result = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        // 2. Obtener datos del usuario por email, desde backend a través de endpoint
+        final infoResponse = await http.get(
+          Uri.parse('$baseUrl/users/mobile/email/$email'),
+          headers: {'Content-Type': 'application/json'},
+        );
+
+        if (infoResponse.statusCode == 200) {
+          final data = jsonDecode(infoResponse.body);
+          final email = data['email'];
+          final rol = data['rol'];
+
+          // 3. Guardar datos en SharedPreferences
+          await saveUserData(email, rol);
+
+          return {'success': true, 'data': result};
+        } else {
+          return {
+            'success': false,
+            'error': 'No se pudo obtener la información del usuario',
+          };
+        }
+      } else {
+        return {
+          'success': false,
+          'error': result['error'] ?? 'Error desconocido',
+        };
+      }
+    } catch (e) {
+      //print para depuracion
+      print(e);
+      return {'success': false, 'error': e.toString()};
+    }
+  }
+
+
+  // Guardar datos del usuario
+  Future<void> saveUserData(String email, String rol) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_email', email);
+    await prefs.setString('user_rol', rol);
+  }
+
+  // Obtener email del usuario
+  Future<String?> getUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_email');
+  }
+
+  // Obtener rol del usuario
+  Future<String?> getUserRol() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('user_rol');
+  }
+
+  // Cerrar sesión (eliminar datos)
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_email');
+    await prefs.remove('user_rol');
   }
 }

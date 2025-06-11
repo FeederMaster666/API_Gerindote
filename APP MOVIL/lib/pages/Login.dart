@@ -1,6 +1,7 @@
 import 'package:ayuntamiento_gerindote/pages/GestionNavegacion.dart';
 import 'package:ayuntamiento_gerindote/pages/ChangePassword.dart';
 import 'package:ayuntamiento_gerindote/pages/SignUp2.dart';
+import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui'; // Import para el filtro de la imagen
 
@@ -12,8 +13,46 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool rememberMe = false; // Estado del checkbox para recordar sesión
+final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
+  bool _isLoading = false;
+  final AuthService _authService = AuthService();
+  bool rememberMe = false;//estado del checkbox para recordar sesion
+
+  // Método para iniciar sesión
+  void _loginUser() async {
+    setState(() => _isLoading = true);
+    try {
+      final response = await _authService.loginMobile(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+
+      setState(() => _isLoading = false);
+
+      if (response['success']) {
+        // Login exitoso, navega a la pantalla principal
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => MainScreen()),
+        );
+      } else {
+        // Error en el login
+        String errorMessage = response['error'] ?? 'Error desconocido';
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Error: $errorMessage")));
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error inesperado: $e")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +95,11 @@ class _LoginState extends State<Login> {
 
                       const SizedBox(height: 20),
 
-                      // DNI/NIE o Email Field
+                      //  Email Field
                       TextFormField(
+                        controller: _emailController,
                         decoration: const InputDecoration(
-                          labelText: "DNI/N.I.F o E-Mail",
+                          labelText: "E-Mail",
                           labelStyle: TextStyle(color: Colors.white),
                           floatingLabelStyle: TextStyle(
                             color: Colors.blueAccent,
@@ -82,6 +122,7 @@ class _LoginState extends State<Login> {
 
                       // Password Field
                       TextFormField(
+                        controller: _passwordController,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           labelText: "Contraseña",
@@ -169,15 +210,7 @@ class _LoginState extends State<Login> {
 
                       // Login Button
                       ElevatedButton(
-                        onPressed: () {
-                          // Acción de inicio de sesión
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MainScreen(),
-                            ),
-                          );
-                        },
+                        onPressed: _isLoading ? null : _loginUser,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.lightBlueAccent,
                           minimumSize: const Size(double.infinity, 50),
@@ -185,10 +218,12 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text(
+                        child: _isLoading
+                          ? CircularProgressIndicator()
+                          : Text(
                           "ENTRAR",
                           style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
+                          ),
                       ),
 
                       const SizedBox(height: 15), // Espaciado entre botones

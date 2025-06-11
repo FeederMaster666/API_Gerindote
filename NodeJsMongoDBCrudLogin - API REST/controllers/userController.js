@@ -78,6 +78,25 @@ exports.registerUserMobile = async (req, res) => {
   }
 };
 
+//Obtener un usuario por email, app móvil
+
+// Buscar usuario por email (para frontend móvil)
+exports.getUserByEmailMobile = async (req, res) => {
+  try {
+    const email = req.params.email;
+    // Busca el usuario por email (sin contraseña)
+    const user = await User.findOne({ email }).select('-password');
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error("Error al buscar usuario por email:", error);
+    res.status(500).json({ error: "Error del servidor" });
+  }
+};
+
+
 
 
 exports.logoutUser = (req, res) => {
