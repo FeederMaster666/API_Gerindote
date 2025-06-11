@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   table_calendar: ^3.0.8
   carousel_slider: ^5.0.0
+  http: ^1.2.1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

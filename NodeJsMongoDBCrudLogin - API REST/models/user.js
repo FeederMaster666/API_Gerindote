@@ -19,7 +19,8 @@ const userSchema = new Schema({
   },
   dni: {
     type: String,
-    required: false
+    required: false,
+    unique:true
   },
   password: {
     type: String,

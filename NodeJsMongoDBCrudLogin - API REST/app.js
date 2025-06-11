@@ -41,7 +41,11 @@ app.use(passport.session());
 
 // CORS
 app.use(cors({
-  origin: 'http://127.0.0.1:5500', // tu frontend
+  origin: [
+    'http://127.0.0.1:5500', // Web
+    'http://192.168.1.131:5500', // Dirección de tu móvil en desarrollo
+    'http://localhost:5500' // Emuladores
+  ], // tu frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
