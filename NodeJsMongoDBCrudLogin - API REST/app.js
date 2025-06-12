@@ -18,6 +18,9 @@ var usersRouter = require('./routes/users');
 var noticiasRouter = require('./routes/noticias');
 var userController = require('./controllers/userController');
 const espaciosRouter = require('./routes/espacios'); // Añadido
+const actividadesRouter = require('./routes/actividades');
+const reservasActividadesRouter = require('./routes/reservasActividades');
+
 
 // view engine setup
 app.set('port', process.env.PORT || 5500);
@@ -63,9 +66,14 @@ app.use('/api/users', usersRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/noticias', noticiasRouter);
 app.use('/api/espacios', espaciosRouter); // Añadido
+app.use('/api/actividades', actividadesRouter);
+app.use('/api/reservas-actividades', reservasActividadesRouter);
 const reservasRouter = require('./routes/reservas'); // ⛔ Falta
 app.use('/api/reservas', reservasRouter);
+//servir imagen portada de las noticias
 app.use('/imagenPortadaNoticias', express.static(path.join(__dirname,'..', 'imagenPortadaNoticias')));
+// Servir imágenes de actividades
+app.use('/imagenesActividades', express.static(path.join(__dirname, '..', 'imagenesActividades')));
 // Endpoint para info de sesión (autenticación y rol)
 app.get('/api/users/session-info', userController.sessionInfo);
 
@@ -101,7 +109,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal server error", error: err.message });
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
 });

@@ -2,11 +2,20 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const actividadSchema = new Schema({
-    name: {type: String, required: true },
-    usuario: {type: mongoose.Schema.Types.ObjectId, ref:'user'},
-    aforo: {type: Number, required: true },
-    espacio: {type: mongoose.Schema.Types.ObjectId, ref:'espacio'},
-    fechaHora: { type: Date, default: Date.now },
+    titulo: { type: String, required: true },
+    descripcion: { type: String }, // Nuevo campo útil para web/app
+    imagen: { type: String }, // URL de imagen destacada
+    imagenes: [{ type: String }], // Lista de URLs de imágenes(para el carrusel de la app)
+    plazasTotales: { type: Number, required: true }, // Reemplazar "aforo"
+    plazasDisponibles: { type: Number, required: true }, // Control dinámico
+    ubicacion: { type: String, required:true },//ubicacion de la actividad
+    espacio: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'espacio',
+        required: false // Algunas actividades no requieren espacio físico
+    },
+    fechaInicio: { type: Date, required: true }, // Más claro que fechaHora
+    fechaFin: { type: Date, required: true }
 });
 
 actividadSchema.methods.insert= async function () {

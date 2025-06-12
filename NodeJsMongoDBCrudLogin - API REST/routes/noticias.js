@@ -11,7 +11,7 @@ const path = require('path');
 const storage = multer.diskStorage({
     // destination: define la carpeta donde se guardarán los archivos subidos
     destination: function (req, file, cb) {
-        cb(null, 'C:/Users/david/Desktop/2DAM/FCTS/API_GERINDOTE/imagenPortadaNoticias'); // Carpeta absoluta donde se guardarán las imágenes
+        cb(null, '..','..', 'imagenPortadaNoticias'); // Carpeta absoluta donde se guardarán las imágenes
     },
     // filename: define el nombre del archivo guardado
     filename: function (req, file, cb) {
