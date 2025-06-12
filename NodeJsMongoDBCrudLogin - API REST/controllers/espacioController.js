@@ -1,21 +1,27 @@
+// controllers/espacioController.js
 const Espacio = require('../models/Espacio');
 
-// Inicializa los espacios por defecto (puedes llamar esto al arrancar la app)
-exports.initEspacios = async (req, res) => {
-    try {
-        await Espacio.initDefaultEspacios();
-        res.json({ message: 'Espacios inicializados' });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+const listarEspacios = async (req, res) => {
+  try {
+    const espacios = await Espacio.find();
+    res.json({ success: true, espacios });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
 };
 
-// Listar todos los espacios
-exports.listarEspacios = async (req, res) => {
-    try {
-        const espacios = await Espacio.find();
-        res.json(espacios);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+// ✅ NUEVO: Listar espacios por tipo
+const listarPorTipo = async (req, res) => {
+  try {
+    const tipo = req.params.tipo;
+    const espacios = await Espacio.find({ tipo, disponible: true });
+    res.json({ success: true, espacios });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+module.exports = {
+  listarEspacios,
+  listarPorTipo,
 };
