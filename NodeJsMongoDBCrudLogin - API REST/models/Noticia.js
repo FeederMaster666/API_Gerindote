@@ -16,6 +16,9 @@ const NoticiaSchema = Schema({
   fecha: {
     type: Date,
     default: Date.now
+  },
+  enlace: {//enlace a la noticia en la web
+    type: String,
   }
 });
 
