@@ -64,7 +64,8 @@ app.use('/api/tasks', tasksRouter);
 app.use('/api/noticias', noticiasRouter);
 app.use('/api/espacios', espaciosRouter); // Añadido
 const reservasRouter = require('./routes/reservas'); // ⛔ Falta
-app.use('/api/reservas', reservasRouter);   
+app.use('/api/reservas', reservasRouter);
+app.use('/imagenPortadaNoticias', express.static(path.join(__dirname,'..', 'imagenPortadaNoticias')));
 // Endpoint para info de sesión (autenticación y rol)
 app.get('/api/users/session-info', userController.sessionInfo);
 

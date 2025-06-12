@@ -87,8 +87,25 @@ exports.registerUserMobile = async (req, res) => {
   }
 };
 
-//Obtener un usuario por email, app móvil
+// Cambiar el rol de un usuario a admin
+exports.setAdminRole = async (req, res) => {
+    try {
+        const { id } = req.params; // ID del usuario a modificar
+        const user = await User.findByIdAndUpdate(
+            id,
+            { rol: "admin" },
+            { new: true }
+        );
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+        res.json({ message: "Rol actualizado a admin", user });
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar el rol", error: error.message });
+    }
+};
 
+//Obtener un usuario por email, app móvil
 // Buscar usuario por email (para frontend móvil)
 exports.getUserByEmailMobile = async (req, res) => {
   try {

@@ -1,6 +1,6 @@
 const express = require("express");
 //importa todo el controlador
-const { registerUser, loginUser, loginUserMobile, registerUserMobile, getUserByEmailMobile } = require("../controllers/userController");
+const userController = require("../controllers/userController");
 const { getAllUsers, updateUserRole } = require("../controllers/usersController");
 const router = express.Router();
 
@@ -20,12 +20,14 @@ const isAdmin = (req, res, next) => {
   res.status(403).send("Forbidden");
 };
 
-router.post("/signup", registerUser);
-router.post("/signin", loginUser);
-router.post("/mobile/signup", registerUserMobile);
-router.post("/mobile/signin", loginUserMobile);
+router.post("/signup", userController.registerUser);
+router.post("/signin", userController.loginUser);
+router.post("/mobile/signup", userController.registerUserMobile);
+// Endpoint para convertir un usuario en admin
+router.put('/:id/set-admin', userController.setAdminRole);
+router.post("/mobile/signin", userController.loginUserMobile);
 // Buscar usuario por email
-router.get("/mobile/email/:email", getUserByEmailMobile);
+router.get("/mobile/email/:email", userController.getUserByEmailMobile);
 router.get("/check-auth", (req, res) => {
   // Si no está autenticado, devolvemos un error
   if (!req.isAuthenticated()) {
