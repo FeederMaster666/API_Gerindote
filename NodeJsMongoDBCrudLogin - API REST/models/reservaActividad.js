@@ -10,11 +10,19 @@ const reservaActividadSchema = new Schema({
     enum: ['confirmada', 'cancelada'], 
     default: 'confirmada'
     },
+    plazasReservadas: { type: Number, required: true }, // Control dinámico
     estadoPago: { 
     type: String, 
     enum: ['pendiente', 'pagado'], 
     default: 'pendiente'
-    }
+    },
+    metodoPago: {
+        type: String,
+        enum: ['efectivo', 'online'],
+        default: 'efectivo'
+    },
+    //un campo para el id del pago de Stripe por si hace falta
+    stripePaymentIntentId: { type: String }
 });
 
 module.exports = mongoose.model('reservaActividad', reservaActividadSchema);
