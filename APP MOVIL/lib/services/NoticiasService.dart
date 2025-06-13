@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 // Servicio para gestionar las peticiones HTTP relacionadas con noticias
 class NoticiasService {
-  static const String baseUrl = 'http://10.0.2.2:4000/api/noticias';
+  static const String baseUrl = 'http://10.0.2.2:3000/api/noticias';
 
   /// Obtiene todas las noticias usando el endpoint GET del backend
   Future<List<dynamic>> fetchAllNews() async {
