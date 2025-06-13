@@ -3,13 +3,35 @@ const Reserva = require('../models/Reserva');
 // Crear una reserva
 exports.crearReserva = async (req, res) => {
     try {
-        const { espacio, franjaHoraria } = req.body;
-        const usuario = req.user ? req.user._id : req.body.usuario; // Ajusta según tu auth
-        const reserva = new Reserva({ espacio, franjaHoraria, usuario });
-        await reserva.save();
-        res.status(201).json(reserva);
+        const { espacio, franjaHoraria, correo } = req.body;
+
+        if (!espacio || !franjaHoraria || !correo) {
+            return res.status(400).json({ mensaje: 'Faltan datos' });
+        }
+
+        // Buscar si ya hay reserva en ese espacio y franja horaria
+        const conflicto = await Reserva.findOne({
+            espacio,
+            franjaHoraria: new Date(franjaHoraria)
+        });
+
+        if (conflicto) {
+            return res.status(409).json({ mensaje: 'Ese horario ya está reservado' });
+        }
+
+        // O puedes directamente almacenar el email como campo "usuario"
+        const nuevaReserva = new Reserva({
+            espacio,
+            franjaHoraria: new Date(franjaHoraria),
+            usuario: correo
+        });
+
+        await nuevaReserva.save();
+
+        res.status(201).json({ mensaje: 'Reserva confirmada', reserva: nuevaReserva });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ mensaje: 'Error en el servidor' });
     }
 };
 
