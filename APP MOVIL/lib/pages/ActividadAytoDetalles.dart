@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
 
-// Pantalla de detalle de una actividad municipal
+/// Pantalla de detalle de una actividad municipal.
+/// Muestra toda la información de la actividad seleccionada,
+/// incluyendo imagen de portada, ubicación, plazas, descripción y carrusel de imágenes.
 class DetalleActividadScreen extends StatelessWidget {
-  final Map<String, dynamic> actividad; // Recibe la actividad del backend
+  // Recibe la actividad como un Map (json) desde la pantalla principal
+  final Map<String, dynamic> actividad;
 
   const DetalleActividadScreen({Key? key, required this.actividad}) : super(key: key);
 
@@ -16,10 +19,10 @@ class DetalleActividadScreen extends StatelessWidget {
     final List<dynamic> imagenesCarrusel = actividad['imagenes'] ?? [];
     final int plazasOcupadas = actividad['plazasOcupadas'] ?? 0;
     final int plazasTotales = actividad['plazasTotales'] ?? 0;
-    final espacio = actividad['espacio'];
+    final espacio = actividad['espacio']; // (No se usa, pero lo puedes mostrar si lo necesitas)
     final String ubicacion = actividad['ubicacion'] ?? 'Sin ubicación';
     final String fechaInicio = actividad['fechaInicio'] ?? '';
-    // Puedes formatear la fecha a tu gusto
+    // Puedes formatear la fecha a tu gusto si lo necesitas
 
     return Scaffold(
       appBar: AppBar(
@@ -38,10 +41,11 @@ class DetalleActividadScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Fila: imagen de portada, ubicación y plazas
+            // Fila superior: imagen de portada, ubicación y plazas
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Imagen de portada de la actividad (si existe)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Container(
@@ -61,11 +65,12 @@ class DetalleActividadScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
+                // Columna con ubicación y plazas ocupadas/totales
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Ubicación
+                      // Ubicación de la actividad
                       Row(
                         children: [
                           Icon(
@@ -88,6 +93,7 @@ class DetalleActividadScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 15),
+                      // Plazas ocupadas y totales
                       Row(
                         children: [
                           Icon(Icons.people, size: 18, color: Colors.grey[700]),
@@ -104,9 +110,10 @@ class DetalleActividadScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 18),
-            // Botones de reservar y contacto (puedes adaptar la lógica)
+            // Botones de reservar y contacto
             Row(
               children: [
+                // Botón de reservar plaza (simulado)
                 Expanded(
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.event_available),
@@ -121,7 +128,7 @@ class DetalleActividadScreen extends StatelessWidget {
                       elevation: 0,
                     ),
                     onPressed: () {
-                      // Aquí iría la lógica real de reserva
+                      // Diálogo para seleccionar número de plazas a reservar
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -140,6 +147,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    // Muestra las plazas ocupadas
                                     Text(
                                       "Plazas ocupadas: $plazasOcupadas",
                                       style: const TextStyle(
@@ -148,6 +156,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 15),
+                                    // Selector de número de plazas a reservar
                                     Row(
                                       children: [
                                         const Text(
@@ -159,6 +168,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                         const SizedBox(width: 15),
                                         Row(
                                           children: [
+                                            // Botón para restar plazas
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.remove_circle_outline,
@@ -176,6 +186,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                                 fontSize: 18,
                                               ),
                                             ),
+                                            // Botón para sumar plazas
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.add_circle_outline,
@@ -192,6 +203,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 20),
+                                    // Información de la persona a cargo de la reserva
                                     const Text(
                                       "Persona a cargo de la reserva:",
                                       style: TextStyle(
@@ -216,6 +228,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                   ],
                                 ),
                                 actions: [
+                                  // Botón de cancelar reserva
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
                                     child: const Text(
@@ -223,6 +236,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   ),
+                                  // Botón de confirmar reserva (simulado)
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.lightBlueAccent,
@@ -260,6 +274,7 @@ class DetalleActividadScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
+                // Botón de contacto (muestra opciones en un modal)
                 Expanded(
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.mail_outline),
@@ -273,6 +288,7 @@ class DetalleActividadScreen extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
+                      // Modal con opciones de contacto
                       showModalBottomSheet(
                         context: context,
                         shape: const RoundedRectangleBorder(
@@ -300,6 +316,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 18),
+                                // Teléfono
                                 InkWell(
                                   onTap: () {},
                                   borderRadius: BorderRadius.circular(8),
@@ -315,6 +332,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
+                                // Email
                                 InkWell(
                                   onTap: () {},
                                   borderRadius: BorderRadius.circular(8),
@@ -341,7 +359,7 @@ class DetalleActividadScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 18),
-            // Recuadro azul con la descripción real de la actividad
+            // Recuadro azul con la descripción de la actividad
             Container(
               width: double.infinity,
               constraints: const BoxConstraints(minHeight: 100, maxHeight: 180),
@@ -361,7 +379,7 @@ class DetalleActividadScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            // Carrusel de imágenes reales de la actividad
+            // Carrusel de imágenes reales de la actividad (si existen)
             if (imagenesCarrusel.isNotEmpty)
               cs.CarouselSlider(
                 options: cs.CarouselOptions(
@@ -374,6 +392,7 @@ class DetalleActividadScreen extends StatelessWidget {
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
                 ),
+                // Muestra cada imagen del carrusel
                 items: imagenesCarrusel.map<Widget>((img) {
                   final imgUrl = (img as String).startsWith('http')
                       ? img
@@ -410,3 +429,4 @@ class DetalleActividadScreen extends StatelessWidget {
     );
   }
 }
+

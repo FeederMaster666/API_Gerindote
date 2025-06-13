@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../services/ActividadesMunicipalesService.dart';
 
+/// Pantalla de formulario para crear una nueva actividad municipal.
+/// Permite introducir los datos básicos y subir imágenes de portada y carrusel.
 class CrearActividadScreen extends StatefulWidget {
   const CrearActividadScreen({super.key});
 
@@ -11,6 +13,7 @@ class CrearActividadScreen extends StatefulWidget {
 }
 
 class _CrearActividadScreenState extends State<CrearActividadScreen> {
+  // Controladores para los campos de texto
   final tituloController = TextEditingController();
   final descripcionController = TextEditingController();
   final ubicacionController = TextEditingController();
@@ -19,10 +22,14 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
   final fechaInicioController = TextEditingController();
   final fechaFinController = TextEditingController();
 
+  // Imagen de portada seleccionada
   File? _imagenPortada;
+  // Lista de imágenes seleccionadas para el carrusel
   List<File> _imagenesCarrusel = [];
+  // Estado de carga para mostrar indicador mientras se guarda
   bool _isLoading = false;
 
+  // Servicio para interactuar con el backend
   final ActividadesMunicipalesService _service = ActividadesMunicipalesService();
 
   @override
@@ -44,6 +51,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
           ),
         ),
       ),
+      // El formulario se muestra en un ListView para permitir scroll si hay teclado
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         children: [
@@ -84,7 +92,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
               Wrap(
                 spacing: 8,
                 children: [
-                  // Botón para añadir imágenes
+                  // Botón para añadir imágenes al carrusel
                   GestureDetector(
                     onTap: _seleccionarImagenesCarrusel,
                     child: Container(
@@ -227,7 +235,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
     );
   }
 
-  // Seleccionar imagen de portada desde galería
+  /// Permite seleccionar una imagen de portada desde la galería
   Future<void> _seleccionarImagenPortada() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -239,7 +247,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
     }
   }
 
-  // Seleccionar varias imágenes para el carrusel desde galería
+  /// Permite seleccionar varias imágenes para el carrusel desde la galería
   Future<void> _seleccionarImagenesCarrusel() async {
     final picker = ImagePicker();
     final pickedFiles = await picker.pickMultiImage();
@@ -250,8 +258,10 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
     }
   }
 
+  /// Envía el formulario para crear la actividad y subir las imágenes
+  /// Incluye validación básica de campos obligatorios
   Future<void> _crearActividad() async {
-    // Validación básica
+    // Validación básica de campos obligatorios
     if (tituloController.text.trim().isEmpty ||
         descripcionController.text.trim().isEmpty ||
         ubicacionController.text.trim().isEmpty ||
@@ -298,6 +308,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
         );
       }
 
+      // Si todo sale bien, vuelve atrás y muestra mensaje de éxito
       Navigator.pop(context, true);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -312,6 +323,7 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
         ),
       );
     } catch (e) {
+      // Si ocurre un error, muestra un mensaje
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error al crear actividad: $e'),
@@ -325,3 +337,4 @@ class _CrearActividadScreenState extends State<CrearActividadScreen> {
     }
   }
 }
+

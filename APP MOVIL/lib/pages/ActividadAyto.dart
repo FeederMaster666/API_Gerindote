@@ -4,6 +4,9 @@ import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:ayuntamiento_gerindote/pages/ActividadAytoDetalles.dart';
 import 'package:flutter/material.dart';
 
+/// Pantalla principal que lista todas las actividades municipales.
+/// Permite a los usuarios ver las actividades y, si tienen rol admin,
+/// pueden añadir nuevas actividades o eliminar existentes.
 class EventosAyto extends StatefulWidget {
   const EventosAyto({super.key});
 
@@ -24,6 +27,7 @@ class _EventosAytoState extends State<EventosAyto> {
     _reloadActividades();
   }
 
+  /// Obtiene el rol del usuario logueado desde SharedPreferences
   void _loadUserRole() async {
     final rol = await _authService.getUserRol();
     setState(() {
@@ -31,12 +35,14 @@ class _EventosAytoState extends State<EventosAyto> {
     });
   }
 
+  /// Recarga la lista de actividades desde el backend
   void _reloadActividades() {
     setState(() {
       _actividadesFuture = _service.getAllActividades();
     });
   }
 
+  /// Elimina una actividad por su ID y recarga la lista
   Future<void> _eliminarActividad(String actividadId) async {
     try {
       await _service.eliminarActividad(actividadId);
@@ -89,31 +95,37 @@ class _EventosAytoState extends State<EventosAyto> {
           ),
         ],
       ),
+      // Botón flotante de añadir actividad, solo visible para admin
       floatingActionButton: _userRol == 'admin'
           ? FloatingActionButton(
               onPressed: () {
-                // Navegar a pantalla de creación de actividad
+                // Navega a la pantalla de creación de actividad
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const CrearActividadScreen(),
                   ),
-                ).then((_) => _reloadActividades());
+                ).then((_) => _reloadActividades()); // Recarga al volver
               },
               child: const Icon(Icons.add),
               backgroundColor: Colors.blueAccent,
             )
           : null,
+      // Muestra la lista de actividades usando FutureBuilder
       body: FutureBuilder<List<dynamic>>(
         future: _actividadesFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
+            // Indicador de carga mientras llegan los datos
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
+            // Mensaje de error si falla la petición
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            // Mensaje si no hay actividades
             return const Center(child: Text('No hay actividades disponibles.'));
           } else {
+            // Construye la lista de tarjetas de actividades
             final actividades = snapshot.data!;
             return ListView.builder(
               itemCount: actividades.length,
@@ -128,6 +140,7 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
+  /// Construye la tarjeta visual para cada actividad
   Widget _buildActividadCard(Map<String, dynamic> actividad) {
     final String titulo = actividad['titulo'] ?? 'Sin título';
     final String? imagenUrl = actividad['imagen'];
@@ -138,6 +151,7 @@ class _EventosAytoState extends State<EventosAyto> {
 
     return InkWell(
       onTap: () {
+        // Navega a la pantalla de detalle de la actividad
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -162,8 +176,10 @@ class _EventosAytoState extends State<EventosAyto> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Imagen de portada de la actividad, si existe
                 if (imagenUrl != null && imagenUrl.isNotEmpty)
                   _buildImagenActividad(imagenUrl),
+                // Contenido textual de la tarjeta
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,6 +200,7 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
+  /// Construye la miniatura de la imagen de portada
   Widget _buildImagenActividad(String imagenUrl) {
     return Container(
       width: 65,
@@ -213,6 +230,7 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
+  /// Construye la cabecera de la tarjeta (título y botón eliminar si es admin)
   Widget _buildHeaderActividad(String titulo, String actividadId) {
     return Row(
       children: [
@@ -229,6 +247,7 @@ class _EventosAytoState extends State<EventosAyto> {
             overflow: TextOverflow.ellipsis,
           ),
         ),
+        // Botón de eliminar solo visible para admin
         if (_userRol == 'admin')
           IconButton(
             icon: const Icon(Icons.delete, color: Colors.red),
@@ -238,6 +257,7 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
+  /// Muestra la ubicación de la actividad
   Widget _buildUbicacion(String ubicacion) {
     return Row(
       children: [
@@ -256,6 +276,7 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
+  /// Muestra la información de plazas y la fecha de inicio
   Widget _buildInfoPlazasYFecha(int ocupadas, int totales, String fecha) {
     return Row(
       children: [
@@ -283,6 +304,7 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
+  /// Diálogo de confirmación antes de eliminar una actividad
   void _confirmarEliminacion(String actividadId) {
     showDialog(
       context: context,
@@ -307,14 +329,16 @@ class _EventosAytoState extends State<EventosAyto> {
     );
   }
 
-  Color _getColorForAforo(int disponibles, int totales) {
+  /// Devuelve un color según el porcentaje de plazas ocupadas
+  Color _getColorForAforo(int ocupadas, int totales) {
     if (totales == 0) return Colors.grey;
-    final porcentaje = disponibles / totales;
+    final porcentaje = ocupadas / totales;
     if (porcentaje < 0.2) return Colors.red;
     if (porcentaje < 0.5) return Colors.orange;
     return Colors.green;
   }
 
+  /// Formatea la fecha ISO a dd/MM/yyyy
   String _formateaFecha(String iso) {
     if (iso.isEmpty) return '';
     final date = DateTime.tryParse(iso);
@@ -322,5 +346,6 @@ class _EventosAytoState extends State<EventosAyto> {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
 }
+
 
 
