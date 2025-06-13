@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const reservaSchema = new Schema({
-    espacio: { 
-        type: String, 
-        enum: ['Pabellon', 'Pistas de padel', 'Pistas de tenis', 'Salon Cultural'], 
-        required: true 
+    espacio: {
+        type: String,
+        enum: ['Pabellon', 'Pistas de padel', 'Pistas de tenis', 'Salon Cultural'],
+        required: true
     },
     franjaHoraria: { type: Date, required: true },
     estado: { type: String, enum: ['aceptada', 'cancelada'], default: 'aceptada' },
