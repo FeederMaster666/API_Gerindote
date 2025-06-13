@@ -7,7 +7,7 @@ const actividadSchema = new Schema({
     imagen: { type: String }, // URL de imagen destacada
     imagenes: [{ type: String }], // Lista de URLs de imágenes(para el carrusel de la app)
     plazasTotales: { type: Number, required: true }, // Reemplazar "aforo"
-    plazasDisponibles: { type: Number, required: true }, // Control dinámico
+    plazasOcupadas: { type: Number, required: true }, // Control dinámico
     ubicacion: { type: String, required:true },//ubicacion de la actividad
     espacio: { 
         type: mongoose.Schema.Types.ObjectId, 

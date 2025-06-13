@@ -20,7 +20,7 @@ class ActividadesMunicipalesService {
     required String titulo,
     String? descripcion,
     required int plazasTotales,
-    required int plazasDisponibles,
+    required int plazasOcupadas,
     required String ubicacion,
     String? espacio, // id del espacio, opcional
     required String fechaInicio, // formato ISO 8601
@@ -30,7 +30,7 @@ class ActividadesMunicipalesService {
       'titulo': titulo,
       if (descripcion != null) 'descripcion': descripcion,
       'plazasTotales': plazasTotales,
-      'plazasDisponibles': plazasDisponibles,
+      'plazasOcupadas': plazasOcupadas,
       'ubicacion': ubicacion,
       if (espacio != null) 'espacio': espacio,
       'fechaInicio': fechaInicio,

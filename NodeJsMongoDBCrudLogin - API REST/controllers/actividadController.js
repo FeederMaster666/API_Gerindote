@@ -8,7 +8,7 @@ exports.createActividadMobile = async (req, res) => {
         titulo,
         descripcion,
         plazasTotales,
-        plazasDisponibles,
+        plazasOcupadas,
         ubicacion,
         espacio,
         fechaInicio,
@@ -16,7 +16,7 @@ exports.createActividadMobile = async (req, res) => {
         } = req.body;
 
         // Validación básica
-        if (!titulo || !plazasTotales || !plazasDisponibles || !ubicacion || !fechaInicio || !fechaFin) {
+        if (!titulo || !plazasTotales || !plazasOcupadas || !ubicacion || !fechaInicio || !fechaFin) {
         return res.status(400).json({ message: "Faltan campos obligatorios" });
         }
 
@@ -24,7 +24,7 @@ exports.createActividadMobile = async (req, res) => {
         titulo,
         descripcion,
         plazasTotales,
-        plazasDisponibles,
+        plazasOcupadas,
         ubicacion,
         espacio: espacio || undefined,
         fechaInicio,

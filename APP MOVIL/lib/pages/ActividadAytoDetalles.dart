@@ -14,7 +14,7 @@ class DetalleActividadScreen extends StatelessWidget {
     final String descripcion = actividad['descripcion'] ?? 'Sin descripción';
     final String? imagenUrl = actividad['imagen'];
     final List<dynamic> imagenesCarrusel = actividad['imagenes'] ?? [];
-    final int plazasDisponibles = actividad['plazasDisponibles'] ?? 0;
+    final int plazasOcupadas = actividad['plazasOcupadas'] ?? 0;
     final int plazasTotales = actividad['plazasTotales'] ?? 0;
     final espacio = actividad['espacio'];
     final String ubicacion = actividad['ubicacion'] ?? 'Sin ubicación';
@@ -93,7 +93,7 @@ class DetalleActividadScreen extends StatelessWidget {
                           Icon(Icons.people, size: 18, color: Colors.grey[700]),
                           const SizedBox(width: 4),
                           Text(
-                            '$plazasDisponibles/$plazasTotales plazas',
+                            '$plazasOcupadas/$plazasTotales plazas',
                             style: const TextStyle(fontSize: 15),
                           ),
                         ],
@@ -141,7 +141,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Plazas disponibles: $plazasDisponibles",
+                                      "Plazas ocupadas: $plazasOcupadas",
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 14,
@@ -182,7 +182,7 @@ class DetalleActividadScreen extends StatelessWidget {
                                                 color: Colors.green,
                                               ),
                                               onPressed: () {
-                                                if (plazas < plazasDisponibles) {
+                                                if (plazas < plazasOcupadas) {
                                                   setState(() => plazas++);
                                                 }
                                               },
