@@ -22,6 +22,9 @@ const isAdmin = (req, res, next) => {
 
 router.post("/signup", userController.registerUser);
 router.post("/signin", userController.loginUser);
+
+
+//rutas movil
 router.post("/mobile/signup", userController.registerUserMobile);
 // Endpoint para convertir un usuario en admin
 router.put('/:id/set-admin', userController.setAdminRole);

@@ -116,4 +116,43 @@ class AuthService {
     await prefs.remove('user_email');
     await prefs.remove('user_rol');
   }
+
+  //Para obtener los espacios por tipo
+  Future<List<dynamic>> getEspaciosPorTipo(String tipo) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/espacios/tipo/$tipo'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    final data = json.decode(response.body);
+    if (response.statusCode == 200 && data['success'] == true) {
+      return data['espacios'];
+    } else {
+      throw Exception(data['error'] ?? 'Error al cargar espacios');
+    }
+  }
+
+  //para crear una reserva
+  Future<Map<String, dynamic>> crearReserva({
+    required String espacioId,
+    required String usuarioId,
+    required DateTime franjaHoraria,
+  }) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/reservas'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({
+        'espacioId': espacioId,
+        'usuarioId': usuarioId,
+        'franjaHoraria': franjaHoraria.toIso8601String(),
+      }),
+    );
+
+    final data = json.decode(response.body);
+    if (response.statusCode == 201) {
+      return {'success': true, 'data': data['reserva']};
+    } else {
+      return {'success': false, 'error': data['error']};
+    }
+  }
 }
