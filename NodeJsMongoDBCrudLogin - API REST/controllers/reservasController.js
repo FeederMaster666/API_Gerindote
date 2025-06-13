@@ -1,70 +1,81 @@
-// controllers/reservasController.js
 const Reserva = require('../models/Reserva');
 
-// Crear reserva
-const crearReserva = async (req, res) => {
-  try {
-    const { espacioId, usuarioId, franjaHoraria } = req.body;
+// Crear una reserva
+exports.crearReserva = async (req, res) => {
+    try {
+        const { espacio, franjaHoraria, correo } = req.body;
 
-    const nuevaReserva = new Reserva({
-      espacio: espacioId,
-      usuario: usuarioId,
-      franjaHoraria: new Date(franjaHoraria),
-    });
+        if (!espacio || !franjaHoraria || !correo) {
+            return res.status(400).json({ mensaje: 'Faltan datos' });
+        }
 
-    await nuevaReserva.save();
-    res.status(201).json({ success: true, reserva: nuevaReserva });
+        // Buscar si ya hay reserva en ese espacio y franja horaria
+        const conflicto = await Reserva.findOne({
+            espacio,
+            franjaHoraria: new Date(franjaHoraria)
+        });
 
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
+        if (conflicto) {
+            return res.status(409).json({ mensaje: 'Ese horario ya está reservado' });
+        }
+
+        // O puedes directamente almacenar el email como campo "usuario"
+        const nuevaReserva = new Reserva({
+            espacio,
+            franjaHoraria: new Date(franjaHoraria),
+            usuario: correo
+        });
+
+        await nuevaReserva.save();
+
+        res.status(201).json({ mensaje: 'Reserva confirmada', reserva: nuevaReserva });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensaje: 'Error en el servidor' });
+    }
 };
 
-// Listar reservas (todas, o filtradas por espacio y fechas)
-const listarReservas = async (req, res) => {
+exports.listarReservas = async (req, res) => {
   try {
-    const { espacioId, desde, hasta } = req.query;
-
+    const { espacio, usuario, fechas } = req.query;
     const filtro = {};
-    if (espacioId) filtro.espacio = espacioId;
-    if (desde && hasta) {
-      filtro.franjaHoraria = {
-        $gte: new Date(desde),
-        $lte: new Date(hasta),
-      };
+
+    if (espacio) filtro.espacio = espacio;
+    if (usuario) filtro.usuario = usuario;
+
+    if (fechas) {
+      let fechasArray = [];
+      try {
+        fechasArray = JSON.parse(fechas);
+      } catch (e) {
+        return res.status(400).json({ error: 'Formato de fechas inválido' });
+      }
+
+      if (Array.isArray(fechasArray) && fechasArray.length > 0) {
+        const inicio = new Date(fechasArray[0] + 'T00:00:00');
+        const fin = new Date(fechasArray[fechasArray.length - 1] + 'T23:59:59');
+        filtro.franjaHoraria = { $gte: inicio, $lte: fin };
+      }
     }
 
-    const reservas = await Reserva.find(filtro)
-      .populate('usuario', 'name email') // o más campos si quieres
-      .populate('espacio');
-
-    res.json({ success: true, reservas });
+    const reservas = await Reserva.find(filtro).populate('usuario', 'nombre email');
+    res.json(reservas);
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    console.error('Error en listarReservas:', error);
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Cancelar reserva
-const cancelarReserva = async (req, res) => {
-  try {
-    const { id } = req.params;
 
-    const reserva = await Reserva.findById(id);
-    if (!reserva) {
-      return res.status(404).json({ success: false, error: 'Reserva no encontrada' });
+// Cancelar una reserva
+exports.cancelarReserva = async (req, res) => {
+    try {
+        const reserva = await Reserva.findById(req.params.id);
+        if (!reserva) return res.status(404).json({ error: 'Reserva no encontrada' });
+        reserva.estado = 'cancelada';
+        await reserva.save();
+        res.json(reserva);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-
-    reserva.estado = 'cancelada';
-    await reserva.save();
-
-    res.json({ success: true, reserva });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
-
-module.exports = {
-  crearReserva,
-  listarReservas,
-  cancelarReserva,
 };
