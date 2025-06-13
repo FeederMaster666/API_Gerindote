@@ -71,6 +71,7 @@ class _NoticiasState extends State<Noticias> {
             icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               // Acción futura para el icono de usuario
+              
             },
           ),
         ],

@@ -91,6 +91,7 @@ class _EventosAytoState extends State<EventosAyto> {
             icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               // Acción al presionar el icono de usuario (por implementar)
+              
             },
           ),
         ],

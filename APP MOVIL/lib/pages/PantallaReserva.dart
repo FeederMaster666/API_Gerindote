@@ -1,7 +1,5 @@
 // Importación de paquetes necesarios para la interfaz, el calendario y el envío HTTP
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 
 // Widget de pantalla con estado para la reserva de actividades

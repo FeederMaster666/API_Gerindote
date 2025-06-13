@@ -27,3 +27,10 @@ flutter:
 
 assets:
   - lib/assets/gerindote.png
+  - lib/assets/icon_editarUsuario.png
+  - lib/assets/icon_ajustesUsuario.png
+  - lib/assets/icon_ayudaUsuario.png
+  - lib/assets/icon_cerrarSesion.png
+  - lib/assets/icon_historialCitasUsuario.png
+  - lib/assets/icon_notificacionUsuario.png
+  - lib/assets/icon_pagosUsuario.png
