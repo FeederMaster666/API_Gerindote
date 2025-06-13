@@ -44,6 +44,7 @@ class _InicioState extends State<Inicio> {
             icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               // Acción al presionar el icono de usuario (a implementar)
+              
             },
           ),
         ],

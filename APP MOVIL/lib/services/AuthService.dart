@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://10.0.2.2:4000/api';
+  static const String baseUrl = 'http://10.0.2.2:3000/api';
 
   /// Registro de usuario móvil
   Future<Map<String, dynamic>> registerMobile({

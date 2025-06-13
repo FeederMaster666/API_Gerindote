@@ -1,28 +1,26 @@
+import 'dart:convert';
+
+import 'package:ayuntamiento_gerindote/pages/ReservaActividadDialog.dart';
+import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart' as cs;
+import 'package:http/http.dart' as http;
+// Importa tu AuthService o método para obtener usuario logueado
 
-/// Pantalla de detalle de una actividad municipal.
-/// Muestra toda la información de la actividad seleccionada,
-/// incluyendo imagen de portada, ubicación, plazas, descripción y carrusel de imágenes.
 class DetalleActividadScreen extends StatelessWidget {
-  // Recibe la actividad como un Map (json) desde la pantalla principal
   final Map<String, dynamic> actividad;
 
   const DetalleActividadScreen({Key? key, required this.actividad}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Extrae los datos necesarios de la actividad
     final String titulo = actividad['titulo'] ?? 'Sin título';
     final String descripcion = actividad['descripcion'] ?? 'Sin descripción';
     final String? imagenUrl = actividad['imagen'];
     final List<dynamic> imagenesCarrusel = actividad['imagenes'] ?? [];
     final int plazasOcupadas = actividad['plazasOcupadas'] ?? 0;
     final int plazasTotales = actividad['plazasTotales'] ?? 0;
-    final espacio = actividad['espacio']; // (No se usa, pero lo puedes mostrar si lo necesitas)
     final String ubicacion = actividad['ubicacion'] ?? 'Sin ubicación';
-    final String fechaInicio = actividad['fechaInicio'] ?? '';
-    // Puedes formatear la fecha a tu gusto si lo necesitas
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +43,6 @@ class DetalleActividadScreen extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Imagen de portada de la actividad (si existe)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Container(
@@ -65,7 +62,6 @@ class DetalleActividadScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                // Columna con ubicación y plazas ocupadas/totales
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +109,6 @@ class DetalleActividadScreen extends StatelessWidget {
             // Botones de reservar y contacto
             Row(
               children: [
-                // Botón de reservar plaza (simulado)
                 Expanded(
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.event_available),
@@ -127,154 +122,50 @@ class DetalleActividadScreen extends StatelessWidget {
                       ),
                       elevation: 0,
                     ),
-                    onPressed: () {
-                      // Diálogo para seleccionar número de plazas a reservar
+                    onPressed: () async {
+                      // 1. Obtener email del usuario logueado
+                      final authService = AuthService();
+                      final email = await authService.getUserEmail();
+                      if (email == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Debes iniciar sesión para reservar'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        return;
+                      }
+                      // 2. Obtener datos completos del usuario por email
+                      final userResponse = await http.get(
+                        Uri.parse('${AuthService.baseUrl}/users/mobile/email/$email'),
+                        headers: {'Content-Type': 'application/json'},
+                      );
+                      if (userResponse.statusCode != 200) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('No se pudo cargar el usuario'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                        return;
+                      }
+                      final userData = json.decode(userResponse.body);
+
+                      // 3. Abrir el diálogo de reserva con los datos reales
                       showDialog(
                         context: context,
-                        builder: (context) {
-                          int plazas = 1;
-                          return StatefulBuilder(
-                            builder: (context, setState) {
-                              return AlertDialog(
-                                title: const Text(
-                                  "Reservar plaza",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Muestra las plazas ocupadas
-                                    Text(
-                                      "Plazas ocupadas: $plazasOcupadas",
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 15),
-                                    // Selector de número de plazas a reservar
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          "Nº de plazas:",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 15),
-                                        Row(
-                                          children: [
-                                            // Botón para restar plazas
-                                            IconButton(
-                                              icon: const Icon(
-                                                Icons.remove_circle_outline,
-                                                color: Colors.redAccent,
-                                              ),
-                                              onPressed: () {
-                                                if (plazas > 1) {
-                                                  setState(() => plazas--);
-                                                }
-                                              },
-                                            ),
-                                            Text(
-                                              " $plazas ",
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                            // Botón para sumar plazas
-                                            IconButton(
-                                              icon: const Icon(
-                                                Icons.add_circle_outline,
-                                                color: Colors.green,
-                                              ),
-                                              onPressed: () {
-                                                if (plazas < plazasOcupadas) {
-                                                  setState(() => plazas++);
-                                                }
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 20),
-                                    // Información de la persona a cargo de la reserva
-                                    const Text(
-                                      "Persona a cargo de la reserva:",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    // Aquí deberías mostrar los datos reales del usuario logueado
-                                    const ListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      leading: Icon(Icons.person, size: 22),
-                                      title: Text(
-                                        "Juan Pérez",
-                                        style: TextStyle(fontSize: 15),
-                                      ),
-                                      subtitle: Text(
-                                        "juan.perez@email.com\nTel: 611 22 33 44",
-                                        style: TextStyle(fontSize: 13),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                actions: [
-                                  // Botón de cancelar reserva
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const Text(
-                                      "CANCELAR",
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                                  // Botón de confirmar reserva (simulado)
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.lightBlueAccent,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Row(
-                                            children: [
-                                              Icon(Icons.check_circle_outline, color: Colors.white, size: 20),
-                                              const SizedBox(width: 8),
-                                              Text("Reserva confirmada para $plazas personas"),
-                                            ],
-                                          ),
-                                          backgroundColor: Colors.blueAccent[700],
-                                        ),
-                                      );
-                                    },
-                                    child: const Text(
-                                      "CONFIRMAR RESERVA",
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
+                        builder: (context) => ReservaActividadDialog(
+                          actividad: actividad,
+                          usuarioId: userData['_id'],
+                          nombre: userData['name'] ?? '',
+                          apellidos: userData['apellidos'] ?? '',
+                          email: userData['email'] ?? '',
+                        ),
                       );
                     },
                   ),
                 ),
                 const SizedBox(width: 10),
-                // Botón de contacto (muestra opciones en un modal)
                 Expanded(
                   child: OutlinedButton.icon(
                     icon: const Icon(Icons.mail_outline),
@@ -316,7 +207,6 @@ class DetalleActividadScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 18),
-                                // Teléfono
                                 InkWell(
                                   onTap: () {},
                                   borderRadius: BorderRadius.circular(8),
@@ -332,7 +222,6 @@ class DetalleActividadScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                // Email
                                 InkWell(
                                   onTap: () {},
                                   borderRadius: BorderRadius.circular(8),
@@ -392,7 +281,6 @@ class DetalleActividadScreen extends StatelessWidget {
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
                 ),
-                // Muestra cada imagen del carrusel
                 items: imagenesCarrusel.map<Widget>((img) {
                   final imgUrl = (img as String).startsWith('http')
                       ? img
@@ -429,4 +317,3 @@ class DetalleActividadScreen extends StatelessWidget {
     );
   }
 }
-
