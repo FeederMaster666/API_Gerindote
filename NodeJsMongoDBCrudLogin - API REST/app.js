@@ -20,7 +20,11 @@ var userController = require('./controllers/userController');
 const espaciosRouter = require('./routes/espacios'); // Añadido
 const actividadesRouter = require('./routes/actividades');
 const reservasActividadesRouter = require('./routes/reservasActividades');
+const stripeWebhook = require('./routes/stripe');
+const stripeRoutes = require('./routes/stripe');
 
+// ⬇️ MONTA EL WEBHOOK ANTES DE express.json()
+app.use('/api/stripe/webhook', require('express').raw({ type: 'application/json' }), stripeWebhook);
 
 // view engine setup
 app.set('port', process.env.PORT || 5500);
@@ -66,6 +70,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/noticias', noticiasRouter);
 app.use('/api/espacios', espaciosRouter); // Añadido
+app.use('/api/stripe', express.json(), stripeRoutes);
 app.use('/api/actividades', actividadesRouter);
 app.use('/api/reservas-actividades', reservasActividadesRouter);
 const reservasRouter = require('./routes/reservas'); // ⛔ Falta
