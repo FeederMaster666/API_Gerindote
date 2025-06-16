@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const actividadSchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String},
     usuario: {type: mongoose.Schema.Types.ObjectId, ref:'user'},
-    aforo: {type: Number, required: true },
+    aforo: {type: Number},
     descripcion: { type: String }, // Nuevo campo útil para web/app
     imagen: { type: String }, // URL de imagen destacada
     imagenes: [{ type: String }], // Lista de URLs de imágenes(para el carrusel de la app)
