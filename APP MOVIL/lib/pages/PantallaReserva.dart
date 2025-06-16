@@ -147,7 +147,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
 
                       if (_metodoPago == 'metalico') {
                         await reservaService.crearReservaEspacio(
-                          usuarioId: widget.usuarioId,
+                          email: widget.email,
                           espacioId: widget.espacio['_id'],
                           fecha: _fechaSeleccionada,
                           hora: _horaSeleccionada,

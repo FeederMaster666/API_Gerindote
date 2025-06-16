@@ -7,14 +7,14 @@ class ReservaEspaciosService {
 
   /// Crea la reserva en tu API una vez el pago ha sido exitoso.
   Future<void> crearReservaEspacio({
-    required String usuarioId,
+    required String email,
     required String espacioId,
     required DateTime fecha,
     required String hora,
     required String metodoPago, // 'stripe'
   }) async {
     final body = {
-      'usuario': usuarioId,
+      'usuario': email,
       'espacio': espacioId,
       'franjaHoraria': '${fecha.toIso8601String().split('T')[0]}T$hora:00.000Z',
       'metodoPago': metodoPago,
