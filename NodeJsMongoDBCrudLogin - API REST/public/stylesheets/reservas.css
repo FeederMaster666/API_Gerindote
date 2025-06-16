@@ -70,6 +70,11 @@
 #reserva-msg {
     margin-top: 1rem;
 }
+
+.footer{
+    
+}
+
 @media (max-width: 900px) {
     .horas-table th, .horas-table td, .hora-label {
         font-size: 0.9em;

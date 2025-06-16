@@ -1,42 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Reservar Espacio Deportivo</title>
-  <link rel="stylesheet" href="stylesheets/reservas.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="stylesheets/index.css">
-  <style>
-    .hora-label {
-      font-weight: bold;
-    }
-    .horas-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 2rem;
-    }
-    .horas-table th, .horas-table td {
-      border: 1px solid #ddd;
-      padding: 0.5rem;
-      text-align: center;
-    }
-    .celda-disponible {
-      background-color: #e9fbe9;
-    }
-    .celda-reservada {
-      background-color: #f8d7da;
-      color: #6c757d;
-    }
-    .selected {
-      background-color: #bde5ff !important;
-    }
-    .reservar-btn {
-      margin-top: 1.5rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="stylesheets/municipal.css">
 </head>
-
-<nav>
+<body>
+    <nav>
     <div class="barra-navegacion">
         <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
 
@@ -57,7 +29,7 @@
                 <div class="submenu">
                     <a href="alcaldia.html">Alcaldía</a>
                     <a href="corporacionMunicipal.html">Corporación municipal</a>
-                    <a href="municipal.html">Directorio municipal</a>
+                    <a href="alcaldia.html">Tablón de anuncios</a>
                 </div>
                 </div>
 
@@ -75,37 +47,69 @@
             <div id="user-section" style="display: none;">
                 <div class="user-container">
                     <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
-                    <div class="user-menu" id="user-menu" style="display: none;"> 
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <!-- El contenido se rellena dinámicamente por JS -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </nav>
-<body>
-  <main>
-    <div class="separacion">
-            <img src="img/inicio/ayto.jpg" alt="Logo">
-            <h2 class="separacion-titulo">Reservar</h2>
-            <div class="div-color"></div>
-        </div>
-    <div class="reserva-container container mt-5">
-      <h2>Reservar Espacio Deportivo</h2>
-      <form id="form-reserva">
-        <div class="form-group">
-          <label for="espacio">Espacio</label>
-          <input type="text" id="espacio-nombre" class="form-control" readonly>
-          <input type="hidden" id="espacio" name="espacio">
-          <input type="hidden" id="fechas-semana">
-        </div>
-        <div id="horas-horarias-container"></div>
-        <button type="submit" class="btn btn-primary w-100 reservar-btn">Reservar</button>
-      </form>
-      <div id="reserva-msg" class="mt-3"></div>
+    <div class="separador">
+        <h1 class="titulo-seccion">Directorio municipal</h1>
     </div>
-  </main>
+    <div class="banda-azul"></div>
 
-  <footer>
+    <main class="main-directorio">
+        <div class="contenido-principal">
+            <table class="directorio-municipal">
+                <thead>
+                    <tr>
+                        <th>Centro</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ayuntamiento</td><td>925 76 09 01</td></tr>
+                    <tr><td>Ayuntamiento (Fax)</td><td>925 76 29 00</td></tr>
+                    <tr><td>Consultorio Médico</td><td>925 76 40 10</td></tr>
+                    <tr><td>Hogar del Jubilado</td><td>925 77 50 14</td></tr>
+                    <tr><td>Servicios Sociales</td><td>925 76 05 42</td></tr>
+                    <tr><td>Centro de Internet</td><td>925 76 40 88</td></tr>
+                    <tr><td>Biblioteca</td><td>925 76 40 88</td></tr>
+                    <tr><td>Piscina Municipal</td><td>925 76 10 46</td></tr>
+                    <tr><td>Colegio Público «San José»</td><td>925 76 28 47</td></tr>
+                    <tr><td>Parroquia «S. Mateo Apóstol»</td><td>925 76 10 51</td></tr>
+                    <tr><td>Residencia de Ancianos «Celin»</td><td>925 77 09 39</td></tr>
+                    <tr><td>Gimnasio Municipal «El ventorro»</td><td>925 76 26 55</td></tr>
+                    <tr><td>Bomberos</td><td>085 / 925 22 60 80</td></tr>
+                    <tr><td>Guardia Civil</td><td>062 / 925 76 01 78</td></tr>
+                    <tr><td>Protección Civil</td><td>925 76 09 01</td></tr>
+                    <tr><td>Urgencias</td><td>112 / 925 77 13 23</td></tr>
+                    <tr><td>Ayuda en Carretera</td><td>900 12 35 05</td></tr>
+                    <tr><td>Farmacia</td><td>925 76 09 03</td></tr>
+                    <tr><td>Taxi</td><td>629 06 77 93</td></tr>
+                    <tr><td>Renfe</td><td>925 76 00 93</td></tr>
+                    <tr><td>Correos</td><td>925 77 15 70</td></tr>
+                    <tr><td>Aqualia, S.A.</td><td>925 79 74 37</td></tr>
+                    <tr><td>O.A.P.G.T.</td><td>902 45 01 02</td></tr>
+                    <tr><td>Hospital Virgen de la Salud</td><td>925 26 92 00</td></tr>
+                    <tr><td>Hospital Virgen de la Salud (Urgencias)</td><td>925 26 92 17</td></tr>
+                    <tr><td>Hospital Geriátrico Virgen del Valle</td><td>925 26 93 00</td></tr>
+                    <tr><td>Hospital Nacional Parapléjico</td><td>925 24 77 00</td></tr>
+                    <tr><td>Hospital Provincial</td><td>925 25 93 50</td></tr>
+                    <tr><td>Cruz Roja</td><td>925 76 02 08</td></tr>
+                    <tr><td>Diputación Provincial de Toledo</td><td>925 25 80 00</td></tr>
+                    <tr><td>Oficina de empleo de Toledo</td><td>925 33 08 30</td></tr>
+                    <tr><td>Servicio Periféricos de Hacienda Toledo</td><td>925 28 80 80</td></tr>
+                    <tr><td>Servicio Periféricos de Empleo y Economía Toledo</td><td>925 26 79 80</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+
+    <footer>
         <div class="footer-section">
             <div class="div1">
                 <h2>Información</h2>
@@ -165,7 +169,6 @@
             </div>
         </div>
     </footer>
-  <script src="https://js.stripe.com/v3/"></script>
-  <script src="js/reserva.js"></script>
+
 </body>
 </html>

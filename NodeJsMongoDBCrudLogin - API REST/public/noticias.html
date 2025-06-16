@@ -38,16 +38,20 @@
     </style>
 </head>
 <body>
-    <!-- NAVBAR igual que en index.html -->
-    <nav>
+<nav>
     <div class="barra-navegacion">
         <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+
+        <!-- Menú hamburguesa -->
         <input type="checkbox" id="menu-toggle" />
         <label for="menu-toggle" class="menu-icon">
         <span></span>
         <span></span>
         <span></span>
         </label>
+
+        <!-- Enlaces -->
+        
         <div class="nav-links">
             <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
             <div class="nav-item">
@@ -55,25 +59,26 @@
                 <div class="submenu">
                     <a href="alcaldia.html">Alcaldía</a>
                     <a href="corporacionMunicipal.html">Corporación municipal</a>
-                    <a href="alcaldia.html">Tablón de anuncios</a>
+                    <a href="municipal.html">Directorio municipal</a>
                 </div>
-            </div>
-            <div class="nav-item">
+                </div>
+
+                <div class="nav-item">
                 <button class="submenu-toggle">Áreas</button>
                 <div class="submenu">
                     <a href="#">Urbanismo</a>
                     <a href="#">Cultura</a>
-                    <a href="#">Deportes</a>
+                    <a href="deportes.html">Deportes</a>
                 </div>
-            </div>
-            <a href="#">Sede Electrónica</a>
-            <a href="#">Noticias</a>
-            <a href="#">Contacto</a>
+                </div>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
             <div id="user-section" style="display: none;">
                 <div class="user-container">
                     <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
                     <div class="user-menu" id="user-menu" style="display: none;">
-                        <!-- El contenido se rellena dinámicamente por JS -->
+                        
                     </div>
                 </div>
             </div>

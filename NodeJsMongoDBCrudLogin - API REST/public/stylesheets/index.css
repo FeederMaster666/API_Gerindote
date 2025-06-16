@@ -21,6 +21,7 @@ nav .barra-navegacion {
   max-width: 1370px;
   width: 100%;
   margin: 0 auto;
+  height: 60px;
 }
 
 .logo {
@@ -221,18 +222,21 @@ nav .barra-navegacion {
     top: 100%;
     left: 0;
     background-color: #ffffff;
-    min-width: 180px;
     z-index: 999;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     flex-direction: column;
     max-height: 0;
-    overflow: hidden;
     opacity: 0;
     transition: max-height 1s ease, opacity 1s ease;
+    width: auto;
+    min-width: max-content;
+    white-space: nowrap;
+    overflow: visible;
   }
 
   .submenu a {
+    white-space: nowrap;
     color: #000;
   }
 
@@ -277,19 +281,6 @@ nav .barra-navegacion {
 .user-menu a:hover {
   background-color: #f1f1f1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -639,8 +630,6 @@ main {
     }
 }
 
-
-
 footer{
     display: flex;
     justify-content:space-around;
@@ -707,12 +696,6 @@ footer{
 .footer-section ul li a:hover {
     color: #ffffff;
 }
-
-
-
-
-
-
 
 .bottom-footer{
     width: 1370px;
