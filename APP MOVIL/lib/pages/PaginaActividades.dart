@@ -1,6 +1,8 @@
 // Importa los paquetes necesarios de Flutter y una pantalla personalizada
+import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:ayuntamiento_gerindote/pages/PantallaReserva.dart';
+// Asegúrate de que el archivo PantallaReserva.dart contiene una clase llamada PantallaReserva
 
 // Define un widget sin estado (StatelessWidget) llamado PaginaActividades
 class PaginaActividades extends StatelessWidget {
@@ -150,14 +152,21 @@ class PaginaActividades extends StatelessWidget {
             ),
             // Botón para seleccionar la actividad
             ElevatedButton(
-              onPressed: () {
-                // Navega a la pantalla de reserva, pasando el nombre de la actividad
+              onPressed: () async {
+                // Obtiene el email de forma asíncrona antes de navegar
+                final email = await AuthService().getUserEmail();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) =>
-                            PantallaReserva(nombreActividad: activityName),
+                        (context) => PantallaReserva(
+                          nombreActividad: activityName,
+                          espacio: {'nombre': title},
+                          nombre: '', // TODO: Provide actual user ID
+                          email:
+                              email ??
+                              '', // Email obtenido de forma asíncrona, usa '' si es null
+                        ),
                   ),
                 );
               },

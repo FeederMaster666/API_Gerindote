@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const reservaSchema = new Schema({
     espacio: {
         type: String,
-        enum: ['Pabellon', 'Pistas de padel', 'Pistas de tenis', 'Salon Cultural'],
+        enum: ['Pabellon Municipal', 'Pistas de padel', 'Pistas de tenis', 'Salon Cultural', 'Campo de fútbol','Gimnasio Municipal', 'Piscina Municipal', 'Pistas Exteriores' ],
         required: true
     },
     franjaHoraria: { type: Date, required: true },
