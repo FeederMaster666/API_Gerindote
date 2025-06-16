@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alcaldia</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="stylesheets/alcaldia.css">
+</head>
+<body>
+    <nav>
+    <div class="barra-navegacion">
+        <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+
+        <!-- Menú hamburguesa -->
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        </label>
+
+        <!-- Enlaces -->
+        
+        <div class="nav-links">
+            <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <div class="nav-item">
+                <button class="submenu-toggle">Ayuntamiento</button>
+                <div class="submenu">
+                    <a href="alcaldia.html">Alcaldía</a>
+                    <a href="corporacionMunicipal.html">Corporación municipal</a>
+                    <a href="alcaldia.html">Tablón de anuncios</a>
+                </div>
+                </div>
+
+                <div class="nav-item">
+                <button class="submenu-toggle">Áreas</button>
+                <div class="submenu">
+                    <a href="#">Urbanismo</a>
+                    <a href="#">Cultura</a>
+                    <a href="deportes.html">Deportes</a>
+                </div>
+                </div>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
+            <div id="user-section" style="display: none;">
+                <div class="user-container">
+                    <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <!-- El contenido se rellena dinámicamente por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+    <div class="separador">
+        <h1 class="titulo-seccion">Alcaldía</h1>
+    </div>
+    <div class="banda-azul"></div>
+ <main class="main-alcaldia">
+    <div class="contenido-principal">
+        <!-- IZQUIERDA: Saludo de la Alcaldesa -->
+        <div class="columna-izquierda">
+            <h2 class="saludo-titulo">Saluda de la Alcaldesa</h2>
+            <div class="saludo-container">
+                <div class="saludo-imagen">
+                    <img src="img/alcaldesa.jpg" alt="Alcaldesa de Gerindote">
+                </div>
+                <div class="saludo-texto">
+                    <p>Queridos vecinos y vecinas de Gerindote:</p>
+                    <p>Es para mí un verdadero privilegio dirigirme a todos vosotros como alcaldesa de este municipio que tanto queremos...</p>
+                    <p>Desde esta plataforma, queremos acercarte todas aquellas iniciativas, ofertas e informaciones que surgen a diario en esta Casa Consistorial; que tengas a disposición todos aquellos documentos oficiales necesarios para poder ejercer tus derechos y demandas de manera online; y que puedas conocer todas las decisiones que se toman, tanto en Junta de Gobierno como en los Plenos corporativos</p>
+                    <p>Me dirijo a todos vosotros como Alcaldesa, lo cual significa un auténtico placer y orgullo personal por tener la oportunidad de representar a mi pueblo. Desde aquí quiero daros las gracias por concederme este gran honor.</p>
+                </div>
+            </div>
+            <div class="texto-completo">
+                <p>Durante estos meses hemos puesto en marcha diversas iniciativas para mejorar los servicios públicos...</p>
+                <p>Asimismo, quiero expresar mi agradecimiento más sincero a todos aquellos que ayudan al buen desarrollo del pueblo, acudiendo a nuestras reuniones, aportando ideas… En general, a todas aquellas personas que, individualmente, con su granito de arena, contribuyen a que Gerindote mejore día a día. Creo que en el futuro, esta es la fórmula que debemos mantener, intentando mejorarla, puesto que estoy convencida de que cuantos más cooperemos y participemos en las decisiones, mejores serán los resultados</p>
+                <p>Para finalizar, quiero volver a recordaros que no debéis perder la oportunidad de trasladarnos cualquier inquietud o problema que tengáis. Todo esto mezclado da un resultado muy claro: la mejora de la vida local. Os lo merecéis.</p>
+                <p><strong>Ana María Palomo.</strong></p>
+                <p><strong>Alcaldesa de Gerindote.</strong></p>
+            </div>
+        </div>
+        <hr class="separador-vertical">
+        <!-- DERECHA: Últimas noticias -->
+        <div class="columna-derecha">
+            <h3>Últimas Noticias</h3>
+
+            <div class="noticia">
+                <img src="img/noticias/noticia1.jpg" alt="Noticia 1">
+                <p class="noticia-titulo">Inauguración del nuevo centro cultural</p>
+            </div>
+
+            <div class="noticia">
+                <img src="img/noticias/noticia2.jpg" alt="Noticia 2">
+                <p class="noticia-titulo">Programa de actividades verano 2025</p>
+            </div>
+
+            <div class="noticia">
+                <img src="img/noticias/noticia3.jpg" alt="Noticia 3">
+                <p class="noticia-titulo">Mejoras en los caminos rurales</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+<footer>
+        <div class="footer-section">
+            <div class="div1">
+                <h2>Información</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="div2">
+                <h2>Explora</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+    
+            <div class="div3">
+                <h2>Soporte</h2>
+                <ul>
+                    <li><a href="#faq">Preguntas frecuentes</a></li>
+                    <li><a href="#support">Soporte técnico</a></li>
+                    <li><a href="#careers">Trabaja con nosotros</a></li>
+                </ul>
+            </div>
+    
+            <div class="div4">
+                <h2>Legal</h2>
+                <ul>
+                    <li><a href="#terms">Términos de servicio</a></li>
+                    <li><a href="#privacy">Política de privacidad</a></li>
+                    <li><a href="#cookies">Política de cookies</a></li>
+                    <li><a href="#legal">Aviso legal</a></li>
+                    <li><a href="#sitemap">Mapa del sitio</a></li>
+                </ul>
+            </div>
+    
+            <div class="brand">
+                <img src="img/inicio/gerindote.png">
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <ul>
+                <li><p>&copy; 2025 Ayto Gerindote</p></li>
+                <li><a href="#terms">Términos de servicio</a></li>
+                <li><a href="#privacy">Política de privacidad</a></li>
+                <li><a href="#choices">Opciones de privacidad</a></li>
+            </ul>
+            <div class="contactos">
+                <a href="https://www.instagram.com" target="_blank"><img src="img/contacto/icons8-instagram-old-50.png" alt="Instagram"></a>
+                <a href="https://www.facebook.com" target="_blank"><img src="img/contacto/icons8-facebook-50.png" alt="Facebook"></a>
+                <a href="https://www.twitter.com" target="_blank"><img src="img/contacto/icons8-twitter-50.png" alt="Twitter"></a>
+                <a href="https://www.youtube.com" target="_blank"><img src="img/contacto/icons8-youtube-50.png" alt="YouTube"></a>
+                <a href="https://www.spotify.com" target="_blank"><img src="img/contacto/icons8-tiktok-50.png" alt="Tiktok"></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

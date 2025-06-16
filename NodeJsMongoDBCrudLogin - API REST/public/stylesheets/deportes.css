@@ -1,0 +1,82 @@
+.espacios-title {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .espacios-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+        .espacios-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto 2rem auto;
+        }
+        .espacio-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            text-align: center;
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .espacio-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+        .espacio-card img {
+            width: 100%;
+            max-width: 260px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .espacio-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .espacio-card p {
+            color: #555;
+            font-size: 1rem;
+        }
+        .reservar-btn {
+            margin-top: 1rem;
+        }
+        @media (max-width: 800px) {
+            .espacios-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+.separador {
+    position: relative;
+    height: 150px; 
+    background-image: url('../img/inicio/ayto.jpg'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: grayscale(80%);
+}
+
+.titulo-seccion {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    z-index: 1;
+    text-align: center;
+}
+
+.banda-azul {
+    height: 40px;
+    background-color: #add8e6; /* azul pastel */
+}
+

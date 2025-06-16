@@ -1,0 +1,53 @@
+.separador {
+    position: relative;
+    height: 150px; 
+    background-image: url('../img/inicio/ayto.jpg'); 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: grayscale(80%);
+}
+
+.titulo-seccion {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    z-index: 1;
+    text-align: center;
+}
+
+.banda-azul {
+    height: 40px;
+    background-color: #add8e6; /* azul pastel */
+}
+
+.contenido-principal {
+    width: 800px;
+}
+.directorio-municipal {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2em;
+    background: white;
+}
+
+.directorio-municipal th, .directorio-municipal td {
+    padding: 8px 12px;
+    text-align: left;
+    border: none;
+}
+
+.directorio-municipal thead tr {
+    background: #f5f5f5;
+    font-weight: bold;
+}
+
+.directorio-municipal tbody tr:nth-child(even) {
+    background: #e3f0fa; /* Azul pastel */
+}
+
+.directorio-municipal tbody tr:nth-child(odd) {
+    background: white;
+}

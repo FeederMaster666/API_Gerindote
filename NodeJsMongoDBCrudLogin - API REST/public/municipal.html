@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="stylesheets/municipal.css">
+</head>
+<body>
+    <nav>
+    <div class="barra-navegacion">
+        <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+
+        <!-- Menú hamburguesa -->
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        </label>
+
+        <!-- Enlaces -->
+        
+        <div class="nav-links">
+            <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <div class="nav-item">
+                <button class="submenu-toggle">Ayuntamiento</button>
+                <div class="submenu">
+                    <a href="alcaldia.html">Alcaldía</a>
+                    <a href="corporacionMunicipal.html">Corporación municipal</a>
+                    <a href="alcaldia.html">Tablón de anuncios</a>
+                </div>
+                </div>
+
+                <div class="nav-item">
+                <button class="submenu-toggle">Áreas</button>
+                <div class="submenu">
+                    <a href="#">Urbanismo</a>
+                    <a href="#">Cultura</a>
+                    <a href="deportes.html">Deportes</a>
+                </div>
+                </div>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
+            <div id="user-section" style="display: none;">
+                <div class="user-container">
+                    <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
+                    <div class="user-menu" id="user-menu" style="display: none;">
+                        <!-- El contenido se rellena dinámicamente por JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
+    <div class="separador">
+        <h1 class="titulo-seccion">Directorio municipal</h1>
+    </div>
+    <div class="banda-azul"></div>
+
+    <main class="main-directorio">
+        <div class="contenido-principal">
+            <table class="directorio-municipal">
+                <thead>
+                    <tr>
+                        <th>Centro</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Ayuntamiento</td><td>925 76 09 01</td></tr>
+                    <tr><td>Ayuntamiento (Fax)</td><td>925 76 29 00</td></tr>
+                    <tr><td>Consultorio Médico</td><td>925 76 40 10</td></tr>
+                    <tr><td>Hogar del Jubilado</td><td>925 77 50 14</td></tr>
+                    <tr><td>Servicios Sociales</td><td>925 76 05 42</td></tr>
+                    <tr><td>Centro de Internet</td><td>925 76 40 88</td></tr>
+                    <tr><td>Biblioteca</td><td>925 76 40 88</td></tr>
+                    <tr><td>Piscina Municipal</td><td>925 76 10 46</td></tr>
+                    <tr><td>Colegio Público «San José»</td><td>925 76 28 47</td></tr>
+                    <tr><td>Parroquia «S. Mateo Apóstol»</td><td>925 76 10 51</td></tr>
+                    <tr><td>Residencia de Ancianos «Celin»</td><td>925 77 09 39</td></tr>
+                    <tr><td>Gimnasio Municipal «El ventorro»</td><td>925 76 26 55</td></tr>
+                    <tr><td>Bomberos</td><td>085 / 925 22 60 80</td></tr>
+                    <tr><td>Guardia Civil</td><td>062 / 925 76 01 78</td></tr>
+                    <tr><td>Protección Civil</td><td>925 76 09 01</td></tr>
+                    <tr><td>Urgencias</td><td>112 / 925 77 13 23</td></tr>
+                    <tr><td>Ayuda en Carretera</td><td>900 12 35 05</td></tr>
+                    <tr><td>Farmacia</td><td>925 76 09 03</td></tr>
+                    <tr><td>Taxi</td><td>629 06 77 93</td></tr>
+                    <tr><td>Renfe</td><td>925 76 00 93</td></tr>
+                    <tr><td>Correos</td><td>925 77 15 70</td></tr>
+                    <tr><td>Aqualia, S.A.</td><td>925 79 74 37</td></tr>
+                    <tr><td>O.A.P.G.T.</td><td>902 45 01 02</td></tr>
+                    <tr><td>Hospital Virgen de la Salud</td><td>925 26 92 00</td></tr>
+                    <tr><td>Hospital Virgen de la Salud (Urgencias)</td><td>925 26 92 17</td></tr>
+                    <tr><td>Hospital Geriátrico Virgen del Valle</td><td>925 26 93 00</td></tr>
+                    <tr><td>Hospital Nacional Parapléjico</td><td>925 24 77 00</td></tr>
+                    <tr><td>Hospital Provincial</td><td>925 25 93 50</td></tr>
+                    <tr><td>Cruz Roja</td><td>925 76 02 08</td></tr>
+                    <tr><td>Diputación Provincial de Toledo</td><td>925 25 80 00</td></tr>
+                    <tr><td>Oficina de empleo de Toledo</td><td>925 33 08 30</td></tr>
+                    <tr><td>Servicio Periféricos de Hacienda Toledo</td><td>925 28 80 80</td></tr>
+                    <tr><td>Servicio Periféricos de Empleo y Economía Toledo</td><td>925 26 79 80</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+
+    <footer>
+        <div class="footer-section">
+            <div class="div1">
+                <h2>Información</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="div2">
+                <h2>Explora</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+    
+            <div class="div3">
+                <h2>Soporte</h2>
+                <ul>
+                    <li><a href="#faq">Preguntas frecuentes</a></li>
+                    <li><a href="#support">Soporte técnico</a></li>
+                    <li><a href="#careers">Trabaja con nosotros</a></li>
+                </ul>
+            </div>
+    
+            <div class="div4">
+                <h2>Legal</h2>
+                <ul>
+                    <li><a href="#terms">Términos de servicio</a></li>
+                    <li><a href="#privacy">Política de privacidad</a></li>
+                    <li><a href="#cookies">Política de cookies</a></li>
+                    <li><a href="#legal">Aviso legal</a></li>
+                    <li><a href="#sitemap">Mapa del sitio</a></li>
+                </ul>
+            </div>
+    
+            <div class="brand">
+                <img src="img/inicio/gerindote.png">
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <ul>
+                <li><p>&copy; 2025 Ayto Gerindote</p></li>
+                <li><a href="#terms">Términos de servicio</a></li>
+                <li><a href="#privacy">Política de privacidad</a></li>
+                <li><a href="#choices">Opciones de privacidad</a></li>
+            </ul>
+            <div class="contactos">
+                <a href="https://www.instagram.com" target="_blank"><img src="img/contacto/icons8-instagram-old-50.png" alt="Instagram"></a>
+                <a href="https://www.facebook.com" target="_blank"><img src="img/contacto/icons8-facebook-50.png" alt="Facebook"></a>
+                <a href="https://www.twitter.com" target="_blank"><img src="img/contacto/icons8-twitter-50.png" alt="Twitter"></a>
+                <a href="https://www.youtube.com" target="_blank"><img src="img/contacto/icons8-youtube-50.png" alt="YouTube"></a>
+                <a href="https://www.spotify.com" target="_blank"><img src="img/contacto/icons8-tiktok-50.png" alt="Tiktok"></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

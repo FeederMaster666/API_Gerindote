@@ -16,35 +16,55 @@
 
 <body>
     <nav>
-        <div class="barra-navegacion">
-            <a href="#" class="logo"><img src="img/gerindote.png" alt=""></a>
-            <div class="nav-links">
+    <div class="barra-navegacion">
+        <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+
+        <!-- Menú hamburguesa -->
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        </label>
+
+        <!-- Enlaces -->
+        
+        <div class="nav-links">
+            <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <div class="nav-item">
+                <button class="submenu-toggle">Ayuntamiento</button>
+                <div class="submenu">
+                    <a href="alcaldia.html">Alcaldía</a>
+                    <a href="corporacionMunicipal.html">Corporación municipal</a>
+                    <a href="municipal.html">Directorio municipal</a>
+                </div>
+                </div>
+
                 <div class="nav-item">
-                    <a href="#">Ayuntamiento</a>
-                    <div class="submenu">
-                        <a href="alcaldia.html">Alcaldia</a>
-                        <a href="corporacionMunicipal.html">Corporacion municipal</a>
-                        <a href="alcaldia.html">Tablón de anuncios</a>
+                <button class="submenu-toggle">Áreas</button>
+                <div class="submenu">
+                    <a href="#">Urbanismo</a>
+                    <a href="#">Cultura</a>
+                    <a href="deportes.html">Deportes</a>
+                </div>
+                </div>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
+            <div id="user-section" style="display: none;">
+                <div class="user-container">
+                    <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
+                    <div class="user-menu" id="user-menu" style="display: none;"> 
                     </div>
                 </div>
-                <div class="nav-item">
-                    <a href="#">Áreas</a>
-                    <div class="submenu">
-                        <a href="#">Urbanismo</a>
-                        <a href="#">Cultura</a>
-                        <a href="#">Deportes</a>
-                    </div>
-                </div>
-                <a href="#">Sede Electrónica</a>
-                <a href="#">Noticias</a>
-                <a href="#">Contacto</a>
             </div>
         </div>
+    </div>
     </nav>
     <main>
         <div class="separacion">
             <img src="img/inicio/ayto.jpg" alt="Logo">
-            <h2 class="separacion-titulo">Trámites deportivos</h2>
+            <h2 class="separacion-titulo">Iniciar sesion</h2>
             <div class="div-color"></div>
         </div>
         <div class="main-content">
@@ -145,6 +165,91 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    async function renderUserMenuFromBackend() {
+      const userSection = document.getElementById("user-section");
+      const userMenu = document.getElementById("user-menu");
+      const userIcon = document.getElementById("user-icon-toggle");
+
+      userSection.style.display = "none";
+      userMenu.innerHTML = "";
+
+      try {
+        const res = await fetch("/api/users/session-info", { credentials: "include" });
+        const data = await res.json();
+
+        if (data.authenticated) {
+          userSection.style.display = "flex";
+          if (data.rol === "admin") {
+            const adminLink = document.createElement("a");
+            adminLink.href = "/administrador.html";
+            adminLink.textContent = "Herramientas de Administrador";
+            userMenu.appendChild(adminLink);
+          }
+
+          const misReservasLink = document.createElement("a");
+          misReservasLink.href = "/misReservas.html";
+          misReservasLink.textContent = "Mis reservas";
+          userMenu.appendChild(misReservasLink);
+
+          const logoutLink = document.createElement("a");
+          logoutLink.href = "#";
+          logoutLink.id = "logout";
+          logoutLink.textContent = "Cerrar sesión";
+          userMenu.appendChild(logoutLink);
+        } else {
+          const loginLink = document.createElement("a");
+          loginLink.href = "/login.html";
+          loginLink.textContent = "Iniciar Sesión";
+          userMenu.appendChild(loginLink);
+
+          const registerLink = document.createElement("a");
+          registerLink.href = "/registrar.html";
+          registerLink.textContent = "Registrarse";
+          userMenu.appendChild(registerLink);
+
+          userSection.style.display = "flex";
+        }
+      } catch (e) {
+        userSection.style.display = "none";
+      }
+
+      // Lógica desplegable del icono
+      if (userIcon) {
+        userIcon.onclick = (e) => {
+          e.stopPropagation();
+          userMenu.style.display = userMenu.style.display === "flex" ? "none" : "flex";
+        };
+        document.addEventListener("click", (e) => {
+          if (!userIcon.contains(e.target) && !userMenu.contains(e.target)) {
+            userMenu.style.display = "none";
+          }
+        });
+      }
+    }
+
+    renderUserMenuFromBackend();
+
+    // Logout handler
+    document.addEventListener("click", async function (event) {
+      if (event.target && event.target.id === "logout") {
+        event.preventDefault();
+        const confirmation = confirm("¿Estás seguro de que quieres cerrar sesión?");
+        if (!confirmation) return;
+        const response = await fetch("/api/users/logout", {
+          method: "POST",
+          credentials: "include",
+        });
+        const result = await response.json();
+        if (response.ok) {
+          alert(result.message);
+          window.location.href = "index.html";
+        } else {
+          alert("Error al cerrar sesión: " + result.message);
+        }
+      }
+    });
+  });
         document.addEventListener('DOMContentLoaded', () => {
             checkAuthentication(); // Verificamos si el usuario está autenticado al cargar la página.
         });
@@ -220,5 +325,4 @@
         });
     </script>
 </body>
-
 </html>

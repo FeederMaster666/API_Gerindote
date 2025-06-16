@@ -18,8 +18,13 @@ var usersRouter = require('./routes/users');
 var noticiasRouter = require('./routes/noticias');
 var userController = require('./controllers/userController');
 const espaciosRouter = require('./routes/espacios'); // Añadido
+const stripeWebhook = require('./routes/stripe');
+const stripeRoutes = require('./routes/stripe');
 const actividadesRouter = require('./routes/actividades');
 const reservasActividadesRouter = require('./routes/reservasActividades');
+
+// ⬇️ MONTA EL WEBHOOK ANTES DE express.json()
+app.use('/api/stripe/webhook', require('express').raw({ type: 'application/json' }), stripeWebhook);
 
 
 // view engine setup
@@ -44,11 +49,7 @@ app.use(passport.session());
 
 // CORS
 app.use(cors({
-  origin: [
-    'http://127.0.0.1:5500', // Web
-    'http://192.168.1.131:5500', // Dirección de tu móvil en desarrollo
-    'http://localhost:5500' // Emuladores
-  ], // tu frontend
+  origin: 'http://127.0.0.1:5500',  // tu frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
@@ -66,16 +67,24 @@ app.use('/api/users', usersRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/noticias', noticiasRouter);
 app.use('/api/espacios', espaciosRouter); // Añadido
+app.use('/api/stripe', express.json(), stripeRoutes);
 app.use('/api/actividades', actividadesRouter);
 app.use('/api/reservas-actividades', reservasActividadesRouter);
 const reservasRouter = require('./routes/reservas'); // ⛔ Falta
 app.use('/api/reservas', reservasRouter);
+
+// Endpoint para info de sesión (autenticación y rol)
+app.get('/api/users/session-info', userController.sessionInfo);
+
 //servir imagen portada de las noticias
 app.use('/imagenPortadaNoticias', express.static(path.join(__dirname,'..', 'imagenPortadaNoticias')));
 // Servir imágenes de actividades
 app.use('/imagenesActividades', express.static(path.join(__dirname, '..', 'imagenesActividades')));
-// Endpoint para info de sesión (autenticación y rol)
-app.get('/api/users/session-info', userController.sessionInfo);
+
+
+const inscripcionesRoutes = require('./routes/inscripciones');
+app.use('/api/inscripciones', inscripcionesRoutes);
+
 
 // RENDER personalizado para "/index.html"
 app.get("/index.html", (req, res) => {
