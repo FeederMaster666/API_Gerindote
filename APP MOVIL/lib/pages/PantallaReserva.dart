@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:ayuntamiento_gerindote/services/reservaEspacios.dart';
 
 class PantallaReserva extends StatefulWidget {
@@ -10,7 +11,6 @@ class PantallaReserva extends StatefulWidget {
     Key? key,
     required this.espacio,
     required this.usuarioId,
-
     required this.email,
     required String nombreActividad,
   }) : super(key: key);
@@ -37,155 +37,221 @@ class _PantallaReservaState extends State<PantallaReserva> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Reservar espacio")),
+      backgroundColor: const Color(0xFFF4F4F4),
+      appBar: AppBar(
+        title: Text(
+          'Reservar - ${widget.espacio['nombre'] ?? 'Espacio'}',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+            shadows: [
+              Shadow(
+                color: Colors.black45,
+                offset: Offset(1, 2),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: ListView(
+        child: Column(
           children: [
-            const Text("Selecciona fecha:"),
-            const SizedBox(height: 8),
-            GestureDetector(
-              onTap: () async {
-                final DateTime? picked = await showDatePicker(
-                  context: context,
-                  initialDate: _fechaSeleccionada,
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(const Duration(days: 30)),
-                );
-                if (picked != null) {
-                  setState(() => _fechaSeleccionada = picked);
-                }
-              },
-              child: Row(
-                children: [
-                  const Icon(Icons.calendar_today, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    "${_fechaSeleccionada.day}/${_fechaSeleccionada.month}/${_fechaSeleccionada.year}",
-                    style: const TextStyle(fontSize: 16),
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: TableCalendar(
+                  focusedDay: _fechaSeleccionada,
+                  firstDay: DateTime.now(),
+                  lastDay: DateTime.now().add(const Duration(days: 30)),
+                  calendarFormat: CalendarFormat.month,
+                  onDaySelected: (selectedDay, _) {
+                    setState(() {
+                      _fechaSeleccionada = selectedDay;
+                    });
+                  },
+                  selectedDayPredicate:
+                      (day) => isSameDay(_fechaSeleccionada, day),
+                  calendarStyle: const CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      shape: BoxShape.circle,
+                    ),
+                    todayDecoration: BoxDecoration(
+                      color: Colors.lightGreen,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ],
+                ),
               ),
             ),
+
             const SizedBox(height: 20),
-            const Text("Selecciona hora:"),
-            const SizedBox(height: 8),
-            DropdownButton<String>(
-              value: _horaSeleccionada,
-              items:
-                  horasDisponibles.map((String hora) {
-                    return DropdownMenuItem<String>(
-                      value: hora,
-                      child: Text(hora),
+
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Horas disponibles:',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Horas disponibles con selección
+            Wrap(
+              spacing: 10,
+              children:
+                  horasDisponibles.map((hora) {
+                    final bool selected = hora == _horaSeleccionada;
+                    return ChoiceChip(
+                      label: Text(hora),
+                      selected: selected,
+                      selectedColor: Colors.blueAccent,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          _horaSeleccionada = hora;
+                        });
+                      },
                     );
                   }).toList(),
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() => _horaSeleccionada = value);
-                }
-              },
             ),
+
             const SizedBox(height: 20),
-            const Text("Método de pago:"),
-            const SizedBox(height: 8),
-            DropdownButton<String>(
-              value: _metodoPago,
-              items: const [
-                DropdownMenuItem(value: 'metalico', child: Text('En metálico')),
-                DropdownMenuItem(
-                  value: 'stripe',
-                  child: Text('Stripe (tarjeta)'),
+
+            // Método de pago dropdown estilo tarjeta
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
                 ),
-              ],
-              onChanged: (value) {
-                if (value != null) {
-                  setState(() => _metodoPago = value);
-                }
-              },
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              "Reservado por:",
-              style: TextStyle(fontSize: 15, color: Colors.black54),
-            ),
-            const SizedBox(height: 8),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.person, size: 22),
-              title: Text(
-                widget.usuarioId,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                child: DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    labelText: 'Método de pago',
+                    border: InputBorder.none,
+                  ),
+                  value: _metodoPago,
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'metalico',
+                      child: Text('En metálico'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'stripe',
+                      child: Text('Stripe (tarjeta)'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() => _metodoPago = value);
+                    }
+                  },
                 ),
               ),
-              subtitle: Text(
-                widget.email,
-                style: const TextStyle(fontSize: 13),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Datos usuario reservante info
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 3,
+              child: ListTile(
+                leading: const Icon(
+                  Icons.person,
+                  color: Colors.blueAccent,
+                  size: 28,
+                ),
+                title: Text(
+                  widget.usuarioId,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                subtitle: Text(widget.email),
+              ),
+            ),
+
+            const Spacer(),
+
+            // Botón confirmar reserva
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed:
+                    _isLoading
+                        ? null
+                        : () async {
+                          setState(() => _isLoading = true);
+                          try {
+                            final reservaService = ReservaEspaciosService();
+
+                            if (_metodoPago == 'metalico') {
+                              await reservaService.crearReservaEspacio(
+                                email: widget.email,
+                                espacioId: widget.espacio['_id'],
+                                fecha: _fechaSeleccionada,
+                                hora: _horaSeleccionada,
+                                metodoPago: 'metalico',
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Reserva confirmada."),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                              Navigator.pop(context);
+                            }
+
+                            // Puedes implementar Stripe aquí si lo necesitas
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text("Error al reservar: $e"),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          } finally {
+                            setState(() => _isLoading = false);
+                          }
+                        },
+                child:
+                    _isLoading
+                        ? const CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        )
+                        : const Text(
+                          'CONFIRMAR RESERVA',
+                          style: TextStyle(color: Colors.white),
+                        ),
               ),
             ),
           ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueAccent,
-            minimumSize: const Size(double.infinity, 48),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          onPressed:
-              _isLoading
-                  ? null
-                  : () async {
-                    setState(() => _isLoading = true);
-                    try {
-                      final reservaService = ReservaEspaciosService();
-
-                      if (_metodoPago == 'metalico') {
-                        await reservaService.crearReservaEspacio(
-                          email: widget.email,
-                          espacioId: widget.espacio['_id'],
-                          fecha: _fechaSeleccionada,
-                          hora: _horaSeleccionada,
-                          metodoPago: 'metalico',
-                        );
-
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Reserva confirmada."),
-                            backgroundColor: Colors.green,
-                          ),
-                        );
-                      }
-
-                      // Aquí podrías insertar la lógica para Stripe si lo necesitas más adelante
-                    } catch (e) {
-                      Navigator.pop(context);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Error al reservar: $e"),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    } finally {
-                      setState(() => _isLoading = false);
-                    }
-                  },
-          child:
-              _isLoading
-                  ? const CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2,
-                  )
-                  : const Text(
-                    "CONFIRMAR RESERVA",
-                    style: TextStyle(color: Colors.white),
-                  ),
         ),
       ),
     );
