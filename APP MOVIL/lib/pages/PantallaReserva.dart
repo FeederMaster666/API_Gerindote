@@ -1,6 +1,7 @@
 // Importación de paquetes necesarios para la interfaz, el calendario y el envío HTTP
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:ayuntamiento_gerindote/services/reservaEspacio.dart';
 
 // Widget de pantalla con estado para la reserva de actividades
 class PantallaReserva extends StatefulWidget {

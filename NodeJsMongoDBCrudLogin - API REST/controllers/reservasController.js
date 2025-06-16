@@ -23,6 +23,9 @@ exports.crearReserva = async (req, res) => {
         const nuevaReserva = new Reserva({
             espacio,
             franjaHoraria: new Date(franjaHoraria),
+            estado: metodoPago === 'online' ? 'confirmada' : 'confirmada',
+            estadoPago: metodoPago === 'online' ? 'pendiente' : 'pendiente',
+            metodoPago,
             usuario: correo
         });
 

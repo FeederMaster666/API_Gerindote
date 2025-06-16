@@ -1,8 +1,17 @@
 import 'package:ayuntamiento_gerindote/pages/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart'; // 👈 Añadir esta línea
 
-// Punto de entrada de la aplicación
-void main() => runApp(MiApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 👇 Stripe: aquí el cliente solo necesita cambiar esta clave pública
+  Stripe.publishableKey =
+      'pk_test_XXXXXXXXXXXXXXXXXXXXXXXX'; // CAMBIAR POR CLAVE DEL CLIENTE
+  await Stripe.instance.applySettings(); // 👈 Aplica la configuración
+
+  runApp(MiApp());
+}
 
 // Clase principal de la aplicación
 class MiApp extends StatelessWidget {
@@ -12,29 +21,21 @@ class MiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.lightBlueAccent, // Cambia esto a tu color principal
-          ),
-          useMaterial3: true, // Si usas Material 3
-        // Personaliza el color del cursor y selección de texto
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
+        useMaterial3: true,
         textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.white, // Color del cursor
-          selectionColor: Colors.lightBlueAccent, // Color de selección de texto
-          selectionHandleColor: Colors.lightBlueAccent, // Color del "handle"
+          cursorColor: Colors.white,
+          selectionColor: Colors.lightBlueAccent,
+          selectionHandleColor: Colors.lightBlueAccent,
         ),
-        // Personaliza el color de los checkbox
         checkboxTheme: CheckboxThemeData(
           checkColor: WidgetStatePropertyAll(Colors.white),
-          //modificar borde cehckbox
-          side: const BorderSide(
-            color: Colors.black, // Border color
-            width: 1.5,
-          ),
+          side: const BorderSide(color: Colors.black, width: 1.5),
         ),
       ),
-      debugShowCheckedModeBanner:false, // Oculta la etiqueta de "debug" en la app
-      title: "Mi App", // Título de la aplicación
-      home: Home(), // Página principal que se mostrará al iniciar
+      debugShowCheckedModeBanner: false,
+      title: "Mi App",
+      home: Home(),
     );
   }
 }
@@ -50,10 +51,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset:
-          true, // Ajusta el diseño cuando aparece el teclado
-      body: Login(), // Carga la pantalla de login
-    );
+    return Scaffold(resizeToAvoidBottomInset: true, body: Login());
   }
 }
