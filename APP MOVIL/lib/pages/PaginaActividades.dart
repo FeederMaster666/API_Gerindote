@@ -1,6 +1,7 @@
 // Importa los paquetes necesarios de Flutter y una pantalla personalizada
 import 'package:flutter/material.dart';
 import 'package:ayuntamiento_gerindote/pages/PantallaReserva.dart';
+// Asegúrate de que el archivo PantallaReserva.dart contiene una clase llamada PantallaReserva
 
 // Define un widget sin estado (StatelessWidget) llamado PaginaActividades
 class PaginaActividades extends StatelessWidget {
@@ -156,8 +157,12 @@ class PaginaActividades extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder:
-                        (context) =>
-                            PantallaReserva(nombreActividad: activityName),
+                        (context) => PantallaReserva(
+                          nombreActividad: activityName,
+                          espacio: {'nombre': title},
+                          usuarioId: '', // TODO: Provide actual user ID
+                          email: '', // TODO: Provide actual user email
+                        ),
                   ),
                 );
               },
