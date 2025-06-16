@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Reservar Espacio Deportivo</title>
-  <link rel="stylesheet" href="stylesheets/index.css">
   <link rel="stylesheet" href="stylesheets/reservas.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="stylesheets/index.css">
   <style>
     .hora-label {
       font-weight: bold;
@@ -35,8 +35,60 @@
     }
   </style>
 </head>
+
+<nav>
+    <div class="barra-navegacion">
+        <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+
+        <!-- Menú hamburguesa -->
+        <input type="checkbox" id="menu-toggle" />
+        <label for="menu-toggle" class="menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        </label>
+
+        <!-- Enlaces -->
+        
+        <div class="nav-links">
+            <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
+            <div class="nav-item">
+                <button class="submenu-toggle">Ayuntamiento</button>
+                <div class="submenu">
+                    <a href="alcaldia.html">Alcaldía</a>
+                    <a href="corporacionMunicipal.html">Corporación municipal</a>
+                    <a href="municipal.html">Directorio municipal</a>
+                </div>
+                </div>
+
+                <div class="nav-item">
+                <button class="submenu-toggle">Áreas</button>
+                <div class="submenu">
+                    <a href="#">Urbanismo</a>
+                    <a href="#">Cultura</a>
+                    <a href="deportes.html">Deportes</a>
+                </div>
+                </div>
+            <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+            <a href="noticias.html">Noticias</a>
+            <a href="contacto.html">Contacto</a>
+            <div id="user-section" style="display: none;">
+                <div class="user-container">
+                    <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
+                    <div class="user-menu" id="user-menu" style="display: none;"> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </nav>
 <body>
   <main>
+    <div class="separacion">
+            <img src="img/inicio/ayto.jpg" alt="Logo">
+            <h2 class="separacion-titulo">Reservar</h2>
+            <div class="div-color"></div>
+        </div>
     <div class="reserva-container container mt-5">
       <h2>Reservar Espacio Deportivo</h2>
       <form id="form-reserva">
@@ -53,165 +105,67 @@
     </div>
   </main>
 
-  <script>
-    const nombresBonitos = {
-      "Pabellon": "Pabellón Polideportivo",
-      "Pistas de padel": "Pistas de Pádel",
-      "Pistas de tenis": "Pistas de Tenis",
-      "Salon Cultural": "Salón Cultural"
-    };
-
-    function getHoras() {
-      const horas = [];
-      // Mañana: 11:00 – 13:00 (11–12, 12–13)
-      for (let h = 11; h < 13; h++) {
-        horas.push({ inicio: h, fin: h + 1 });
-      }
-      // Tarde: 17:00 – 21:00 (17–18, 18–19, 19–20, 20–21)
-      for (let h = 17; h < 21; h++) {
-        horas.push({ inicio: h, fin: h + 1 });
-      }
-      return horas;
-    }
-
-    function obtenerSemanaActual() {
-      const hoy = new Date();
-      const diaActual = hoy.getDay();
-      const lunes = new Date(hoy);
-      lunes.setDate(hoy.getDate() - (diaActual === 0 ? 6 : diaActual - 1));
-      const dias = [];
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(lunes);
-        d.setDate(lunes.getDate() + i);
-        dias.push(d.toISOString().split('T')[0]);
-      }
-      return dias;
-    }
-
-    async function cargarEspacio() {
-      const params = new URLSearchParams(window.location.search);
-      let espacio = params.get('espacio');
-      if (!espacio) {
-        const res = await fetch('/api/espacios');
-        const espacios = await res.json();
-        if (espacios.length > 0) espacio = espacios[0].nombre;
-      }
-      document.getElementById('espacio').value = espacio || '';
-      document.getElementById('espacio-nombre').value = nombresBonitos[espacio] || espacio || '';
-    }
-
-    async function mostrarHorasSemana(fechas) {
-      const container = document.getElementById('horas-horarias-container');
-      const horas = getHoras();
-      const espacio = document.getElementById('espacio').value;
-
-      let reservas = [];
-      try {
-        const res = await fetch(`/api/reservas?espacio=${encodeURIComponent(espacio)}&fechas=${encodeURIComponent(JSON.stringify(fechas))}`);
-        reservas = await res.json();
-      } catch {}
-
-      const reservadas = new Set(reservas.map(r => {
-        const d = new Date(r.franjaHoraria);
-        return d.toISOString().slice(0,16);
-      }));
-
-      let html = '<table class="horas-table"><thead><tr><th></th>';
-      for (const fecha of fechas) {
-        const d = new Date(fecha);
-        const dias = ['Dom.', 'Lun.', 'Mar.', 'Mié.', 'Jue.', 'Vie.', 'Sáb.'];
-        const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
-        const label = `${dias[d.getDay()]} ${d.getDate()} ${meses[d.getMonth()]}`;
-        html += `<th>${label}</th>`;
-      }
-      html += '</tr></thead><tbody>';
-
-      for (const bloque of horas) {
-        const horaInicio = bloque.inicio.toString().padStart(2, '0') + ':00';
-        const horaFin = bloque.fin.toString().padStart(2, '0') + ':00';
-        html += `<tr><td class="hora-label">${horaInicio} – ${horaFin}</td>`;
-        for (const fecha of fechas) {
-          const keyISO = new Date(`${fecha}T${horaInicio}`).toISOString().slice(0,16);
-          const reservado = reservadas.has(keyISO);
-          html += `<td class="${reservado ? 'celda-reservada' : 'celda-disponible'}">`;
-          if (reservado) {
-            html += `<label>No disponible</label>`;
-          } else {
-            html += `<label>
-              <input type="checkbox" class="hora-checkbox" value="${fecha}|${horaInicio}">
-              Reservar
-            </label>`;
-          }
-          html += '</td>';
-        }
-        html += '</tr>';
-      }
-
-      html += '</tbody></table>';
-      container.innerHTML = html;
-
-      document.querySelectorAll('.hora-checkbox').forEach(cb => {
-        cb.addEventListener('change', function() {
-          const td = cb.closest('td');
-          td.classList.toggle('selected', cb.checked);
-        });
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      await cargarEspacio();
-
-      const diasSemana = obtenerSemanaActual();
-      document.getElementById('fechas-semana').value = diasSemana.join(',');
-      mostrarHorasSemana(diasSemana);
-
-      document.getElementById('form-reserva').onsubmit = async function(e) {
-        e.preventDefault();
-        const espacio = document.getElementById('espacio').value;
-        const fechas = diasSemana;
-        const msg = document.getElementById('reserva-msg');
-        msg.textContent = '';
-
-        const checks = document.querySelectorAll('.hora-checkbox:checked');
-        if (!fechas.length || !checks.length || !espacio) {
-          msg.textContent = 'Por favor, selecciona al menos una franja horaria.';
-          msg.style.color = 'red';
-          return;
-        }
-
-        const reservas = [];
-        checks.forEach(cb => {
-          const [fecha, hora] = cb.value.split('|');
-          reservas.push({
-            espacio,
-            franjaHoraria: new Date(`${fecha}T${hora}:00`)
-          });
-        });
-
-        let ok = 0, fail = 0;
-        for (const reserva of reservas) {
-          try {
-            const res = await fetch('/api/reservas', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(reserva)
-            });
-            if (res.ok) ok++;
-            else fail++;
-          } catch {
-            fail++;
-          }
-        }
-        if (ok) {
-          msg.textContent = `Reservas realizadas correctamente: ${ok}. Fallidas: ${fail ? fail : 0}`;
-          msg.style.color = 'green';
-        } else {
-          msg.textContent = 'No se pudo realizar ninguna reserva.';
-          msg.style.color = 'red';
-        }
-        mostrarHorasSemana(fechas);
-      };
-    });
-  </script>
+  <footer>
+        <div class="footer-section">
+            <div class="div1">
+                <h2>Información</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="div2">
+                <h2>Explora</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+    
+            <div class="div3">
+                <h2>Soporte</h2>
+                <ul>
+                    <li><a href="#faq">Preguntas frecuentes</a></li>
+                    <li><a href="#support">Soporte técnico</a></li>
+                    <li><a href="#careers">Trabaja con nosotros</a></li>
+                </ul>
+            </div>
+    
+            <div class="div4">
+                <h2>Legal</h2>
+                <ul>
+                    <li><a href="#terms">Términos de servicio</a></li>
+                    <li><a href="#privacy">Política de privacidad</a></li>
+                    <li><a href="#cookies">Política de cookies</a></li>
+                    <li><a href="#legal">Aviso legal</a></li>
+                    <li><a href="#sitemap">Mapa del sitio</a></li>
+                </ul>
+            </div>
+    
+            <div class="brand">
+                <img src="img/inicio/gerindote.png">
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <ul>
+                <li><p>&copy; 2025 Ayto Gerindote</p></li>
+                <li><a href="#terms">Términos de servicio</a></li>
+                <li><a href="#privacy">Política de privacidad</a></li>
+                <li><a href="#choices">Opciones de privacidad</a></li>
+            </ul>
+            <div class="contactos">
+                <a href="https://www.instagram.com" target="_blank"><img src="img/contacto/icons8-instagram-old-50.png" alt="Instagram"></a>
+                <a href="https://www.facebook.com" target="_blank"><img src="img/contacto/icons8-facebook-50.png" alt="Facebook"></a>
+                <a href="https://www.twitter.com" target="_blank"><img src="img/contacto/icons8-twitter-50.png" alt="Twitter"></a>
+                <a href="https://www.youtube.com" target="_blank"><img src="img/contacto/icons8-youtube-50.png" alt="YouTube"></a>
+                <a href="https://www.spotify.com" target="_blank"><img src="img/contacto/icons8-tiktok-50.png" alt="Tiktok"></a>
+            </div>
+        </div>
+    </footer>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="js/reserva.js"></script>
 </body>
 </html>

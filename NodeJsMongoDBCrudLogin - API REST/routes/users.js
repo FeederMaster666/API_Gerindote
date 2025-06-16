@@ -51,6 +51,21 @@ router.post('/logout', (req, res) => {
 });
 });
 
+// Empadronar o desempadronar usuario (solo admin)
+router.patch('/:id/empadronar', isAuthenticated, isAdmin, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+    user.isEmpadronado = !user.isEmpadronado;
+    await user.save();
+    res.json({ message: user.isEmpadronado ? 'Usuario empadronado' : 'Usuario desemparonado', isEmpadronado: user.isEmpadronado });
+  } catch (error) {
+    console.error(error); // <-- Añade esto para ver el error en consola
+    res.status(500).json({ message: 'Error al actualizar empadronamiento' });
+  }
+});
+
+
 // Ensure all routes are prefixed with '/api/users'
 router.get("/", isAuthenticated, isAdmin, getAllUsers); // Matches GET /api/users
 router.put("/:id/role", isAuthenticated, isAdmin, updateUserRole); // Matches PUT /api/users/:id/role
