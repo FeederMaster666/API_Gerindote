@@ -25,13 +25,10 @@ class ReservaEspaciosService {
     required String espacioId,
     required DateTime fecha,
     required String hora,
-    required String metodoPago, // 'stripe'
+    required String metodoPago,
   }) async {
-    // 1. Obtener el email real del usuario desde el backend
-    final usuarioEmail = await obtenerEmailUsuario(email);
-
     final body = {
-      'usuario': usuarioEmail,
+      'usuario': email,
       'espacio': espacioId,
       'franjaHoraria': '${fecha.toIso8601String().split('T')[0]}T$hora:00.000Z',
       'metodoPago': metodoPago,

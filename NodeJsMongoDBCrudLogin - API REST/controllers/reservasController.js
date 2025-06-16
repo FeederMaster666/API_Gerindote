@@ -3,9 +3,9 @@ const Reserva = require('../models/Reserva');
 // Crear una reserva
 exports.crearReserva = async (req, res) => {
     try {
-        const { espacio, franjaHoraria, correo } = req.body;
+        const { espacio, franjaHoraria, usuario } = req.body;
 
-        if (!espacio || !franjaHoraria || !correo) {
+        if (!espacio || !franjaHoraria || !usuario) {
             return res.status(400).json({ mensaje: 'Faltan datos' });
         }
 

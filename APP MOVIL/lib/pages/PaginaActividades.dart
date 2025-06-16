@@ -1,86 +1,72 @@
-// Importa los paquetes necesarios de Flutter y una pantalla personalizada
 import 'package:flutter/material.dart';
 import 'package:ayuntamiento_gerindote/pages/PantallaReserva.dart';
-// Asegúrate de que el archivo PantallaReserva.dart contiene una clase llamada PantallaReserva
+import 'package:ayuntamiento_gerindote/services/AuthService.dart'; // Asumo que AuthService está aquí
+import 'package:shared_preferences/shared_preferences.dart';
 
-// Define un widget sin estado (StatelessWidget) llamado PaginaActividades
-class PaginaActividades extends StatelessWidget {
-  // Variable final para el título, se recibe por constructor
+class PaginaActividades extends StatefulWidget {
   final String title;
 
-  // Constructor con parámetro requerido 'title'
-  PaginaActividades({Key? key, required this.title}) : super(key: key);
-  // Lista de actividades por instalación (simulación de datos)
-  final Map<String, List<Map<String, String>>> actividadesPorInstalacion = {
-    "Pistas Exteriores": [
-      {
-        "nombre": "Pista de Padel Nº 1",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0026.jpg",
-      },
-      {
-        "nombre": "Pista de Padel Nº 2",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0009.jpg",
-      },
-      {
-        "nombre": "Pista de Tenis y/o baloncesto",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0006.jpg",
-      },
-      {
-        "nombre": "Mesa ping pong Nº 1",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0013.jpg",
-      },
-      {
-        "nombre": "Mesa ping pong Nº 2",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0011.jpg",
-      },
-      {
-        "nombre": "Campo Voley Playa",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200708-wa0004.jpg",
-      },
-    ],
-    "Campo de fútbol": [
-      {
-        "nombre": "Campo Fútbol 7 Nº 1",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0012.jpg",
-      },
-      {
-        "nombre": "Campo Fútbol 7 Nº 2",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0014.jpg",
-      },
-    ],
-    "Gimnasio Municipal": [
-      {
-        "nombre": "Parque Calistenia",
-        "imagen":
-            "https://gerindote.wordpress.com/wp-content/uploads/2020/07/img-20200702-wa0025.jpg",
-      },
-    ],
-    // Puedes añadir más según tus categorías...
-  };
+  const PaginaActividades({Key? key, required this.title}) : super(key: key);
+
+  @override
+  _PaginaActividadesState createState() => _PaginaActividadesState();
+}
+
+class _PaginaActividadesState extends State<PaginaActividades> {
+  final AuthService _authService = AuthService();
+
+  List<dynamic> espacios = [];
+  bool isLoading = true;
+  String? errorMessage;
+
+  String? usuarioId;
+  String? userEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+    _fetchEspacios();
+  }
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userEmail = prefs.getString('user_email');
+      usuarioId = prefs.getString(
+        'user_id',
+      ); // <-- Necesitas guardar el id en SharedPreferences cuando inicies sesión
+    });
+  }
+
+  Future<void> _fetchEspacios() async {
+    try {
+      final data = await _authService.getEspaciosPorTipo(widget.title);
+      setState(() {
+        espacios = data;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final actividades = actividadesPorInstalacion[title] ?? [];
     return Scaffold(
-      // AppBar con título y botón de perfil
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent, // Color de fondo del AppBar
+        backgroundColor: Colors.blueAccent,
         centerTitle: true,
         title: Text(
-          "$title", // Muestra el título dinámico
+          widget.title,
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            letterSpacing: 1, // Espaciado entre letras
+            letterSpacing: 1,
             shadows: [
               Shadow(
                 color: Colors.black45,
@@ -100,47 +86,53 @@ class PaginaActividades extends StatelessWidget {
         ],
       ),
       body:
-          actividades.isEmpty
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : errorMessage != null
+              ? Center(child: Text("Error: $errorMessage"))
+              : espacios.isEmpty
               ? const Center(child: Text("No hay actividades disponibles."))
               : ListView.builder(
-                itemCount: actividades.length,
+                itemCount: espacios.length,
                 itemBuilder: (context, index) {
-                  final actividad = actividades[index];
+                  final espacio = espacios[index];
                   return _buildActivityCard(
                     context,
-                    actividad["nombre"]!,
-                    actividad["imagen"]!,
+                    espacio['nombre'] ?? 'Nombre desconocido',
+                    espacio['imagen'] ?? '',
                   );
                 },
               ),
     );
   }
 
-  // Método auxiliar para construir una tarjeta (Card) de actividad
   Widget _buildActivityCard(
     BuildContext context,
     String activityName,
     String imageUrl,
   ) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Margen
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12), // Bordes redondeados
-        side: BorderSide(
-          color: Colors.blueGrey.shade200, // Color del borde
-          width: 1,
-        ), // Borde visible
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: Colors.blueGrey.shade200, width: 1),
       ),
-      elevation: 2, // Sombra suave
+      elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.all(12.0), // Espaciado interno
+        padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
-            // Avatar circular con la imagen de la actividad
-            CircleAvatar(backgroundImage: NetworkImage(imageUrl), radius: 30),
-            const SizedBox(width: 16), // Espacio entre imagen y texto
+            CircleAvatar(
+              backgroundImage:
+                  imageUrl.isNotEmpty ? NetworkImage(imageUrl) : null,
+              radius: 30,
+              child:
+                  imageUrl.isEmpty
+                      ? const Icon(Icons.image_not_supported)
+                      : null,
+            ),
+            const SizedBox(width: 16),
             Expanded(
-              // Nombre de la actividad
               child: Text(
                 activityName,
                 style: const TextStyle(
@@ -149,36 +141,40 @@ class PaginaActividades extends StatelessWidget {
                 ),
               ),
             ),
-            // Botón para seleccionar la actividad
             ElevatedButton(
               onPressed: () {
-                // Navega a la pantalla de reserva, pasando el nombre de la actividad
+                if (usuarioId == null || userEmail == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Usuario no autenticado')),
+                  );
+                  return;
+                }
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder:
                         (context) => PantallaReserva(
                           nombreActividad: activityName,
-                          espacio: {'nombre': title},
-                          usuarioId: '', // TODO: Provide actual user ID
-                          email: '', // TODO: Provide actual user email
+                          espacio: {'nombre': widget.title},
+                          usuarioId: usuarioId!,
+                          email: userEmail!,
                         ),
                   ),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent, // Color del botón
+                backgroundColor: Colors.blueAccent,
                 textStyle: const TextStyle(fontSize: 16),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10), // Bordes redondeados
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                   vertical: 6,
-                ), // Tamaño interno del botón
+                ),
               ),
               child: const Text(
-                "Seleccionar", // Texto del botón
+                "Seleccionar",
                 style: TextStyle(color: Colors.white, fontSize: 12),
               ),
             ),

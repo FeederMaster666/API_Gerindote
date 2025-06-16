@@ -6,13 +6,14 @@ class PantallaReserva extends StatefulWidget {
   final Map<String, dynamic> espacio;
   final String usuarioId;
   final String email;
+  final String nombreActividad; // <-- añadido
 
   const PantallaReserva({
     Key? key,
     required this.espacio,
     required this.usuarioId,
     required this.email,
-    required String nombreActividad,
+    required this.nombreActividad, // <-- añadido
   }) : super(key: key);
 
   @override
@@ -40,7 +41,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
       backgroundColor: const Color(0xFFF4F4F4),
       appBar: AppBar(
         title: Text(
-          'Reservar - ${widget.espacio['nombre'] ?? 'Espacio'}',
+          'Reservar ${widget.nombreActividad}', // uso del parámetro
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
