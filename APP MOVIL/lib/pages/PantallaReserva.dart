@@ -57,9 +57,10 @@ class _PantallaReservaState extends State<PantallaReserva> {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
               shape: RoundedRectangleBorder(
@@ -96,17 +97,13 @@ class _PantallaReservaState extends State<PantallaReserva> {
 
             const SizedBox(height: 20),
 
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Horas disponibles:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+            const Text(
+              'Horas disponibles:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 10),
 
-            // Horas disponibles con selección
             Wrap(
               spacing: 10,
               children:
@@ -127,7 +124,6 @@ class _PantallaReservaState extends State<PantallaReserva> {
 
             const SizedBox(height: 20),
 
-            // Método de pago dropdown estilo tarjeta
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -165,7 +161,6 @@ class _PantallaReservaState extends State<PantallaReserva> {
 
             const SizedBox(height: 20),
 
-            // Datos usuario reservante info
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -188,9 +183,8 @@ class _PantallaReservaState extends State<PantallaReserva> {
               ),
             ),
 
-            const Spacer(),
+            const SizedBox(height: 30),
 
-            // Botón confirmar reserva
             SizedBox(
               width: double.infinity,
               height: 48,
@@ -227,7 +221,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                               Navigator.pop(context);
                             }
 
-                            // Puedes implementar Stripe aquí si lo necesitas
+                            // Aquí puedes implementar pago con Stripe si quieres
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
