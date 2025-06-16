@@ -4,17 +4,17 @@ import 'package:ayuntamiento_gerindote/services/reservaEspacios.dart';
 
 class PantallaReserva extends StatefulWidget {
   final Map<String, dynamic> espacio;
-  final String usuarioId;
+  final String nombre;
   final String email;
-  final String nombreActividad; // <-- añadido
+  final String nombreActividad;
 
   const PantallaReserva({
-    Key? key,
+    super.key,
     required this.espacio,
-    required this.usuarioId,
+    required this.nombre,
     required this.email,
-    required this.nombreActividad, // <-- añadido
-  }) : super(key: key);
+    required this.nombreActividad,
+  });
 
   @override
   State<PantallaReserva> createState() => _PantallaReservaState();
@@ -23,7 +23,6 @@ class PantallaReserva extends StatefulWidget {
 class _PantallaReservaState extends State<PantallaReserva> {
   DateTime _fechaSeleccionada = DateTime.now();
   String _horaSeleccionada = '10:00';
-  bool _isLoading = false;
   String _metodoPago = 'metalico';
 
   final List<String> horasDisponibles = [
@@ -41,7 +40,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
       backgroundColor: const Color(0xFFF4F4F4),
       appBar: AppBar(
         title: Text(
-          'Reservar ${widget.nombreActividad}', // uso del parámetro
+          'Reservar ${widget.nombreActividad}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -58,9 +57,10 @@ class _PantallaReservaState extends State<PantallaReserva> {
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
               shape: RoundedRectangleBorder(
@@ -94,20 +94,12 @@ class _PantallaReservaState extends State<PantallaReserva> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Horas disponibles:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+            const Text(
+              'Horas disponibles:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-
             const SizedBox(height: 10),
-
-            // Horas disponibles con selección
             Wrap(
               spacing: 10,
               children:
@@ -117,7 +109,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                       label: Text(hora),
                       selected: selected,
                       selectedColor: Colors.blueAccent,
-                      onSelected: (bool selected) {
+                      onSelected: (_) {
                         setState(() {
                           _horaSeleccionada = hora;
                         });
@@ -125,10 +117,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                     );
                   }).toList(),
             ),
-
             const SizedBox(height: 20),
-
-            // Método de pago dropdown estilo tarjeta
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -163,10 +152,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
-
-            // Datos usuario reservante info
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -179,7 +165,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                   size: 28,
                 ),
                 title: Text(
-                  widget.usuarioId,
+                  widget.nombre,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -188,10 +174,7 @@ class _PantallaReservaState extends State<PantallaReserva> {
                 subtitle: Text(widget.email),
               ),
             ),
-
-            const Spacer(),
-
-            // Botón confirmar reserva
+            const SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
               height: 48,
@@ -202,59 +185,162 @@ class _PantallaReservaState extends State<PantallaReserva> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed:
-                    _isLoading
-                        ? null
-                        : () async {
-                          setState(() => _isLoading = true);
-                          try {
-                            final reservaService = ReservaEspaciosService();
+                onPressed: () async {
+                  final espacioNombre = widget.espacio['nombre'];
 
-                            if (_metodoPago == 'metalico') {
-                              await reservaService.crearReservaEspacio(
-                                email: widget.email,
-                                espacioId: widget.espacio['_id'],
-                                fecha: _fechaSeleccionada,
-                                hora: _horaSeleccionada,
-                                metodoPago: 'metalico',
-                              );
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Reserva confirmada."),
-                                  backgroundColor: Colors.green,
-                                ),
-                              );
-                              Navigator.pop(context);
-                            }
-
-                            // Puedes implementar Stripe aquí si lo necesitas
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("Error al reservar: $e"),
-                                backgroundColor: Colors.red,
-                              ),
-                            );
-                          } finally {
-                            setState(() => _isLoading = false);
-                          }
-                        },
-                child:
-                    _isLoading
-                        ? const CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        )
-                        : const Text(
-                          'CONFIRMAR RESERVA',
-                          style: TextStyle(color: Colors.white),
+                  final confirmado = await showDialog<bool>(
+                    context: context,
+                    barrierDismissible: false,
+                    builder:
+                        (_) => ReservaEspacioDialog(
+                          espacio: espacioNombre,
+                          email: widget.email,
+                          nombre: widget.nombre,
+                          fecha: _fechaSeleccionada,
+                          hora: _horaSeleccionada,
+                          metodoPago: _metodoPago,
                         ),
+                  );
+
+                  if (confirmado == true) {
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Reserva confirmada."),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text(
+                  'CONFIRMAR RESERVA',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class ReservaEspacioDialog extends StatefulWidget {
+  final String espacio;
+  final String email;
+  final String nombre;
+  final DateTime fecha;
+  final String hora;
+  final String metodoPago;
+
+  const ReservaEspacioDialog({
+    Key? key,
+    required this.espacio,
+    required this.email,
+    required this.nombre,
+    required this.fecha,
+    required this.hora,
+    required this.metodoPago,
+  }) : super(key: key);
+
+  @override
+  State<ReservaEspacioDialog> createState() => _ReservaEspacioDialogState();
+}
+
+class _ReservaEspacioDialogState extends State<ReservaEspacioDialog> {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text(
+        "Confirmar reserva",
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Espacio: ${widget.espacio}"),
+          const SizedBox(height: 10),
+          Text("Fecha: ${widget.fecha.toLocal().toString().split(' ')[0]}"),
+          Text("Hora: ${widget.hora}"),
+          const SizedBox(height: 20),
+          const Text(
+            "Persona a cargo de la reserva:",
+            style: TextStyle(fontSize: 15, color: Colors.black54),
+          ),
+          const SizedBox(height: 8),
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.person),
+            title: Text(widget.nombre),
+            subtitle: Text(widget.email),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            "Método de pago: ${widget.metodoPago == 'metalico' ? 'En metálico' : 'Stripe (tarjeta)'}",
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: _isLoading ? null : () => Navigator.pop(context, false),
+          child: const Text("CANCELAR", style: TextStyle(color: Colors.grey)),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.lightBlueAccent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+          onPressed:
+              _isLoading
+                  ? null
+                  : () async {
+                    setState(() => _isLoading = true);
+                    try {
+                      final reservaService = ReservaEspaciosService();
+                      await reservaService.crearReservaEspacio(
+                        email: widget.email,
+                        nombre: widget.espacio,
+                        fecha: widget.fecha,
+                        hora: widget.hora,
+                        metodoPago: widget.metodoPago,
+                      );
+
+                      Navigator.pop(context, true);
+                    } catch (e) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Error al reservar: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      Navigator.pop(context, false);
+                    } finally {
+                      setState(() => _isLoading = false);
+                    }
+                  },
+          child:
+              _isLoading
+                  ? const SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                  : const Text(
+                    "CONFIRMAR RESERVA",
+                    style: TextStyle(color: Colors.white),
+                  ),
+        ),
+      ],
     );
   }
 }

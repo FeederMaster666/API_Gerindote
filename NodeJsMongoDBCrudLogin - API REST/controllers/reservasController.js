@@ -1,40 +1,42 @@
 const Reserva = require('../models/Reserva');
 
-// Crear una reserva
+const User = require('../models/user'); // modelo de usuario
+
 exports.crearReserva = async (req, res) => {
-    try {
-        const { espacio, franjaHoraria, usuario } = req.body;
+  try {
+    const { usuario: email, espacio, franjaHoraria, metodoPago } = req.body;
 
-        if (!espacio || !franjaHoraria || !usuario) {
-            return res.status(400).json({ mensaje: 'Faltan datos' });
-        }
+    console.log('--- BODY RECIBIDO EN BACKEND ---');
+    console.log('Email:', email);
+    console.log('Espacio:', espacio);
+    console.log('Franja Horaria:', franjaHoraria);
+    console.log('Metodo de Pago:', metodoPago);
 
-        // Buscar si ya hay reserva en ese espacio y franja horaria
-        const conflicto = await Reserva.findOne({
-            espacio,
-            franjaHoraria: new Date(franjaHoraria)
-        });
+    const user = await User.findOne({ email });
 
-        if (conflicto) {
-            return res.status(409).json({ mensaje: 'Ese horario ya está reservado' });
-        }
-
-        // O puedes directamente almacenar el email como campo "usuario"
-        const nuevaReserva = new Reserva({
-            espacio,
-            franjaHoraria: new Date(franjaHoraria),
-            usuario: correo
-        });
-
-        await nuevaReserva.save();
-
-        res.status(201).json({ mensaje: 'Reserva confirmada', reserva: nuevaReserva });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensaje: 'Error en el servidor' });
+    if (!user) {
+      console.error('Usuario no encontrado en la base de datos');
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
+
+    const nuevaReserva = new Reserva({
+      usuario: user._id, // ✅ Usa el ID real
+      espacio,
+      franjaHoraria,
+      metodoPago,
+    });
+
+    await nuevaReserva.save();
+
+    res.status(201).json({ success: true, reserva: nuevaReserva });
+  } catch (error) {
+    console.error('Error al crear reserva:', error);
+    res.status(500).json({ error: 'Error al crear la reserva', detalle: error.message });
+  }
 };
 
+
+// Listar reservas con filtros
 exports.listarReservas = async (req, res) => {
   try {
     const { espacio, usuario, fechas } = req.query;
