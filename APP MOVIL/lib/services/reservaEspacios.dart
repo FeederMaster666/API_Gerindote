@@ -1,23 +1,9 @@
+// lib/services/reserva_espacios_service.dart
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 class ReservaEspaciosService {
-  static const _baseUrl = 'http://10.0.2.2:3000/api';
-
-  /// Obtiene el email del usuario desde el backend.
-  Future<String> obtenerEmailUsuario(String email) async {
-    final resp = await http.get(
-      Uri.parse('$_baseUrl/users/mobile/email/$email'),
-      headers: {'Content-Type': 'application/json'},
-    );
-    if (resp.statusCode == 200) {
-      final data = jsonDecode(resp.body);
-      return data['email'];
-    } else {
-      throw Exception('No se pudo obtener la información del usuario');
-    }
-  }
+  static const _baseUrl = 'http://10.0.2.2:3000/api/reservas';
 
   /// Crea la reserva en tu API una vez el pago ha sido exitoso.
   Future<void> crearReservaEspacio({
@@ -34,7 +20,7 @@ class ReservaEspaciosService {
       'metodoPago': metodoPago,
     };
     final resp = await http.post(
-      Uri.parse('$_baseUrl/reservas'),
+      Uri.parse('$_baseUrl'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(body),
     );
