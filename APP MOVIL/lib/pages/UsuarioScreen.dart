@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class UsuarioScreen extends StatelessWidget {
   const UsuarioScreen({super.key});
-
+  //las imagenes importadas y el logout en assets dan error, no entiendo porque. En otro proyecto si funcionan
   // Lista de apartados con su imagen de asset y widget destino.
   static final List<_AjusteItem> items = [
     _AjusteItem('Mi cuenta', "lib/assets/icon_editarUsuario.png", ProximamenteScreen()),
@@ -42,7 +42,7 @@ class UsuarioScreen extends StatelessWidget {
         decoration: BoxDecoration(
           // Fondo de pantalla con imagen
           image: DecorationImage(
-          image: NetworkImage("https://mediaim.expedia.com/destination/2/703c79390a1c88f11c4a683c0d670a7f.jpg?impolicy=fcrop&w=512&h=288&q=medium"),
+          image: NetworkImage("https://img.freepik.com/vector-gratis/fondo-tecnologia-abstracta-azul-degradado_23-2149213765.jpg?semt=ais_hybrid&w=740"),
             fit: BoxFit.cover,
             onError: (exception, stackTrace) {
               // Aquí podrías setear un fondo alternativo o loguear el error
@@ -85,8 +85,8 @@ class _AjusteItem {
 
 class _AjusteTile extends StatelessWidget {
   final _AjusteItem item;
-  const _AjusteTile({required this.item});
-
+  _AjusteTile({required this.item});
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +111,7 @@ class _AjusteTile extends StatelessWidget {
           if (confirmed == true) {
             try {
               // Borrar datos de sesión (SharedPreferences)
-              //_authService.logout();
+              _authService.logout();
               // Navegar al login
               Navigator.pushAndRemoveUntil(
                 context,
@@ -135,12 +135,12 @@ class _AjusteTile extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
+          /*Image.asset(
             item.assetIcono,
             width: 72, // Más grande, ajústalo a tu gusto
             height: 72,
             fit: BoxFit.contain,
-          ),
+          ),*/
           const SizedBox(height: 10),
           Text(
             item.titulo,

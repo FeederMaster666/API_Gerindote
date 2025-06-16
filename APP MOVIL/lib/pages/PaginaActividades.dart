@@ -1,4 +1,5 @@
 // Importa los paquetes necesarios de Flutter y una pantalla personalizada
+import 'package:ayuntamiento_gerindote/pages/UsuarioScreen.dart';
 import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:ayuntamiento_gerindote/pages/PantallaReserva.dart';
@@ -96,6 +97,10 @@ class PaginaActividades extends StatelessWidget {
             icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               // Acción futura (a definir)
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UsuarioScreen()),
+              );
             },
           ),
         ],

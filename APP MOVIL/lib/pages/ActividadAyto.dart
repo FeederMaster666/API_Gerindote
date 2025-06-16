@@ -1,4 +1,5 @@
 import 'package:ayuntamiento_gerindote/pages/CrearActividad.dart';
+import 'package:ayuntamiento_gerindote/pages/UsuarioScreen.dart';
 import 'package:ayuntamiento_gerindote/services/ActividadesMunicipalesService.dart';
 import 'package:ayuntamiento_gerindote/services/AuthService.dart';
 import 'package:ayuntamiento_gerindote/pages/ActividadAytoDetalles.dart';
@@ -91,7 +92,10 @@ class _EventosAytoState extends State<EventosAyto> {
             icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               // Acción al presionar el icono de usuario (por implementar)
-              
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UsuarioScreen()),
+              );
             },
           ),
         ],
