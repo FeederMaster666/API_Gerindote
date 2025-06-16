@@ -111,3 +111,57 @@ exports.deleteActividadMobile = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar la actividad", error: error.message });
     }
 };
+
+
+exports.getActividades = async (req, res) => {
+  try {
+    const actividades = await Actividad.find();
+    res.json(actividades);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Crear una nueva actividad
+exports.createActividad = async (req, res) => {
+  try {
+    const nuevaActividad = new Actividad(req.body);
+    await nuevaActividad.save();
+    res.status(201).json(nuevaActividad);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Obtener una actividad por ID
+exports.getActividadById = async (req, res) => {
+  try {
+    const actividad = await Actividad.findById(req.params.id);
+    if (!actividad) return res.status(404).json({ message: 'Actividad no encontrada' });
+    res.json(actividad);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Actualizar una actividad
+exports.updateActividad = async (req, res) => {
+  try {
+    const actividad = await Actividad.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!actividad) return res.status(404).json({ message: 'Actividad no encontrada' });
+    res.json(actividad);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Eliminar una actividad
+exports.deleteActividad = async (req, res) => {
+  try {
+    const actividad = await Actividad.findByIdAndDelete(req.params.id);
+    if (!actividad) return res.status(404).json({ message: 'Actividad no encontrada' });
+    res.json({ message: 'Actividad eliminada' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

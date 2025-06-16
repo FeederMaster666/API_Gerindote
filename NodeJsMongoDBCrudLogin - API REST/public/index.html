@@ -29,7 +29,7 @@
                 <div class="submenu">
                     <a href="alcaldia.html">Alcaldía</a>
                     <a href="corporacionMunicipal.html">Corporación municipal</a>
-                    <a href="alcaldia.html">Tablón de anuncios</a>
+                    <a href="municipal.html">Directorio municipal</a>
                 </div>
                 </div>
 
@@ -47,8 +47,7 @@
             <div id="user-section" style="display: none;">
                 <div class="user-container">
                     <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
-                    <div class="user-menu" id="user-menu" style="display: none;">
-                        <!-- El contenido se rellena dinámicamente por JS -->
+                    <div class="user-menu" id="user-menu" style="display: none;"> 
                     </div>
                 </div>
             </div>
@@ -249,7 +248,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.min.js" integrity="sha384-VQqxDN0EQCkWoxt/0vsQvZswzTHUVOImccYmSyhJTp7kGtPed0Qcx8rK9h9YEgx+" crossorigin="anonymous"></script>
     <script>
 document.addEventListener("DOMContentLoaded", function () {
-  // ...existing code de menú hamburguesa...
+
 
   // Lógica de usuario/rol desde backend
   async function renderUserMenuFromBackend() {
@@ -273,6 +272,10 @@ document.addEventListener("DOMContentLoaded", function () {
           adminLink.textContent = "Herramientas de Administrador";
           userMenu.appendChild(adminLink);
         }
+        const misReservasLink = document.createElement("a");
+        misReservasLink.href = "/misReservas.html";
+        misReservasLink.textContent = "Mis reservas";
+        userMenu.appendChild(misReservasLink);
         const logoutLink = document.createElement("a");
         logoutLink.href = "#";
         logoutLink.id = "logout";
@@ -289,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
         registerLink.textContent = "Registrarse";
         userMenu.appendChild(registerLink);
 
+        
         userSection.style.display = "flex";
       }
     } catch (e) {

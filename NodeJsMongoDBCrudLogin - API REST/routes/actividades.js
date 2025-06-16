@@ -33,5 +33,12 @@ router.get("/all", actividadController.getAllActividadesMobile);
 // Eliminar actividad
 router.delete("/:id", actividadController.deleteActividadMobile);
 
+router.get('/', actividadController.getActividades);
+router.post('/', actividadController.createActividad);
+router.get('/:id', actividadController.getActividadById);
+router.put('/:id', actividadController.updateActividad);
+router.delete('/:id', actividadController.deleteActividad);
+
+
 module.exports = router;
 

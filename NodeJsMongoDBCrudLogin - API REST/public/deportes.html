@@ -4,98 +4,270 @@
     <meta charset="UTF-8">
     <title>Espacios Deportivos - Gerindote</title>
     <link rel="stylesheet" href="stylesheets/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .espacios-title {
-            text-align: center;
-            margin-top: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        .espacios-subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-        }
-        .espacios-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto 2rem auto;
-        }
-        .espacio-card {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 1.5rem;
-            text-align: center;
-            transition: box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .espacio-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-        }
-        .espacio-card img {
-            width: 100%;
-            max-width: 260px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-        .espacio-card h3 {
-            margin-bottom: 0.5rem;
-        }
-        .espacio-card p {
-            color: #555;
-            font-size: 1rem;
-        }
-        .reservar-btn {
-            margin-top: 1rem;
-        }
-        @media (max-width: 800px) {
-            .espacios-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="stylesheets/deportes.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
     <nav>
-        <!-- ...puedes reutilizar tu navbar aquí... -->
+        <div class="barra-navegacion">
+            <a href="index.html" class="logo"><img src="img/gerindote.png" alt=""></a>
+
+            <!-- Menú hamburguesa -->
+            <input type="checkbox" id="menu-toggle" />
+            <label for="menu-toggle" class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+            </label>
+
+            <!-- Enlaces -->
+            
+            <div class="nav-links">
+                <img src="img/gerindote.png" alt="" class="logo2" onclick="window.location.href='index.html'" style="cursor:pointer;">
+                <div class="nav-item">
+                    <button class="submenu-toggle">Ayuntamiento</button>
+                    <div class="submenu">
+                        <a href="alcaldia.html">Alcaldía</a>
+                        <a href="corporacionMunicipal.html">Corporación municipal</a>
+                        <a href="municipal.html">Directorio municipal</a>
+                    </div>
+                    </div>
+
+                    <div class="nav-item">
+                    <button class="submenu-toggle">Áreas</button>
+                    <div class="submenu">
+                        <a href="#">Urbanismo</a>
+                        <a href="#">Cultura</a>
+                        <a href="deportes.html">Deportes</a>
+                    </div>
+                    </div>
+                <a href="https://gerindote.sedelectronica.es/info.0">Sede Electrónica</a>
+                <a href="noticias.html">Noticias</a>
+                <a href="contacto.html">Contacto</a>
+                <div id="user-section" style="display: none;">
+                    <div class="user-container">
+                        <img src="/img/inicio/user-svgrepo-com.svg" alt="Usuario" class="user-icon" id="user-icon-toggle">
+                        <div class="user-menu" id="user-menu" style="display: none;">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
+    <div class="separador">
+        <h1 class="titulo-seccion">Deportes</h1>
+    </div>
+    <div class="banda-azul"></div>
     <main>
         <h1 class="espacios-title">Espacios Deportivos Municipales</h1>
         <div class="espacios-subtitle">Reserva tu espacio deportivo favorito y disfruta de las instalaciones municipales</div>
         <div class="espacios-grid">
             <div class="espacio-card">
-                <img src="img/deportes/pabellon.jpg" alt="Pabellón Polideportivo">
+                <img src="img/deportes/piscina.webp" alt="Pabellón Polideportivo">
                 <h3>Pabellón Polideportivo</h3>
                 <p>Espacio cubierto para la práctica de deportes como fútbol sala, baloncesto, voleibol, etc.</p>
                 <a href="reservas.html?espacio=Pabellon" class="btn btn-primary reservar-btn">Reservar</a>
             </div>
             <div class="espacio-card">
-                <img src="img/deportes/padel.jpg" alt="Pistas de Pádel">
+                <img src="img/deportes/piscina.webp" alt="Pistas de Pádel">
                 <h3>Pistas de Pádel</h3>
                 <p>Disfruta de nuestras pistas de pádel al aire libre, perfectas para partidos entre amigos.</p>
                 <a href="reservas.html?espacio=Pistas%20de%20padel" class="btn btn-primary reservar-btn">Reservar</a>
             </div>
             <div class="espacio-card">
-                <img src="img/deportes/tenis.jpg" alt="Pistas de Tenis">
+                <img src="img/deportes/piscina.webp" alt="Pistas de Tenis">
                 <h3>Pistas de Tenis</h3>
                 <p>Pistas de tenis municipales para todos los niveles y edades.</p>
                 <a href="reservas.html?espacio=Pistas%20de%20tenis" class="btn btn-primary reservar-btn">Reservar</a>
             </div>
             <div class="espacio-card">
-                <img src="img/deportes/salon-cultural.jpg" alt="Salón Cultural">
+                <img src="img/deportes/piscina.webp" alt="Salón Cultural">
                 <h3>Salón Cultural</h3>
                 <p>Espacio multifuncional para actividades deportivas, culturales y eventos.</p>
                 <a href="reservas.html?espacio=Salon%20Cultural" class="btn btn-primary reservar-btn">Reservar</a>
             </div>
         </div>
+        <section class="actividades-publicas container py-4">
+            <h2 class="mb-4">Actividades Municipales Disponibles</h2>
+            <div class="row" id="actividades-container">
+                
+        </div>
+</section>
     </main>
+
+    <footer>
+        <div class="footer-section">
+            <div class="div1">
+                <h2>Información</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="div2">
+                <h2>Explora</h2>
+                <ul>
+                    <li><a href="#about">Sobre nosotros</a></li>
+                    <li><a href="#help">Ayuda</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+    
+            <div class="div3">
+                <h2>Soporte</h2>
+                <ul>
+                    <li><a href="#faq">Preguntas frecuentes</a></li>
+                    <li><a href="#support">Soporte técnico</a></li>
+                    <li><a href="#careers">Trabaja con nosotros</a></li>
+                </ul>
+            </div>
+    
+            <div class="div4">
+                <h2>Legal</h2>
+                <ul>
+                    <li><a href="#terms">Términos de servicio</a></li>
+                    <li><a href="#privacy">Política de privacidad</a></li>
+                    <li><a href="#cookies">Política de cookies</a></li>
+                    <li><a href="#legal">Aviso legal</a></li>
+                    <li><a href="#sitemap">Mapa del sitio</a></li>
+                </ul>
+            </div>
+    
+            <div class="brand">
+                <img src="img/inicio/gerindote.png">
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <ul>
+                <li><p>&copy; 2025 Ayto Gerindote</p></li>
+                <li><a href="#terms">Términos de servicio</a></li>
+                <li><a href="#privacy">Política de privacidad</a></li>
+                <li><a href="#choices">Opciones de privacidad</a></li>
+            </ul>
+            <div class="contactos">
+                <a href="https://www.instagram.com" target="_blank"><img src="img/contacto/icons8-instagram-old-50.png" alt="Instagram"></a>
+                <a href="https://www.facebook.com" target="_blank"><img src="img/contacto/icons8-facebook-50.png" alt="Facebook"></a>
+                <a href="https://www.twitter.com" target="_blank"><img src="img/contacto/icons8-twitter-50.png" alt="Twitter"></a>
+                <a href="https://www.youtube.com" target="_blank"><img src="img/contacto/icons8-youtube-50.png" alt="YouTube"></a>
+                <a href="https://www.spotify.com" target="_blank"><img src="img/contacto/icons8-tiktok-50.png" alt="Tiktok"></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de pago -->
+<div class="modal fade" id="modalPago" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Selecciona método de pago</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <button id="btnStripe" class="btn btn-outline-primary w-100 mb-2">Pagar con Stripe</button>
+        <button id="btnMetalico" class="btn btn-outline-secondary w-100">Pagar en Metálico</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<script>
+  const contenedorActividades = document.getElementById('actividades-container');
+
+  async function cargarActividadesPublicas() {
+    try {
+      const res = await fetch('http://localhost:3000/api/actividades', { credentials: 'include' });
+      const actividades = await res.json();
+
+      if (!actividades.length) {
+        contenedorActividades.innerHTML = '<div class="col-12"><div class="alert alert-warning">No hay actividades disponibles actualmente.</div></div>';
+        return;
+      }
+
+      contenedorActividades.innerHTML = '';
+      actividades.forEach(act => {
+        const fecha = new Date(act.fechaHora).toLocaleString();
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'col-md-6 col-lg-4 mb-4';
+        tarjeta.innerHTML = `
+          <div class="card h-100 shadow-sm" onclick="mostrarOpcionesPago('${act._id}', ${act.pagoRequerido})" style="cursor:pointer;">
+            <img src="${act.imagen || 'img/inicio/image.png'}" class="card-img-top" alt="Actividad">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">${act.name}</h5>
+              <p class="card-text small">${act.descripcion || 'Sin descripción'}<br><strong>Fecha:</strong> ${fecha}<br><strong>Aforo:</strong> ${act.aforo}</p>
+            </div>
+          </div>`;
+        contenedorActividades.appendChild(tarjeta);
+      });
+    } catch (e) {
+      contenedorActividades.innerHTML = '<div class="alert alert-danger">Error al cargar actividades.</div>';
+    }
+  }
+
+ async function inscribirseActividad(actividadId, conStripe) {
+  if (conStripe) {
+    try {
+      const res = await fetch('/api/stripe/actividad-session', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ actividadId })
+      });
+
+      const data = await res.json();
+      if (res.ok && data.url) {
+        window.location.href = data.url; // redirige a Stripe Checkout
+      } else {
+        alert(data.message || 'Error al redirigir a Stripe');
+      }
+    } catch (error) {
+      alert('Error al conectar con Stripe');
+    }
+    return;
+  }
+
+  // Pago en metálico
+  const res = await fetch('/api/inscripciones/inscribirse', {
+    method: 'POST',
+    credentials: 'include',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ actividadId, metodoPago: "efectivo" })
+  });
+
+  const data = await res.json();
+  alert(data.message);
+  if (res.ok) location.reload();
+}
+
+let actividadSeleccionada = null;
+let pagoRequeridoSeleccionado = false;
+
+function mostrarOpcionesPago(actividadId, pagoRequerido) {
+  actividadSeleccionada = actividadId;
+  pagoRequeridoSeleccionado = pagoRequerido;
+  if (pagoRequerido) {
+    document.getElementById('btnStripe').style.display = '';
+    document.getElementById('btnMetalico').textContent = 'Pagar en Metálico';
+  } else {
+    document.getElementById('btnStripe').style.display = 'none';
+    document.getElementById('btnMetalico').textContent = 'Inscribirme';
+  }
+  const modal = new bootstrap.Modal(document.getElementById('modalPago'));
+  modal.show();
+}
+
+document.getElementById('btnStripe').onclick = function() {
+  inscribirseActividad(actividadSeleccionada, true);
+};
+document.getElementById('btnMetalico').onclick = function() {
+  inscribirseActividad(actividadSeleccionada, false);
+};
+
+  document.addEventListener('DOMContentLoaded', cargarActividadesPublicas);
+</script>

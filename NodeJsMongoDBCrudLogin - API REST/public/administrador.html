@@ -134,9 +134,55 @@
         </div>
 
         <!-- Sección Actividades -->
-        <div id="section-actividades" class="admin-section">
-            <div class="alert alert-info mt-4">Aquí irá el formulario y la gestión de actividades.</div>
+        <!-- Sección Actividades -->
+<div id="section-actividades" class="admin-section">
+  <div class="row">
+    <!-- FORMULARIO -->
+    <div class="col-md-5">
+      <form id="actividadForm" class="card card-body">
+        <div class="form-group mb-2">
+          <label for="actividadNombre">Nombre de la Actividad</label>
+          <input type="text" class="form-control" id="actividadNombre" required>
         </div>
+        <div class="form-group mb-2">
+          <label for="actividadDescripcion">Descripción</label>
+          <textarea class="form-control" id="actividadDescripcion" required></textarea>
+        </div>
+        <div class="form-group mb-2">
+          <label for="actividadImagen">Imagen (URL)</label>
+          <input type="text" class="form-control" id="actividadImagen">
+        </div>
+        <div class="form-group mb-2">
+          <label for="actividadFecha">Fecha</label>
+          <input type="datetime-local" class="form-control" id="actividadFecha" required>
+        </div>
+        <div class="form-group mb-2">
+          <label for="actividadAforo">Aforo</label>
+          <input type="number" class="form-control" id="actividadAforo" required>
+        </div>
+        <div class="form-group mb-2">
+          <label for="actividadImporte">Importe (€)</label>
+          <input type="number" class="form-control" id="actividadImporte" min="0" step="0.01" value="0">
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="actividadPago">
+          <label class="form-check-label">Pago requerido</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear actividad</button>
+      </form>
+    </div>
+
+    <!-- LISTADO -->
+    <div class="col-md-7">
+      <table class="table table-striped">
+        <thead>
+          <tr><th>#</th><th>Nombre</th><th>Fecha</th><th>Aforo</th><th>Pago</th><th>Inscritos</th></tr>
+        </thead>
+        <tbody id="actividadesTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
         <!-- Sección Usuarios -->
         <div id="section-usuarios" class="admin-section">
@@ -150,6 +196,7 @@
                                 <th>Nombre</th>
                                 <th>Email</th>
                                 <th>Empadronado</th>
+                                <th>Empadronar</th>
                             </tr>
                         </thead>
                         <tbody id="usersTableBody">
@@ -161,6 +208,31 @@
         </div>
     </div>
 
+
+    <!-- Modal para inscritos -->
+<div class="modal fade" id="modalInscritos" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Inscritos en <span id="nombreActividadModal"></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Método de Pago</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaInscritos"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Pestañas de administración
@@ -383,18 +455,20 @@
         }
 
         function renderUsers(users) {
-            usersTableBody.innerHTML = "";
-            if (!users.length) {
-                usersTableBody.innerHTML = `<tr><td colspan="3">No hay usuarios registrados.</td></tr>`;
-                return;
-            }
-            // Mostrar solo los primeros 10 usuarios
-            users.slice(0, 10).forEach(user => {
+            const usersTableBody = document.getElementById('usersTableBody');
+            usersTableBody.innerHTML = '';
+            users.forEach(user => {
                 usersTableBody.innerHTML += `
                     <tr>
                         <td>${user.name || ''}</td>
                         <td>${user.email || ''}</td>
-                        <td>${user.isEmpadronado ? 'Sí' : 'No'}</td>
+                        <td id="empadronado-${user._id}">${user.isEmpadronado ? 'Sí' : 'No'}</td>
+                        <td>
+                        <button class="btn btn-sm ${user.isEmpadronado ? 'btn-danger' : 'btn-success'}"
+                            onclick="toggleEmpadronar('${user._id}', this)">
+                            ${user.isEmpadronado ? 'Desempadronar' : 'Empadronar'}
+                        </button>
+                        </td>
                     </tr>
                 `;
             });
@@ -414,6 +488,143 @@
         // Cargar usuarios al mostrar la pestaña
         document.querySelector('[data-section="usuarios"]').addEventListener('click', loadUsers);
     });
+     const API_ACTIVIDADES = "http://localhost:3000/api/actividades";
+
+  const actividadForm = document.getElementById("actividadForm");
+  const actividadesTable = document.getElementById("actividadesTable");
+
+  actividadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nombre = document.getElementById("actividadNombre").value.trim();
+    const descripcion = document.getElementById("actividadDescripcion").value.trim();
+    const imagen = document.getElementById("actividadImagen").value.trim();
+    const fechaHora = document.getElementById("actividadFecha").value;
+    const aforo = parseInt(document.getElementById("actividadAforo").value);
+    const pagoRequerido = document.getElementById("actividadPago").checked;
+    const importe = parseFloat(document.getElementById("actividadImporte").value) || 0;
+
+    try {
+      const res = await fetch(`${API_ACTIVIDADES}/add`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          name: nombre,
+          descripcion,
+          imagen,
+          fechaHora,
+          aforo,
+          pagoRequerido,
+          importe
+        })
+      });
+      const data = await res.json();
+      alert(data.message);
+      actividadForm.reset();
+      cargarActividades();
+    } catch (err) {
+      alert("Error al crear actividad.");
+    }
+  });
+
+  async function cargarActividades() {
+    try {
+      const res = await fetch(API_ACTIVIDADES, { credentials: "include" });
+      const actividades = await res.json();
+      renderizarActividades(actividades);
+    } catch (err) {
+      actividadesTable.innerHTML = "<tr><td colspan='5'>Error al cargar actividades.</td></tr>";
+    }
+  }
+
+  function renderizarActividades(lista) {
+    actividadesTable.innerHTML = "";
+    lista.forEach((a, i) => {
+      const fecha = new Date(a.fechaHora).toLocaleString();
+      actividadesTable.innerHTML += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${a.name}</td>
+          <td>${fecha}</td>
+          <td>${a.aforo}</td>
+          <td>${a.pagoRequerido ? "✅" : "❌"}</td>
+          <td>
+            <button class="btn btn-info btn-sm" onclick="verInscritos('${a._id}', '${a.name}')">Ver inscritos</button>
+          </td>
+        </tr>`;
+    });
+  }
+async function verInscritos(actividadId, actividadNombre) {
+  document.getElementById('nombreActividadModal').textContent = actividadNombre;
+  const tabla = document.getElementById('tablaInscritos');
+  tabla.innerHTML = '<tr><td colspan="4">Cargando...</td></tr>';
+  try {
+    const res = await fetch(`/api/inscripciones/actividad/${actividadId}`, { credentials: 'include' });
+    const inscripciones = await res.json();
+    if (!inscripciones.length) {
+      tabla.innerHTML = '<tr><td colspan="4">No hay inscritos.</td></tr>';
+      return;
+    }
+    tabla.innerHTML = '';
+    inscripciones.forEach(i => {
+      tabla.innerHTML += `
+        <tr>
+          <td>${i.usuario?.name || ''}</td>
+          <td>${i.usuario?.email || ''}</td>
+          <td>${i.metodoPago}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="eliminarInscripcion('${i._id}', '${actividadId}', '${actividadNombre}')">
+              🗑️
+            </button>
+          </td>
+        </tr>
+      `;
+    });
+  } catch (e) {
+    tabla.innerHTML = '<tr><td colspan="4">Error al cargar inscritos.</td></tr>';
+  }
+  const modal = new bootstrap.Modal(document.getElementById('modalInscritos'));
+  modal.show();
+}
+
+async function eliminarInscripcion(inscripcionId, actividadId, actividadNombre) {
+  if (!confirm('¿Seguro que quieres eliminar esta inscripción?')) return;
+  await fetch(`/api/inscripciones/${inscripcionId}`, {
+    method: 'DELETE',
+    credentials: 'include'
+  });
+  verInscritos(actividadId, actividadNombre); // Recarga la lista
+}
+async function toggleEmpadronar(userId, btn) {
+  try {
+    const res = await fetch(`/api/users/${userId}/empadronar`, {
+      method: 'PATCH',
+      credentials: 'include'
+    });
+    const data = await res.json();
+    if (res.ok) {
+      document.getElementById(`empadronado-${userId}`).textContent = data.isEmpadronado ? 'Sí' : 'No';
+      if (data.isEmpadronado) {
+        btn.classList.remove('btn-success');
+        btn.classList.add('btn-danger');
+        btn.textContent = 'Desempadronar';
+      } else {
+        btn.classList.remove('btn-danger');
+        btn.classList.add('btn-success');
+        btn.textContent = 'Empadronar';
+      }
+    } else {
+      alert(data.message || 'Error al actualizar empadronamiento');
+    }
+  } catch (err) {
+    alert('Error de red al empadronar/desempadronar');
+  }
+}
+  // Cargar al hacer clic en la pestaña
+  document.querySelector('[data-section="actividades"]').addEventListener('click', cargarActividades);
 </script>
+
+
+
 </body>
 </html>
